@@ -13,16 +13,20 @@ public class WiiMoteControl : MonoBehaviour {
 
 	[DllImport ("UniWii")]
 	public static extern int wiimote_count();
+	[DllImport ("UniWii")]
+	public static extern bool wiimote_isExpansionPortEnabled( int which );
+	[DllImport ("UniWii")]
+	public static extern double wiimote_getBatteryLevel( int which );
 	
 	[DllImport ("UniWii")]
-	private static extern byte wiimote_getAccX(int which);
+	public static extern byte wiimote_getAccX(int which);
 	[DllImport ("UniWii")]
-	private static extern byte wiimote_getAccY(int which);
+	public static extern byte wiimote_getAccY(int which);
 	[DllImport ("UniWii")]
-	private static extern byte wiimote_getAccZ(int which);
+	public static extern byte wiimote_getAccZ(int which);
 
 	[DllImport ("UniWii")]
-	private static extern float wiimote_getPitch(int which);
+	public static extern float wiimote_getPitch(int which);
 	
 	[DllImport ("UniWii")]
 	public static extern bool wiimote_getButtonA(int which);
@@ -46,6 +50,15 @@ public class WiiMoteControl : MonoBehaviour {
 	public static extern bool wiimote_getButtonMinus(int which);
 	[DllImport ("UniWii")]
 	public static extern bool wiimote_getButtonHome(int which);
+	
+	[DllImport ("UniWii")]
+	public static extern byte wiimote_getNunchuckStickX(int which);
+	[DllImport ("UniWii")]
+	public static extern byte wiimote_getNunchuckStickY(int which);
+	[DllImport ("UniWii")]
+	public static extern bool wiimote_getButtonNunchuckC(int which);
+	[DllImport ("UniWii")]
+	public static extern bool wiimote_getButtonNunchuckZ(int which);
 	
 	/**
 	 * Variables
