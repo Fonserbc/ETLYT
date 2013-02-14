@@ -36,7 +36,7 @@ public class Control : MonoBehaviour {
 		
 	}
 	
-	int RegisterPlayer (ControllerType type, int id) {
+	public int RegisterPlayer (ControllerType type, int id) {
 		if (players < 4) {
 			types[players] = type;
 			
@@ -56,7 +56,7 @@ public class Control : MonoBehaviour {
 		return -1;
 	}
 	
-	ControllerType GetType (int player) {
+	public ControllerType GetType (int player) {
 		if (player < players) {
 			return types[player];
 		}
@@ -69,20 +69,35 @@ public class Control : MonoBehaviour {
 	/*
 	 * Returns a value between -1 and 1
 	 */
-	float VerticalAxis (int player) {
-		// TODO
+	public float VerticalAxis (int player) {
+		if (player < players) {
+			switch (types[player]) {
+			case ControllerType.WiiMote:
+				if (WiiMoteControl.wiimote_isExpansionPortEnabled(playerControllerId[player])) {
+					
+				}
+				else {
+					
+				}
+				break;
+			default:
+				break;
+			}
+		}
+		else Debug.LogError("Player id does not exist. id "+player);
+		
 		return 0;
 	}
 	
 	/*
 	 * Returns a value between -1 and 1
 	 */
-	float HorizontalAxis (int player) {
+	public float HorizontalAxis (int player) {
 		// TODO
 		return 0;
 	}
 	
-	bool Jump (int player) {
+	public bool Jump (int player) {
 		if (player < players) {
 			switch (types[player]) {
 			case ControllerType.WiiMote:
@@ -92,6 +107,7 @@ public class Control : MonoBehaviour {
 				else {
 					return WiiMoteControl.wiimote_getButton2(playerControllerId[player]);
 				}
+				break;
 			default:
 				break;
 			}
@@ -101,27 +117,87 @@ public class Control : MonoBehaviour {
 		return false;
 	}
 	
-	bool Attack (int player) {
-		// TODO
+	public bool Attack (int player) {
+		if (player < players) {
+			switch (types[player]) {
+			case ControllerType.WiiMote:
+				if (WiiMoteControl.wiimote_isExpansionPortEnabled(playerControllerId[player])) {
+					return WiiMoteControl.wiimote_getButtonB(playerControllerId[player]);
+				}
+				else {
+					return WiiMoteControl.wiimote_getButton1(playerControllerId[player]);
+				}
+				break;
+			default:
+				break;
+			}
+		}
+		else Debug.LogError("Player id does not exist. id "+player);
+		
 		return false;
 	}
 	
-	bool AbilityWorld (int player) {
-		// TODO
+	public bool AbilityWorld (int player) {
+		if (player < players) {
+			switch (types[player]) {
+			case ControllerType.WiiMote:
+				if (WiiMoteControl.wiimote_isExpansionPortEnabled(playerControllerId[player])) {
+					return WiiMoteControl.wiimote_getButtonPlus(playerControllerId[player]);
+				}
+				else {
+					return WiiMoteControl.wiimote_getButtonA(playerControllerId[player]);
+				}
+				break;
+			default:
+				break;
+			}
+		}
+		else Debug.LogError("Player id does not exist. id "+player);
+		
 		return false;
 	}
 	
-	bool AbilityGravity (int player) {
-		// TODO
+	public bool AbilityGravity (int player) {
+		if (player < players) {
+			switch (types[player]) {
+			case ControllerType.WiiMote:
+				if (WiiMoteControl.wiimote_isExpansionPortEnabled(playerControllerId[player])) {
+					return WiiMoteControl.wiimote_getButtonMinus(playerControllerId[player]);
+				}
+				else {
+					return WiiMoteControl.wiimote_getButtonB(playerControllerId[player]);
+				}
+				break;
+			default:
+				break;
+			}
+		}
+		else Debug.LogError("Player id does not exist. id "+player);
+		
 		return false;
 	}
 	
-	bool AbilityPowerUp (int player) {
-		// TODO
+	public bool AbilityPowerUp (int player) {
+		if (player < players) {
+			switch (types[player]) {
+			case ControllerType.WiiMote:
+				if (WiiMoteControl.wiimote_isExpansionPortEnabled(playerControllerId[player])) {
+					return WiiMoteControl.wiimote_getButtonNunchuckZ(playerControllerId[player]);
+				}
+				else {
+					return WiiMoteControl.wiimote_getButtonMinus(playerControllerId[player]);
+				}
+				break;
+			default:
+				break;
+			}
+		}
+		else Debug.LogError("Player id does not exist. id "+player);
+		
 		return false;
 	}
 	
-	bool AbilitySkill (int player) {
+	public bool AbilitySkill (int player) {
 		// TODO
 		return false;
 	}
@@ -131,13 +207,28 @@ public class Control : MonoBehaviour {
 	 * 
 	 * 0 represents the static position
 	 */
-	float Slope (int player) {
+	public float Slope (int player) {
 		// TODO
 		return 0;
 	}
 	
-	bool Pause (int player) {
-		// TODO
+	public bool Pause (int player) {
+		if (player < players) {
+			switch (types[player]) {
+			case ControllerType.WiiMote:
+				if (WiiMoteControl.wiimote_isExpansionPortEnabled(playerControllerId[player])) {
+					return WiiMoteControl.wiimote_getButton1(playerControllerId[player]);
+				}
+				else {
+					return WiiMoteControl.wiimote_getButtonPlus(playerControllerId[player]);
+				}
+				break;
+			default:
+				break;
+			}
+		}
+		else Debug.LogError("Player id does not exist. id "+player);
+		
 		return false;
 	}
 	
