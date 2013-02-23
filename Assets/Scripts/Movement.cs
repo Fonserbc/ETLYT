@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Movement : MonoBehaviour {
 	
+	private float minSpeed = 0.2f;
+	
 	public enum PlayerState {
 		Idle,
 		Run,
@@ -29,26 +31,23 @@ public class Movement : MonoBehaviour {
 	private Vector3 normal;
 	private Transform camara;
 	
+	private AnimationHandler anim;
+	private Control control;
+	
 	void Start () {
 		camara = GameObject.FindGameObjectWithTag("MainCamera").transform;
-		player = int.Parse(gameObject.tag) - 1;
 		
 		otherPlayer = GameObject.FindGameObjectWithTag(((int)((player+1)%2) + 1).ToString());
+		anim = GetComponent<AnimationHandler>();
+		anim.setAnimation(PlayerState.Idle, 0.1f);
+		
+		control = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
+		player = control.RegisterPlayer(Control.ControllerType.WiiMote, 0);
 	}
 	
 	void Update () {
 		if (WiiMoteControl.wiimote_count() > player) {
-			bool up = false;
-			bool down = false;
-			bool right = false;
-			bool left = false;
-			bool jump = false;
-			
-			left = WiiMoteControl.wiimote_getButtonUp(player);
-			right = WiiMoteControl.wiimote_getButtonDown(player);
-			up = WiiMoteControl.wiimote_getButtonRight(player);
-			down = WiiMoteControl.wiimote_getButtonLeft(player);
-			jump = WiiMoteControl.wiimote_getButton2(player);
+			bool jump = control.Jump(player);
 			
 			if (!jumping && colliding && jump) {
 				jumping = true;
@@ -58,18 +57,9 @@ public class Movement : MonoBehaviour {
 				airTimer += Time.deltaTime;
 			}
 			if (airTimer < airTime) {
-				if (left) {
-					rigidbody.velocity += camara.right*-acceleration*Time.deltaTime;
-				}
-				else if (right) {
-					rigidbody.velocity += camara.right*acceleration*Time.deltaTime;
-				}
-				if (up) {
-					rigidbody.velocity += camara.up*acceleration*Time.deltaTime;
-				}
-				else if (down) {
-					rigidbody.velocity += camara.up*-acceleration*Time.deltaTime;
-				}
+				rigidbody.velocity += control.HorizontalAxis(player)*camara.right*acceleration*Time.deltaTime;
+				
+				rigidbody.velocity += control.VerticalAxis(player)*camara.up*acceleration*Time.deltaTime;
 			}
 		}
 	}

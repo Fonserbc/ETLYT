@@ -10,7 +10,7 @@ public class AnimationHandler : MonoBehaviour {
 	float m_animationSpeed = 0;
 	Movement.PlayerState m_actualState;	
 	
-	void setAnimation (Movement.PlayerState newState, float animationSpeed) {
+	public void setAnimation (Movement.PlayerState newState, float animationSpeed) {
 		m_actualState = newState;
 		m_step = 0;
 		m_animationSpeed = animationSpeed;
