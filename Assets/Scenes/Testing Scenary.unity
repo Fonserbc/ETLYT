@@ -282,6 +282,7 @@ GameObject:
   - 54: {fileID: 389248517}
   - 114: {fileID: 389248516}
   - 114: {fileID: 389248521}
+  - 114: {fileID: 389248522}
   m_Layer: 0
   m_Name: Player1
   m_TagString: 1
@@ -375,9 +376,16 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 127794339057a3e4eace27d00c70c73a, type: 3}
   m_Name: 
-  gravitySensitivity: .100000001
-  rotationSensitivity: .5
-  slowMotionFactor: 5
+--- !u!114 &389248522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 389248514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84a283aabdb1c2f4ead63bccf46256cb, type: 3}
+  m_Name: 
 --- !u!1 &433286818
 GameObject:
   m_ObjectHideFlags: 0
@@ -1126,9 +1134,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 127794339057a3e4eace27d00c70c73a, type: 3}
   m_Name: 
-  gravitySensitivity: .100000001
-  rotationSensitivity: .5
-  slowMotionFactor: 5
 --- !u!1 &1051825370
 GameObject:
   m_ObjectHideFlags: 0
@@ -1618,13 +1623,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25b134d849b6e0341af5730c6aca6485, type: 3}
   m_Name: 
-  sensitivity: 1
-  pitchFudge: 30
-  maxDeltaPitch: 30
-  wiimoteCount: 0
-  pitch: []
-  oldPitch: []
-  deltaPitch: []
 --- !u!1 &1470284952
 GameObject:
   m_ObjectHideFlags: 0
