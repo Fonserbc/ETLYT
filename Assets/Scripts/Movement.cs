@@ -3,6 +3,17 @@ using System.Collections;
 
 public class Movement : MonoBehaviour {
 	
+	public enum PlayerState {
+		Idle,
+		Run,
+		Slide,
+		Jump,
+		Air,
+		Wall,
+		Hurt,
+		Attack
+	}
+	
 	public float jumpForce = 10f;
 	public float acceleration = 5f;
 	public float airTime = 1.5f;

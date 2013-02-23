@@ -41,13 +41,19 @@ public class WorldMovement : MonoBehaviour {
 			
 
 		}*/
-		Debug.Log (newRotation.eulerAngles.z);
+		Debug.Log (newRotation.eulerAngles.z-transform.eulerAngles.z);
 		Quaternion nextRotation;
 		if((newRotation.eulerAngles.z - transform.eulerAngles.z)%360  < grados) {
 			nextRotation = newRotation;
-		} else nextRotation = transform.rotation*Quaternion.Euler(0,0,grados);
-		
-		rigidbody.MoveRotation(nextRotation);	
+		} else {
+			float sentido = 1;
+			float ang = newRotation.eulerAngles.z;
+			if(	newRotation.eulerAngles.z < transform.eulerAngles.z) ang += 360;
+			ang -= transform.eulerAngles.z;
+			if(ang >= 180) sentido = -1;
+			nextRotation = transform.rotation*Quaternion.Euler(0,0,grados*sentido);
+		}
+		rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime));	
 		Physics.gravity = Vector3.Slerp(Physics.gravity, gravity,Time.deltaTime*speed);
 		
 	}
