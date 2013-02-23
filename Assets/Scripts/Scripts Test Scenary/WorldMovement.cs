@@ -41,7 +41,7 @@ public class WorldMovement : MonoBehaviour {
 
 		}
 		
-		rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, nextRotation, Time.deltaTime*speed));	
+		rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, nextRotation, Time.deltaTime));	
 		Physics.gravity = Vector3.Slerp(Physics.gravity, gravity,Time.deltaTime*speed);
 		
 	}
@@ -58,7 +58,7 @@ public class WorldMovement : MonoBehaviour {
 	
 	public void rotateToAngle(float angle) {
 		//rotating = true;
-		nextRotation = transform.rotation*Quaternion.Euler(0,0,angle);
+		nextRotation = Quaternion.Euler(0,0,angle);
 	}
 	
 	public void gravitateToAngle(Vector3 newGravity) {
