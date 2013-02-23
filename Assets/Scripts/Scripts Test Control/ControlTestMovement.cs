@@ -21,18 +21,18 @@ public class ControlTestMovement : MonoBehaviour {
 	
 	void Start () {
 		control = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
-		camara = GameObject.FindGameObjectWithTag("MainCamera").transform;		
+		camara = GameObject.FindGameObjectWithTag("MainCamera").transform;
+		player = control.RegisterPlayer(Control.ControllerType.WiiMote, 0);
 	}
 	
 	void Update () {
-		if (player < 0) player = control.RegisterPlayer(Control.ControllerType.WiiMote, 0);
-		
-		Debug.Log("Hx: "+WiiMoteControl.wiimote_getNunchuckStickX(0)+", Vy: "+WiiMoteControl.wiimote_getNunchuckStickY(0));
 		
 		bool jump = control.Jump(player);
 		
-		float hAxis = control.HorizontalAxis(player);
-		float vAxis = control.VerticalAxis(player);
+		//float hAxis = control.HorizontalAxis(player);
+		//float vAxis = control.VerticalAxis(player);
+		
+		//Debug.Log("Roll: "+WiiMoteControl.wiimote_getRoll(player)+", Pitch: "+WiiMoteControl.wiimote_getPitch(player));
 		
 		if (!jumping && colliding && jump) {
 			jumping = true;

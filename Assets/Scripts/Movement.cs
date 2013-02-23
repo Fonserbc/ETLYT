@@ -14,7 +14,6 @@ public class Movement : MonoBehaviour {
 	
 	private int player;
 	private GameObject otherPlayer;
-	private Powers otherPower;
 	
 	private Vector3 normal;
 	private Transform camara;
@@ -24,7 +23,6 @@ public class Movement : MonoBehaviour {
 		player = int.Parse(gameObject.tag) - 1;
 		
 		otherPlayer = GameObject.FindGameObjectWithTag(((int)((player+1)%2) + 1).ToString());
-		otherPower = (Powers)(otherPlayer.GetComponent("Powers"));
 	}
 	
 	void Update () {
@@ -66,12 +64,6 @@ public class Movement : MonoBehaviour {
 	}
 	
 	void OnCollisionEnter(Collision col) {
-		if (col.gameObject.tag.Equals("World")) {
-			if (otherPower.Rotating() && col.contacts.Length > 0) {
-				transform.position = col.contacts[0].point+col.contacts[0].normal /*+ col.contacts[0].normal*/;
-				rigidbody.velocity = Vector3.zero;
-			}
-		}
 		airTimer = 0f;
 	}
 	

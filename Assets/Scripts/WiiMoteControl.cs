@@ -26,7 +26,15 @@ public class WiiMoteControl : MonoBehaviour {
 	public static extern byte wiimote_getAccZ(int which);
 
 	[DllImport ("UniWii")]
+	public static extern float wiimote_getIrX(int which);
+	[DllImport ("UniWii")]
+	public static extern float wiimote_getIrY(int which);
+	[DllImport ("UniWii")]
+	public static extern float wiimote_getRoll(int which);
+	[DllImport ("UniWii")]
 	public static extern float wiimote_getPitch(int which);
+	[DllImport ("UniWii")]
+	public static extern float wiimote_getYaw(int which);
 	
 	[DllImport ("UniWii")]
 	public static extern bool wiimote_getButtonA(int which);
@@ -64,63 +72,14 @@ public class WiiMoteControl : MonoBehaviour {
 	 * Variables
 	 */
 	
-	//WIIMOTE
-	public float sensitivity = 1.0f;
-	public float pitchFudge = 30.0f;
-	public float maxDeltaPitch = 30.0f;
-	
-	public int wiimoteCount;
-
-	public float[] pitch;
-	public float[] oldPitch;
-	public float[] deltaPitch;
-	
 	// Use this for initialization
 	void Start () {
 		wiimote_start();
-		pitch = new float[2];
-		oldPitch = new float[2];
-		deltaPitch = new float[2];
 	}
-	
-	void FixedUpdate() {
-		wiimoteCount = wiimote_count();
-		
-		if (wiimoteCount > 0) {
-			for (int i = 0; i < min(wiimoteCount,2); ++i) {
-				float newPitch = wiimote_getPitch(i) + pitchFudge;
-				deltaPitch[i] = 0;
-				
-				if (!float.IsNaN(newPitch)) {
-					pitch[i] = newPitch;
-					deltaPitch[i] = pitch[i] - oldPitch[i];
-					deltaPitch[i] *= sensitivity;
-					if (deltaPitch[i] > 0) deltaPitch[i] = min(maxDeltaPitch, deltaPitch[i]);
-					else deltaPitch[i] = max(-maxDeltaPitch, deltaPitch[i]);
-					oldPitch[i] = pitch[i];
-				}
-			}
-		}
-	}
+
 	
 	void OnApplicationQuit() {
 		wiimote_stop();
-	}
-	
-	void OnDrawGizmos() {
-		Gizmos.DrawLine(Vector3.zero, Physics.gravity);
-	}
-	
-	int min(int x, int y) {
-		return (x < y)? x : y;
-	}
-	
-	float min(float x, float y) {
-		return (x < y)? x : y;
-	}
-	
-	float max(float x, float y) {
-		return (x > y)? x : y;
 	}
 }
 
