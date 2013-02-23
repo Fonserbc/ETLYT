@@ -13,7 +13,8 @@ public class Movement : MonoBehaviour {
 		Air,
 		Wall,
 		Hurt,
-		Attack
+		Attack,
+		Death
 	}
 	
 	public float jumpForce = 10f;
@@ -34,6 +35,9 @@ public class Movement : MonoBehaviour {
 	private AnimationHandler anim;
 	private Control control;
 	
+	private Vector3 lastPos;
+	private int direction = 1;
+	
 	void Start () {
 		camara = GameObject.FindGameObjectWithTag("MainCamera").transform;
 		
@@ -43,6 +47,8 @@ public class Movement : MonoBehaviour {
 		
 		control = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
 		player = control.RegisterPlayer(Control.ControllerType.WiiMote, 0);
+		
+		lastPos = transform.position;
 	}
 	
 	void Update () {
@@ -62,6 +68,19 @@ public class Movement : MonoBehaviour {
 				rigidbody.velocity += control.VerticalAxis(player)*camara.up*acceleration*Time.deltaTime;
 			}
 		}
+		
+		
+		Vector3 dir = transform.position - lastPos;
+		
+		float wantedDir = Vector3.Cross(-Physics.gravity, dir).z;
+		int newDir = (wantedDir < 0)? -1 : 1;
+		
+		if (newDir != direction) {
+			//anim.setDirection(wantedDir);
+			direction = newDir;
+		}
+		
+		lastPos = transform.position;
 	}
 	
 	void OnCollisionEnter(Collision col) {
