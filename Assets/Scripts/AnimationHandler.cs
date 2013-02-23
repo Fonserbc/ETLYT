@@ -8,12 +8,12 @@ public class AnimationHandler : MonoBehaviour {
 	int m_step = 0;
 	int m_stepStatus = 0;
 	int m_animationSpeed = 0;
-//	enum animation = idle;	
+	Movement.PlayerState m_actualState;	
 	
-	void setAnimation () {
-//		m_animation = animation
+	void setAnimation (Movement.PlayerState newState) {
+		m_actualState = newState;
 		m_step = 0;
-		m_speed = animationSpeed;
+		//m_speed = m_animationSpeed;
 	}
 	
 	// Use this for initialization
@@ -23,8 +23,8 @@ public class AnimationHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		switch (animation) {
-		case idle:
+		switch (m_actualState) {
+		case Movement.PlayerState.Idle:
 			m_stepStatus = m_stepStatus + m_animationSpeed;
 
 			if(m_stepStatus >= 100) {
@@ -33,7 +33,7 @@ public class AnimationHandler : MonoBehaviour {
 			} 
 			renderer.material.mainTexture = idleAnimation[m_step];
 			break;
-		case run:
+		case Movement.PlayerState.Run:
 			break;
 		default:
 			break;
