@@ -48,6 +48,8 @@ public class Movement : MonoBehaviour {
 		control = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
 		player = control.RegisterPlayer(Control.ControllerType.WiiMote, 0);
 		
+		BroadcastMessage("SetPlayer", player);
+		
 		lastPos = transform.position;
 	}
 	
@@ -75,8 +77,8 @@ public class Movement : MonoBehaviour {
 		float wantedDir = Vector3.Cross(-Physics.gravity, dir).z;
 		int newDir = (wantedDir < 0)? -1 : 1;
 		
-		if (newDir != direction) {
-			//anim.setDirection(wantedDir);
+		if (Mathf.Abs(wantedDir) > 0.1 && newDir != direction) {
+			anim.setDirection(newDir);
 			direction = newDir;
 		}
 		

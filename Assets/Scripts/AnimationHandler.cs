@@ -25,7 +25,7 @@ public class AnimationHandler : MonoBehaviour {
 		m_animationSpeed = animationSpeed;
 	}
 	
-	private void setDirection(int dir) {
+	public void setDirection(int dir) {
 		m_direction = dir;
 	}
 	

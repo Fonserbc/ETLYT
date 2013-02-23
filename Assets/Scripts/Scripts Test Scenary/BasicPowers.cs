@@ -15,8 +15,6 @@ public class BasicPowers : MonoBehaviour {
 	void Start () {
 		control = (Control)(GameObject.FindGameObjectWithTag("Control").GetComponent("Control"));	
 		world = (WorldMovement)(GameObject.FindGameObjectWithTag("World").GetComponent("WorldMovement"));
-		control.RegisterPlayer(Control.ControllerType.WiiMote, player);
-
 	}
 	
 	// Update is called once per frame

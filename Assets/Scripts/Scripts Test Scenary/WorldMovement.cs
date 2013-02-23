@@ -43,7 +43,7 @@ public class WorldMovement : MonoBehaviour {
 			
 
 		}*/
-		Debug.Log ("newAngle :"+newAngle+", "+transform.eulerAngles.z + " sense " + sentido);
+		
 		Quaternion nextRotation;
 		if(Mathf.Abs(newAngle - transform.eulerAngles.z) < 2*grados*Time.deltaTime) {
 			nextRotation = Quaternion.Euler(0,0,newAngle);
