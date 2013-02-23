@@ -12,7 +12,8 @@ public class WorldMovement : MonoBehaviour {
 	public float speed = 5;
 	
 	/*** Rotacion escenario ***/
-	private Quaternion nextRotation;
+	private Quaternion newRotation;
+	public float grados = 20;
 	
 	
 	/*** Rotacion gravedad ***/
@@ -22,13 +23,13 @@ public class WorldMovement : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		nextRotation = transform.rotation;
+		newRotation = transform.rotation;
 		gravity = Physics.gravity;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.Space)) {
+		/*if(Input.GetKeyDown(KeyCode.Space)) {
 			//rotating = true;
 			nextRotation = transform.rotation*Quaternion.Euler(0,0,10);
 			
@@ -39,9 +40,14 @@ public class WorldMovement : MonoBehaviour {
 			gravity = new Vector3(9.8f,9.8f,0);
 			
 
-		}
+		}*/
+		Debug.Log (newRotation.eulerAngles.z);
+		Quaternion nextRotation;
+		if((newRotation.eulerAngles.z - transform.eulerAngles.z)%360  < grados) {
+			nextRotation = newRotation;
+		} else nextRotation = transform.rotation*Quaternion.Euler(0,0,grados);
 		
-		rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, nextRotation, Time.deltaTime));	
+		rigidbody.MoveRotation(nextRotation);	
 		Physics.gravity = Vector3.Slerp(Physics.gravity, gravity,Time.deltaTime*speed);
 		
 	}
@@ -58,7 +64,7 @@ public class WorldMovement : MonoBehaviour {
 	
 	public void rotateToAngle(float angle) {
 		//rotating = true;
-		nextRotation = Quaternion.Euler(0,0,angle);
+		newRotation = Quaternion.Euler(0,0,angle);
 	}
 	
 	public void gravitateToAngle(Vector3 newGravity) {

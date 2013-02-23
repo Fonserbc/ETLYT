@@ -21,10 +21,7 @@ public class BasicPowers : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		float angle = (control.Slope(player)*2*Mathf.PI)/360;
-		Debug.Log (angle +  " " + Mathf.Cos(angle));
-		Vector3 j = new Vector3(Mathf.Sin(angle), -Mathf.Cos(angle),0);
-		Debug.DrawRay(transform.position, j*3);
+		
 		
 		if(control.AbilityWorld(player)) {
 			//if(!world.isRotating()) {
@@ -33,7 +30,9 @@ public class BasicPowers : MonoBehaviour {
 		}		
 		if(control.AbilityGravity(player)) {
 			//if(!world.isGravitating()) {
-				//world.gravitateToAngle();
+				float angle = (control.Slope(player)*2*Mathf.PI)/360;
+				Vector3 gravity = new Vector3(Mathf.Sin(angle), -Mathf.Cos(angle),0);
+				world.gravitateToAngle(gravity);
 			//}
 		}
 		
