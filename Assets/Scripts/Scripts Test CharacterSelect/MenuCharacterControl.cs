@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MenuCharacterControl : MonoBehaviour {
 	
-	private Control control;
+
 	public Rigidbody selector;
 	private MenuMovement mov;
 	
@@ -11,7 +11,7 @@ public class MenuCharacterControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		control = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
+		Control control = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
 		int c = WiiMoteControl.wiimote_count();
 		if (c>0) {
 			players = new Rigidbody[c];
