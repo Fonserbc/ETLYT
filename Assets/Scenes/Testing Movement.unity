@@ -1558,9 +1558,17 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 547fea5582ec370468a2c6c2dcc32e76, type: 3}
   m_Name: 
-  airAnimation: []
-  attackAnimation: []
-  hurtAnimation: []
+  airAnimation:
+  - {fileID: 2800000, guid: 12ba0e77f2410d641998f25367842b20, type: 3}
+  - {fileID: 2800000, guid: c61a1ccd1463d9a46af9ad08645fa1ab, type: 3}
+  attackAnimation:
+  - {fileID: 2800000, guid: 547705318a015d6439578a9fdfabafbf, type: 3}
+  - {fileID: 2800000, guid: efc1ebfef177ecc469a915313e1a274a, type: 3}
+  - {fileID: 2800000, guid: 190fb69e8e4049a468a07e994f6bd63a, type: 3}
+  - {fileID: 2800000, guid: 98cde6f945ef6e348b68096fa25018ab, type: 3}
+  hurtAnimation:
+  - {fileID: 2800000, guid: 64adafff7ddda1545b52264a97624f5f, type: 3}
+  - {fileID: 2800000, guid: 50b3d906e3b7d3845826119d50d7c783, type: 3}
   idleAnimation:
   - {fileID: 2800000, guid: 5eb181c44aa5f82459f3a77e474b784c, type: 3}
   - {fileID: 2800000, guid: 76c20c52ce75a3c4585255cccefeca13, type: 3}
@@ -1578,10 +1586,38 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 59c27fdf88af4974b87b8559fe44c49e, type: 3}
   - {fileID: 2800000, guid: 01999ed64d4480a499be8406c88798b9, type: 3}
   - {fileID: 2800000, guid: ec15df8ab075ebe4da566a08d281bbbd, type: 3}
-  jumpAnimation: []
-  runAnimation: []
-  slideAnimation: []
-  wallAnimation: []
+  jumpAnimation:
+  - {fileID: 2800000, guid: 249776dacfb7fda4f8ce8790b317003a, type: 3}
+  - {fileID: 2800000, guid: 98741d09d5b00874d8883eb4dbe26918, type: 3}
+  - {fileID: 2800000, guid: 5775984cf8ccbde4881f7858e3aba827, type: 3}
+  - {fileID: 2800000, guid: 3f495aa83e42bda4f9173c8d14dc0ad7, type: 3}
+  - {fileID: 2800000, guid: 429792dcee505084893dcba532530f47, type: 3}
+  - {fileID: 2800000, guid: 159202063fd3b3a4eb7da4d04873d5f9, type: 3}
+  - {fileID: 2800000, guid: 046956389f5506547b091f8d8b683a8e, type: 3}
+  - {fileID: 2800000, guid: 36ccc49fa1f0efc43ba2f120e6e96403, type: 3}
+  runAnimation:
+  - {fileID: 2800000, guid: 119d6d8e972c45842a47e7d01e990def, type: 3}
+  - {fileID: 2800000, guid: 8846935bbc7cad245818376000f349be, type: 3}
+  - {fileID: 2800000, guid: 0ed69598cbc687d4c9fd0e1e29f3c750, type: 3}
+  - {fileID: 2800000, guid: 06f75e517cc385f46b7c6fb926c1a5eb, type: 3}
+  - {fileID: 2800000, guid: eda68631b1309ff44b0c6ee87aa5cf7b, type: 3}
+  - {fileID: 2800000, guid: 80680b428460dea46a1de76e5db1a04f, type: 3}
+  - {fileID: 2800000, guid: 80680b428460dea46a1de76e5db1a04f, type: 3}
+  - {fileID: 2800000, guid: a5905effa31ba5544adb6d7e3d1b3bc0, type: 3}
+  - {fileID: 2800000, guid: 84c0927e3a84cb74b9207b1e83cfc157, type: 3}
+  - {fileID: 2800000, guid: 8d16a9e08434ed5419b84f1e04cc4010, type: 3}
+  - {fileID: 2800000, guid: 0f2b0e475bde52f44b1dd7e1af2f3982, type: 3}
+  - {fileID: 2800000, guid: dabcc846ee466e9468526f9b3f0ad6fe, type: 3}
+  - {fileID: 2800000, guid: 5a47d1c864a2a08468272c856e5561c3, type: 3}
+  - {fileID: 2800000, guid: 10391aa5573de3d4caf05f0d984217d2, type: 3}
+  - {fileID: 2800000, guid: dd1afde38633814428fe76e85d1c8780, type: 3}
+  slideAnimation:
+  - {fileID: 2800000, guid: d89511771dd6008418a9e9e23bba7076, type: 3}
+  - {fileID: 2800000, guid: 8592f2c5b3014604881c6480fafc8218, type: 3}
+  wallAnimation:
+  - {fileID: 2800000, guid: 265e1f31dc1935942afe549bb25b2d63, type: 3}
+  - {fileID: 2800000, guid: 1b208bde1776bcb438f639131de9497b, type: 3}
+  - {fileID: 2800000, guid: 08fb11aa5f5f8a641bc5df80a69a36a8, type: 3}
 --- !u!114 &1598896733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1593,9 +1629,10 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92ca82c4faee3c64f8fed37ba73da328, type: 3}
   m_Name: 
-  jumpForce: 5
+  jumpForce: 10
+  jumpAnimationLenght: 1
   acceleration: 10
-  airTime: 1.5
+  airAcceleration: 5
 --- !u!136 &1598896734
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1700,7 +1737,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1638611085}
   m_LocalRotation: {x: 0, y: 0, z: .382683486, w: .923879564}
-  m_LocalPosition: {x: 17.5418205, y: -22.3485069, z: 6.54827309}
+  m_LocalPosition: {x: 17.5418205, y: -22.2999992, z: 6.54827309}
   m_LocalScale: {x: 20, y: 20, z: 10}
   m_Children: []
   m_Father: {fileID: 751473744}
@@ -1945,7 +1982,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: abb0af9b14c0692439c0e5b9da14b4f7, type: 2}
       propertyPath: jumpForce
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: abb0af9b14c0692439c0e5b9da14b4f7, type: 2}

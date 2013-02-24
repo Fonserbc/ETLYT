@@ -3,15 +3,22 @@ using System.Collections;
 
 public class CharacterSelect : MonoBehaviour {
 	
-	private bool selected = false;
+	public GameObject player;
+	private Color mat;
+	
+	void Start() {
+		mat = renderer.material.color;	
+	}
 
 	
 	
-	public void setSelected(bool s) {
-		selected = s;	
+	public void setSelected(int i) {
+		BattleInformer b = GameObject.FindGameObjectWithTag("Control").GetComponent<BattleInformer>();
+		b.setPlayer(player,i);
 	}
 	
-	public bool isSelected() {
-		return selected;	
+	public void setColor() {
+		renderer.material.color = mat;	
 	}
+
 }

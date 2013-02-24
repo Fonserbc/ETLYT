@@ -31,19 +31,12 @@ public class MenuMovement : MonoBehaviour {
 		
 		if(selection) {
 			if(control.Jump(player)) {
-				CharacterSelect Cs;
+				CharacterSelect Cs;				
 				Cs = selection.GetComponent<CharacterSelect>();
-				if(!Cs.isSelected()) {
-					if(selected) {
-						selected.renderer.material.color = Color.white;
-						Cs = selected.GetComponent<CharacterSelect>();
-						Cs.setSelected(false);
-					}
-					selected = selection;
-					selected.renderer.material.color = Color.blue;
-					Cs = selected.GetComponent<CharacterSelect>();
-					Cs.setSelected(true);	
-				}
+				Cs.setSelected(player);	
+				
+				
+				
 			}
 		}
 	
@@ -60,9 +53,7 @@ public class MenuMovement : MonoBehaviour {
 		if (c.gameObject.tag == "Character") {
 			selection = null;
 			CharacterSelect Cs = c.GetComponent<CharacterSelect>();
-
-			if(!Cs.isSelected()) c.renderer.material.color = Color.white;
-			else c.renderer.material.color = Color.blue;
+			Cs.setColor();
 		}
 	}
 }
