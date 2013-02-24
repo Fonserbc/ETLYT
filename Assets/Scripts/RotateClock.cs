@@ -10,4 +10,6 @@ public class RotateClock : MonoBehaviour {
 	void Update () {
 		transform.Rotate(0,speed*Time.deltaTime*sentido,0);
 	}
+	
+
 }

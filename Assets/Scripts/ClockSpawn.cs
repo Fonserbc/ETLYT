@@ -17,10 +17,17 @@ public class ClockSpawn : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		time += Time.deltaTime;
-		if (time >= 5) {
-			time -= 5;
+		if (time >= 3) {
+			time -= 3;
 			int pos = Random.Range(0, SpawnPoints.Length-1);
-			Instantiate (Clock, SpawnPoints[pos].position, SpawnPoints[pos].rotation);
+			SphereGizmos sG = SpawnPoints[pos].GetComponent<SphereGizmos>();
+			if (!sG.isInstantiated()) {
+				sG.is_instanced(true);
+				GameObject c = (GameObject)Instantiate(Clock, SpawnPoints[pos].position, SpawnPoints[pos].rotation);
+				ClockGestor rC = c.GetComponent<ClockGestor>();
+				Debug.Log (rC == null);
+				rC.setSpawner(SpawnPoints[pos]);
+			}
 		}
 	}
 }
