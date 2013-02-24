@@ -27,7 +27,6 @@ public class Movement : MonoBehaviour {
 	private bool colliding = false;
 	
 	private int player;
-	private GameObject otherPlayer;
 	
 	private Vector3 normal;
 	private Transform camara;
@@ -41,7 +40,6 @@ public class Movement : MonoBehaviour {
 	void Start () {
 		camara = GameObject.FindGameObjectWithTag("MainCamera").transform;
 		
-		otherPlayer = GameObject.FindGameObjectWithTag(((int)((player+1)%2) + 1).ToString());
 		anim = GetComponent<AnimationHandler>();
 		anim.setAnimation(PlayerState.Idle, 0.1f);
 		
@@ -83,6 +81,13 @@ public class Movement : MonoBehaviour {
 		}
 		
 		lastPos = transform.position;
+		
+		//rigidbody.MoveRotation(transform.rotation*Quaternion.FromToRotation(-transform.forward, normal));
+	}
+	
+	void OnDrawGizmos() {
+		Gizmos.color = Color.red;
+		Gizmos.DrawLine(transform.position, transform.position+normal*5);
 	}
 	
 	void OnCollisionEnter(Collision col) {
@@ -92,6 +97,7 @@ public class Movement : MonoBehaviour {
 	void OnCollisionStay(Collision col) {
 		colliding = true;
 		if (col.contacts.Length > 0) normal = col.contacts[0].normal;
+		Debug.Log(col.contacts.Length);
 		normal.z = 0;
 		jumping = false;
 		airTimer = 0f;
