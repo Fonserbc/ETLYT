@@ -108,6 +108,7 @@ public class Control : MonoBehaviour {
 						playerAxis[players].init();
 					
 					break;
+				
 				default:
 					break;
 			}
@@ -144,6 +145,10 @@ public class Control : MonoBehaviour {
 					else {
 						return playerAxis[player].v;
 					}
+				
+				case ControllerType.Keyboard:
+					return Input.GetAxis("Vertical Axis");
+				
 				default:
 					break;
 			}
@@ -168,6 +173,10 @@ public class Control : MonoBehaviour {
 					else {
 						return playerAxis[player].h;
 					}
+				
+				case ControllerType.Keyboard:
+					return Input.GetAxis("Horizontal Axis");
+				
 				default:
 					break;
 			}
@@ -187,6 +196,10 @@ public class Control : MonoBehaviour {
 					else {
 						return WiiMoteControl.wiimote_getButton2(playerControllerId[player]);
 					}
+				
+				case ControllerType.Keyboard:
+					return Input.GetKeyDown(KeyCode.Space);
+				
 				default:
 					break;
 			}
@@ -206,6 +219,10 @@ public class Control : MonoBehaviour {
 					else {
 						return WiiMoteControl.wiimote_getButton1(playerControllerId[player]);
 					}
+				
+				case ControllerType.Keyboard:
+					return Input.GetButtonDown("Fire1");
+				
 				default:
 					break;
 			}
@@ -225,6 +242,10 @@ public class Control : MonoBehaviour {
 					else {
 						return WiiMoteControl.wiimote_getButtonA(playerControllerId[player]);
 					}
+				
+				case ControllerType.Keyboard:
+					return Input.GetKeyDown(KeyCode.Q);
+				
 				default:
 					break;
 			}
@@ -244,6 +265,10 @@ public class Control : MonoBehaviour {
 					else {
 						return WiiMoteControl.wiimote_getButtonB(playerControllerId[player]);
 					}
+				
+				case ControllerType.Keyboard:
+					return Input.GetKeyDown(KeyCode.E);
+					
 				default:
 					break;
 			}
@@ -263,6 +288,10 @@ public class Control : MonoBehaviour {
 					else {
 						return WiiMoteControl.wiimote_getButtonMinus(playerControllerId[player]);
 					}
+				
+				case ControllerType.Keyboard:
+					return Input.GetButtonDown("Fire2");
+					
 				default:
 					break;
 			}
@@ -292,6 +321,12 @@ public class Control : MonoBehaviour {
 					else {
 						return (float)(WiiMoteControl.wiimote_getPitch(playerControllerId[player]));
 					}
+				
+				case ControllerType.Keyboard:
+					Vector3 dir = new Vector3(Input.GetAxis("Horizontal Axis"), Input.GetAxis("Vertical Axis"), 0);
+					dir.Normalize();
+					return ((Vector3.Cross(Vector3.up, dir).z < 0)? 1f : -1f)*Vector3.Angle(Vector3.up, dir);
+					
 				default:
 					break;
 			}
@@ -311,6 +346,10 @@ public class Control : MonoBehaviour {
 					else {
 						return WiiMoteControl.wiimote_getButtonPlus(playerControllerId[player]);
 					}
+				
+				case ControllerType.Keyboard:
+					return Input.GetKeyDown(KeyCode.P);
+					
 				default:
 					break;
 			}
