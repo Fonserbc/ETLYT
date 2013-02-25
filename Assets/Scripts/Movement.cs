@@ -24,9 +24,9 @@ public class Movement : MonoBehaviour {
 	public float jumpAnimationLenght = 1f;
 	public float acceleration = 10f;
 	public float airAcceleration = 5f;
+	public float rotationSpeed = 5f;
 
 	private bool colliding = false;
-	private float jumpTimer = 0f;
 	
 	private int player;
 	private PlayerState state;
@@ -44,7 +44,7 @@ public class Movement : MonoBehaviour {
 	void Start () {
 		camara = GameObject.FindGameObjectWithTag("MainCamera").transform;
 		
-		anim = GetComponent<AnimationHandler>();
+		anim = GetComponentInChildren<AnimationHandler>();
 		
 		control = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
 		player = control.RegisterPlayer(debugControl, 0);
@@ -54,6 +54,8 @@ public class Movement : MonoBehaviour {
 		lastPos = transform.position;
 		state = PlayerState.Air;
 		anim.setAnimation(state, DEF_ANIM_SPEED);
+		
+		normal = -Physics.gravity.normalized;
 	}
 	
 	void Update () {
@@ -63,15 +65,14 @@ public class Movement : MonoBehaviour {
 			bool jump = control.Jump(player);
 			
 			if (state == PlayerState.Air || state == PlayerState.Jump) {
-				if (state == PlayerState.Jump) {
-					jumpTimer -= Time.deltaTime;
-					
-					if (jumpTimer < 0f) {
+				if (state == PlayerState.Jump) {					
+					if (Vector3.Angle(-Physics.gravity.normalized, rigidbody.velocity.normalized) > 90f) {
 						state = PlayerState.Air;
 						anim.setAnimation(state, DEF_ANIM_SPEED);
 					}
 				}
 				rigidbody.velocity += movementDir*airAcceleration*Time.deltaTime;
+				rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, -Physics.gravity.normalized), Time.deltaTime*rotationSpeed));
 			}
 			else if (state == PlayerState.Idle || state == PlayerState.Run) {
 				
@@ -96,11 +97,11 @@ public class Movement : MonoBehaviour {
 				if (jump && colliding) {
 					rigidbody.velocity += (normal-Physics.gravity.normalized).normalized*jumpForce;
 					
-					jumpTimer = 1f;
-					
 					state = PlayerState.Jump;
 					anim.setAnimation(state, DEF_ANIM_SPEED/2f);
 				}
+				
+				rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, normal), Time.deltaTime*rotationSpeed));
 			}
 			else if (state == PlayerState.Slide) {
 				rigidbody.velocity += movementDir*acceleration*Time.deltaTime;
@@ -108,7 +109,19 @@ public class Movement : MonoBehaviour {
 				if (jump && colliding) {
 					rigidbody.velocity += (normal-Physics.gravity.normalized).normalized*jumpForce;
 					
-					jumpTimer = 1f;
+					state = PlayerState.Jump;
+					anim.setAnimation(state, DEF_ANIM_SPEED/2f);
+				}
+				else if (rigidbody.velocity.magnitude < 1f) {
+					state = PlayerState.Run;
+					anim.setAnimation(state, DEF_ANIM_SPEED);
+				}
+				rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, normal), Time.deltaTime*rotationSpeed));
+			}
+			else if (state == PlayerState.Wall) {
+				
+				if (jump && colliding) {
+					rigidbody.velocity += (normal-Physics.gravity.normalized).normalized*jumpForce;
 					
 					state = PlayerState.Jump;
 					anim.setAnimation(state, DEF_ANIM_SPEED/2f);
@@ -117,6 +130,12 @@ public class Movement : MonoBehaviour {
 					state = PlayerState.Run;
 					anim.setAnimation(state, DEF_ANIM_SPEED);
 				}
+				rigidbody.velocity += movementDir*airAcceleration*Time.deltaTime;
+				
+				Vector3 wantedRot = normal;
+				if (wantedRot.x > 0f) wantedRot = Quaternion.Euler(0, 0, 90f)*wantedRot;
+				else wantedRot = Quaternion.Euler(0, 0, -90f)*wantedRot;
+				rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, wantedRot), Time.deltaTime*rotationSpeed));
 			}
 			
 		}
@@ -133,12 +152,10 @@ public class Movement : MonoBehaviour {
 		}
 		
 		lastPos = transform.position;
-		
-		//rigidbody.MoveRotation(transform.rotation*Quaternion.FromToRotation(-transform.forward, normal));
 	}
 	
 	Vector3 GetMovementDir () {
-		Vector3 norm = -transform.forward;
+		Vector3 norm = transform.up;
 		float hAxis = control.HorizontalAxis(player);
 		float vAxis = control.VerticalAxis(player);
 		
@@ -162,13 +179,20 @@ public class Movement : MonoBehaviour {
 		}
 		else {
 			dirAux = 0;
-			return transform.forward;
+			return -transform.up;
 		}
 	}
 	
 	void OnDrawGizmos() {
 		Gizmos.color = Color.red;
 		Gizmos.DrawLine(transform.position, transform.position+normal*5);
+	}
+	
+	void OnCollisionEnter(Collision col) {
+		if (state == PlayerState.Jump) {
+			state = PlayerState.Air;
+			anim.setAnimation(state, DEF_ANIM_SPEED);
+		}
 	}
 	
 	void OnCollisionStay(Collision col) {
@@ -180,18 +204,29 @@ public class Movement : MonoBehaviour {
 			state = PlayerState.Wall;
 			anim.setAnimation(state, DEF_ANIM_SPEED);
 		}
-		else if (state == PlayerState.Air) {
-			state = PlayerState.Idle;
-			anim.setAnimation(state, DEF_ANIM_SPEED);
-		}
 		else if (state == PlayerState.Wall) {
-			state = PlayerState.Slide;
+			if (Vector3.Angle(-Physics.gravity, normal) > 5f) {
+				state = PlayerState.Slide;
+				anim.setAnimation(state, DEF_ANIM_SPEED);
+			}
+			else {
+				state = PlayerState.Run;
+				anim.setAnimation(state, DEF_ANIM_SPEED);
+			}
+		}
+		else if (state == PlayerState.Air) {
+			state = PlayerState.Run;
 			anim.setAnimation(state, DEF_ANIM_SPEED);
 		}
 	}
 	
 	void OnCollisionExit(Collision col) {
 		colliding = false;
+		
+		/*if (state == PlayerState.Wall) {
+			state = PlayerState.Air;
+			anim.setAnimation(state, DEF_ANIM_SPEED);
+		}*/
 	}
 	
 	public void SetPlayer (int p) {

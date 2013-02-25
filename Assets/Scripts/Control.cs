@@ -175,7 +175,7 @@ public class Control : MonoBehaviour {
 					}
 				
 				case ControllerType.Keyboard:
-					return Input.GetAxis("Horizontal");
+					return -Input.GetAxis("Horizontal");
 				
 				default:
 					break;
