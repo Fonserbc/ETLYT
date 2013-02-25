@@ -18,6 +18,8 @@ public class Movement : MonoBehaviour {
 		Death
 	}
 	
+	public Control.ControllerType debugControl;
+	
 	public float jumpForce = 10f;
 	public float jumpAnimationLenght = 1f;
 	public float acceleration = 10f;
@@ -45,7 +47,7 @@ public class Movement : MonoBehaviour {
 		anim = GetComponent<AnimationHandler>();
 		
 		control = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
-		player = control.RegisterPlayer(Control.ControllerType.WiiMote, 0);
+		player = control.RegisterPlayer(debugControl, 0);
 		
 		BroadcastMessage("SetPlayer", player);
 		
@@ -55,7 +57,7 @@ public class Movement : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (WiiMoteControl.wiimote_count() > player) {
+		if (debugControl != Control.ControllerType.WiiMote || WiiMoteControl.wiimote_count() > player) {
 			Vector3 movementDir = GetMovementDir();
 			
 			bool jump = control.Jump(player);
@@ -137,7 +139,15 @@ public class Movement : MonoBehaviour {
 	
 	Vector3 GetMovementDir () {
 		Vector3 norm = -transform.forward;
-		Vector3 dir = new Vector3(control.HorizontalAxis(player), control.VerticalAxis(player), 0);
+		float hAxis = control.HorizontalAxis(player);
+		float vAxis = control.VerticalAxis(player);
+		
+		if (Mathf.Abs(hAxis) < 0.1f) hAxis = 0f;
+		if (Mathf.Abs(vAxis) < 0.1f) vAxis = 0f;
+		Vector3 dir = new Vector3(hAxis, vAxis, 0);
+		
+		if (hAxis == 0f && vAxis == 0f) return Vector3.zero;
+		
 		dir.Normalize();
 		
 		float angle = Vector3.Angle(norm, dir);

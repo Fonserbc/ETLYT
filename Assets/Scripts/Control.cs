@@ -147,7 +147,7 @@ public class Control : MonoBehaviour {
 					}
 				
 				case ControllerType.Keyboard:
-					return Input.GetAxis("Vertical Axis");
+					return Input.GetAxis("Vertical");
 				
 				default:
 					break;
@@ -175,7 +175,7 @@ public class Control : MonoBehaviour {
 					}
 				
 				case ControllerType.Keyboard:
-					return Input.GetAxis("Horizontal Axis");
+					return Input.GetAxis("Horizontal");
 				
 				default:
 					break;
@@ -323,7 +323,7 @@ public class Control : MonoBehaviour {
 					}
 				
 				case ControllerType.Keyboard:
-					Vector3 dir = new Vector3(Input.GetAxis("Horizontal Axis"), Input.GetAxis("Vertical Axis"), 0);
+					Vector3 dir = new Vector3(Input.GetAxis("Horizontal"), -Input.GetAxis("Vertical"), 0);
 					dir.Normalize();
 					return ((Vector3.Cross(Vector3.up, dir).z < 0)? 1f : -1f)*Vector3.Angle(Vector3.up, dir);
 					
