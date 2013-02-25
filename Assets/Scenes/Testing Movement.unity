@@ -1629,6 +1629,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92ca82c4faee3c64f8fed37ba73da328, type: 3}
   m_Name: 
+  debugControl: 3
   jumpForce: 10
   jumpAnimationLenght: 1
   acceleration: 10
@@ -1983,6 +1984,10 @@ Prefab:
     - target: {fileID: 11400000, guid: abb0af9b14c0692439c0e5b9da14b4f7, type: 2}
       propertyPath: jumpForce
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: abb0af9b14c0692439c0e5b9da14b4f7, type: 2}
+      propertyPath: debugControl
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: abb0af9b14c0692439c0e5b9da14b4f7, type: 2}
