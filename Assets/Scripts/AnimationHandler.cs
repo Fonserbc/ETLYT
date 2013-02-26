@@ -71,7 +71,9 @@ public class AnimationHandler : MonoBehaviour {
 		case Movement.PlayerState.Jump:
 			if(m_stepStatus >= m_animationSpeed) {
 				m_stepStatus %= m_animationSpeed;
-				m_step = (++m_step)%jumpAnimation.Length;
+				if (m_step <= 5) m_step = (++m_step)%jumpAnimation.Length;
+				else if (m_step == 6) m_step = 7;
+				else m_step = 6;
 			} 
 			renderer.material.mainTexture = jumpAnimation[m_step];
 			break;
