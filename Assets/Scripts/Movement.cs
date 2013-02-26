@@ -18,13 +18,15 @@ public class Movement : MonoBehaviour {
 		Death
 	}
 	
+	public Control.ControllerType debugControl;
+	
 	public float jumpForce = 10f;
 	public float jumpAnimationLenght = 1f;
 	public float acceleration = 10f;
 	public float airAcceleration = 5f;
+	public float rotationSpeed = 5f;
 
 	private bool colliding = false;
-	private float jumpTimer = 0f;
 	
 	private int player;
 	private PlayerState state;
@@ -42,34 +44,35 @@ public class Movement : MonoBehaviour {
 	void Start () {
 		camara = GameObject.FindGameObjectWithTag("MainCamera").transform;
 		
-		anim = GetComponent<AnimationHandler>();
+		anim = GetComponentInChildren<AnimationHandler>();
 		
 		control = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
-		player = control.RegisterPlayer(Control.ControllerType.WiiMote, 0);
+		player = control.RegisterPlayer(debugControl, 0);
 		
 		BroadcastMessage("SetPlayer", player);
 		
 		lastPos = transform.position;
 		state = PlayerState.Air;
 		anim.setAnimation(state, DEF_ANIM_SPEED);
+		
+		normal = -Physics.gravity.normalized;
 	}
 	
 	void Update () {
-		if (WiiMoteControl.wiimote_count() > player) {
+		if (debugControl != Control.ControllerType.WiiMote || WiiMoteControl.wiimote_count() > player) {
 			Vector3 movementDir = GetMovementDir();
 			
 			bool jump = control.Jump(player);
 			
 			if (state == PlayerState.Air || state == PlayerState.Jump) {
-				if (state == PlayerState.Jump) {
-					jumpTimer -= Time.deltaTime;
-					
-					if (jumpTimer < 0f) {
+				if (state == PlayerState.Jump) {					
+					if (Vector3.Angle(-Physics.gravity.normalized, rigidbody.velocity.normalized) > 90f) {
 						state = PlayerState.Air;
 						anim.setAnimation(state, DEF_ANIM_SPEED);
 					}
 				}
 				rigidbody.velocity += movementDir*airAcceleration*Time.deltaTime;
+				rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, -Physics.gravity.normalized), Time.deltaTime*rotationSpeed));
 			}
 			else if (state == PlayerState.Idle || state == PlayerState.Run) {
 				
@@ -94,11 +97,11 @@ public class Movement : MonoBehaviour {
 				if (jump && colliding) {
 					rigidbody.velocity += (normal-Physics.gravity.normalized).normalized*jumpForce;
 					
-					jumpTimer = 1f;
-					
 					state = PlayerState.Jump;
 					anim.setAnimation(state, DEF_ANIM_SPEED/2f);
 				}
+				
+				rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, normal), Time.deltaTime*rotationSpeed));
 			}
 			else if (state == PlayerState.Slide) {
 				rigidbody.velocity += movementDir*acceleration*Time.deltaTime;
@@ -106,7 +109,19 @@ public class Movement : MonoBehaviour {
 				if (jump && colliding) {
 					rigidbody.velocity += (normal-Physics.gravity.normalized).normalized*jumpForce;
 					
-					jumpTimer = 1f;
+					state = PlayerState.Jump;
+					anim.setAnimation(state, DEF_ANIM_SPEED/2f);
+				}
+				else if (rigidbody.velocity.magnitude < 1f) {
+					state = PlayerState.Run;
+					anim.setAnimation(state, DEF_ANIM_SPEED);
+				}
+				rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, normal), Time.deltaTime*rotationSpeed));
+			}
+			else if (state == PlayerState.Wall) {
+				
+				if (jump && colliding) {
+					rigidbody.velocity += (normal-Physics.gravity.normalized).normalized*jumpForce;
 					
 					state = PlayerState.Jump;
 					anim.setAnimation(state, DEF_ANIM_SPEED/2f);
@@ -115,6 +130,12 @@ public class Movement : MonoBehaviour {
 					state = PlayerState.Run;
 					anim.setAnimation(state, DEF_ANIM_SPEED);
 				}
+				rigidbody.velocity += movementDir*airAcceleration*Time.deltaTime;
+				
+				Vector3 wantedRot = normal;
+				if (wantedRot.x > 0f) wantedRot = Quaternion.Euler(0, 0, 90f)*wantedRot;
+				else wantedRot = Quaternion.Euler(0, 0, -90f)*wantedRot;
+				rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, wantedRot), Time.deltaTime*rotationSpeed));
 			}
 			
 		}
@@ -131,13 +152,19 @@ public class Movement : MonoBehaviour {
 		}
 		
 		lastPos = transform.position;
-		
-		//rigidbody.MoveRotation(transform.rotation*Quaternion.FromToRotation(-transform.forward, normal));
 	}
 	
 	Vector3 GetMovementDir () {
-		Vector3 norm = -transform.forward;
-		Vector3 dir = new Vector3(control.HorizontalAxis(player), control.VerticalAxis(player), 0);
+		Vector3 norm = transform.up;
+		float hAxis = control.HorizontalAxis(player);
+		float vAxis = control.VerticalAxis(player);
+		
+		if (Mathf.Abs(hAxis) < 0.1f) hAxis = 0f;
+		if (Mathf.Abs(vAxis) < 0.1f) vAxis = 0f;
+		Vector3 dir = new Vector3(hAxis, vAxis, 0);
+		
+		if (hAxis == 0f && vAxis == 0f) return Vector3.zero;
+		
 		dir.Normalize();
 		
 		float angle = Vector3.Angle(norm, dir);
@@ -152,13 +179,20 @@ public class Movement : MonoBehaviour {
 		}
 		else {
 			dirAux = 0;
-			return transform.forward;
+			return -transform.up;
 		}
 	}
 	
 	void OnDrawGizmos() {
 		Gizmos.color = Color.red;
 		Gizmos.DrawLine(transform.position, transform.position+normal*5);
+	}
+	
+	void OnCollisionEnter(Collision col) {
+		if (state == PlayerState.Jump) {
+			state = PlayerState.Air;
+			anim.setAnimation(state, DEF_ANIM_SPEED);
+		}
 	}
 	
 	void OnCollisionStay(Collision col) {
@@ -170,18 +204,29 @@ public class Movement : MonoBehaviour {
 			state = PlayerState.Wall;
 			anim.setAnimation(state, DEF_ANIM_SPEED);
 		}
-		else if (state == PlayerState.Air) {
-			state = PlayerState.Idle;
-			anim.setAnimation(state, DEF_ANIM_SPEED);
-		}
 		else if (state == PlayerState.Wall) {
-			state = PlayerState.Slide;
+			if (Vector3.Angle(-Physics.gravity, normal) > 5f) {
+				state = PlayerState.Slide;
+				anim.setAnimation(state, DEF_ANIM_SPEED);
+			}
+			else {
+				state = PlayerState.Run;
+				anim.setAnimation(state, DEF_ANIM_SPEED);
+			}
+		}
+		else if (state == PlayerState.Air) {
+			state = PlayerState.Run;
 			anim.setAnimation(state, DEF_ANIM_SPEED);
 		}
 	}
 	
 	void OnCollisionExit(Collision col) {
 		colliding = false;
+		
+		/*if (state == PlayerState.Wall) {
+			state = PlayerState.Air;
+			anim.setAnimation(state, DEF_ANIM_SPEED);
+		}*/
 	}
 	
 	public void SetPlayer (int p) {
