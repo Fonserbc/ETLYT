@@ -26,7 +26,7 @@ public class MenuMovement : MonoBehaviour {
 		rigidbody.MovePosition(transform.position+control.HorizontalAxis(player)*camara.right*acceleration*Time.deltaTime+control.VerticalAxis(player)*camara.up*acceleration*Time.deltaTime);
 		
 		if(control.Pause(player)) {
-			Application.LoadLevel("Scene Demo");	
+			Application.LoadLevel("Testing Movement");	
 		}
 		
 		if(selection) {
