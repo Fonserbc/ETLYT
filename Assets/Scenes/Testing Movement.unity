@@ -1160,10 +1160,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1224497552}
-  - 135: {fileID: 1224497550}
   - 54: {fileID: 1224497549}
   - 114: {fileID: 1224497551}
   - 114: {fileID: 1224497553}
+  - 136: {fileID: 1224497550}
   m_Layer: 0
   m_Name: PlayerSphere
   m_TagString: Untagged
@@ -1186,19 +1186,19 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 120
-  m_CollisionDetection: 0
---- !u!135 &1224497550
-SphereCollider:
+  m_CollisionDetection: 1
+--- !u!136 &1224497550
+CapsuleCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 13500000, guid: 34978fb60a65d8e4ebc9d738380d4b73,
-    type: 2}
-  m_PrefabInternal: {fileID: 2142505582}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1224497548}
-  m_Material: {fileID: 13400000, guid: cdf7d3f1ad11f8d6d00011d98d76c639, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: .5
+  m_Radius: .300000012
+  m_Height: 1
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1224497551
 MonoBehaviour:
@@ -2126,7 +2126,12 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5400000, guid: 34978fb60a65d8e4ebc9d738380d4b73, type: 2}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 13500000, guid: 34978fb60a65d8e4ebc9d738380d4b73, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 34978fb60a65d8e4ebc9d738380d4b73, type: 2}
   m_RootGameObject: {fileID: 1224497548}
   m_IsPrefabParent: 0
