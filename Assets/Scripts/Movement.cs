@@ -6,6 +6,9 @@ public class Movement : MonoBehaviour {
 	private float MIN_SPEED = 0.2f;
 	private float DEF_ANIM_SPEED = 0.1f;
 	
+	private float MIN_ANGLE_SLIDE = 5f;
+	private float MIN_ANGLE_WALL = 45f;
+	
 	public enum PlayerState {
 		Idle,
 		Run,
@@ -72,12 +75,11 @@ public class Movement : MonoBehaviour {
 					}
 				}
 				rigidbody.velocity += movementDir*airAcceleration*Time.deltaTime;
-				rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, -Physics.gravity.normalized), Time.deltaTime*rotationSpeed));
 			}
 			else if (state == PlayerState.Idle || state == PlayerState.Run) {
 				
 				if (dirAux == 0) { //time to slide?
-					if (Vector3.Angle(-Physics.gravity, normal) > 5f) {
+					if (Vector3.Angle(-Physics.gravity, normal) > MIN_ANGLE_SLIDE) {
 						state = PlayerState.Slide;
 						anim.setAnimation(state, DEF_ANIM_SPEED);
 					}
@@ -100,8 +102,6 @@ public class Movement : MonoBehaviour {
 					state = PlayerState.Jump;
 					anim.setAnimation(state, DEF_ANIM_SPEED/2f);
 				}
-				
-				rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, normal), Time.deltaTime*rotationSpeed));
 			}
 			else if (state == PlayerState.Slide) {
 				rigidbody.velocity += movementDir*acceleration*Time.deltaTime;
@@ -116,7 +116,6 @@ public class Movement : MonoBehaviour {
 					state = PlayerState.Run;
 					anim.setAnimation(state, DEF_ANIM_SPEED);
 				}
-				rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, normal), Time.deltaTime*rotationSpeed));
 			}
 			else if (state == PlayerState.Wall) {
 				
@@ -131,12 +130,12 @@ public class Movement : MonoBehaviour {
 					anim.setAnimation(state, DEF_ANIM_SPEED);
 				}
 				rigidbody.velocity += movementDir*airAcceleration*Time.deltaTime;
-				
-				Vector3 wantedRot = normal;
-				if (wantedRot.x > 0f) wantedRot = Quaternion.Euler(0, 0, 90f)*wantedRot;
-				else wantedRot = Quaternion.Euler(0, 0, -90f)*wantedRot;
-				rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, wantedRot), Time.deltaTime*rotationSpeed));
 			}
+			
+			Vector3 wantedRot = -Physics.gravity.normalized;
+			//if (wantedRot.x > 0f) wantedRot = Quaternion.Euler(0, 0, 90f)*wantedRot;
+			//else wantedRot = Quaternion.Euler(0, 0, -90f)*wantedRot;
+			rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, wantedRot), Time.deltaTime*rotationSpeed));
 			
 		}
 		
@@ -168,24 +167,26 @@ public class Movement : MonoBehaviour {
 		dir.Normalize();
 		
 		float angle = Vector3.Angle(norm, dir);
-		bool left = (Vector3.Cross(norm, dir).z > 0);
+		bool left = (Vector3.Cross(norm, dir).z < 0);
 		
-		if (angle < 50f) {
+		if (angle < 50f) { //Dir is going up
 			return Vector3.zero;
 		}
 		else if (angle < 135f) {
 			dirAux = (left)? 1 : 2;
-			return ((left)? 1 : -1)*transform.right;
+			return ((left)? -1 : 1)*(Quaternion.Euler(0, 0, 90f)*normal);
 		}
 		else {
 			dirAux = 0;
-			return -transform.up;
+			return Quaternion.Euler(0, 0, 180f)*normal;
 		}
 	}
 	
 	void OnDrawGizmos() {
 		Gizmos.color = Color.red;
 		Gizmos.DrawLine(transform.position, transform.position+normal*5);
+		Gizmos.color = Color.green;
+		if (control) Gizmos.DrawLine(transform.position, transform.position+ new Vector3(control.HorizontalAxis(player), control.VerticalAxis(player), 0)*5);
 	}
 	
 	void OnCollisionEnter(Collision col) {
@@ -197,15 +198,20 @@ public class Movement : MonoBehaviour {
 	
 	void OnCollisionStay(Collision col) {
 		colliding = true;
-		if (col.contacts.Length > 0) normal = col.contacts[0].normal;
+		if (col.contacts.Length > 0) {
+			normal = col.contacts[0].normal;
+			
+			if (Vector3.Angle(normal, transform.position - col.contacts[0].point) > 90f)
+				normal = -normal;
+		}
 		normal.z = 0;
 		
-		if (Vector3.Angle(-Physics.gravity, normal) > 45f) {
+		if (Vector3.Angle(-Physics.gravity, normal) > MIN_ANGLE_WALL) {
 			state = PlayerState.Wall;
 			anim.setAnimation(state, DEF_ANIM_SPEED);
 		}
 		else if (state == PlayerState.Wall) {
-			if (Vector3.Angle(-Physics.gravity, normal) > 5f) {
+			if (Vector3.Angle(-Physics.gravity, normal) > MIN_ANGLE_SLIDE) {
 				state = PlayerState.Slide;
 				anim.setAnimation(state, DEF_ANIM_SPEED);
 			}
@@ -223,10 +229,10 @@ public class Movement : MonoBehaviour {
 	void OnCollisionExit(Collision col) {
 		colliding = false;
 		
-		/*if (state == PlayerState.Wall) {
+		if (state == PlayerState.Wall) {
 			state = PlayerState.Air;
 			anim.setAnimation(state, DEF_ANIM_SPEED);
-		}*/
+		}
 	}
 	
 	public void SetPlayer (int p) {
