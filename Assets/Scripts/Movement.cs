@@ -167,7 +167,7 @@ public class Movement : MonoBehaviour {
 		dir.Normalize();
 		
 		float angle = Vector3.Angle(norm, dir);
-		bool left = (Vector3.Cross(norm, dir).z > 0);
+		bool left = (Vector3.Cross(norm, dir).z < 0);
 		
 		if (angle < 50f) { //Dir is going up
 			return Vector3.zero;
@@ -185,6 +185,8 @@ public class Movement : MonoBehaviour {
 	void OnDrawGizmos() {
 		Gizmos.color = Color.red;
 		Gizmos.DrawLine(transform.position, transform.position+normal*5);
+		Gizmos.color = Color.green;
+		if (control) Gizmos.DrawLine(transform.position, transform.position+ new Vector3(control.HorizontalAxis(player), control.VerticalAxis(player), 0)*5);
 	}
 	
 	void OnCollisionEnter(Collision col) {
@@ -198,6 +200,9 @@ public class Movement : MonoBehaviour {
 		colliding = true;
 		if (col.contacts.Length > 0) {
 			normal = col.contacts[0].normal;
+			
+			if (Vector3.Angle(normal, transform.position - col.contacts[0].point) > 90f)
+				normal = -normal;
 		}
 		normal.z = 0;
 		
