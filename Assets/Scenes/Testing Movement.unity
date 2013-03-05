@@ -1215,7 +1215,7 @@ MonoBehaviour:
   jumpForce: 10
   jumpAnimationLenght: 1
   acceleration: 20
-  airAcceleration: 10
+  airAcceleration: 15
   rotationSpeed: 10
 --- !u!4 &1224497552
 Transform:
@@ -2129,6 +2129,14 @@ Prefab:
     - target: {fileID: 5400000, guid: 34978fb60a65d8e4ebc9d738380d4b73, type: 2}
       propertyPath: m_CollisionDetection
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 34978fb60a65d8e4ebc9d738380d4b73, type: 2}
+      propertyPath: jumpForce
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 34978fb60a65d8e4ebc9d738380d4b73, type: 2}
+      propertyPath: airAcceleration
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 13500000, guid: 34978fb60a65d8e4ebc9d738380d4b73, type: 2}
