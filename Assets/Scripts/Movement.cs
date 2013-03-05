@@ -111,7 +111,7 @@ public class Movement : MonoBehaviour {
 					}
 				}
 				else if (state == PlayerState.Slide) {
-					rigidbody.velocity += movementDir*acceleration*Time.deltaTime;
+					//rigidbody.velocity += movementDir*acceleration*Time.deltaTime;
 					
 					if (jump && colliding) {
 						rigidbody.velocity += (normal-Physics.gravity.normalized).normalized*jumpForce;
