@@ -39,7 +39,7 @@ public class Movement : MonoBehaviour {
 	private Vector3 normal;
 	private Transform camara;
 	
-	private AnimationHandler anim;
+	private AnimationHandler[] anim;
 	private Control control;
 	
 	private Vector3 lastPos;
@@ -50,8 +50,7 @@ public class Movement : MonoBehaviour {
 	void Start () {
 		camara = GameObject.FindGameObjectWithTag("MainCamera").transform;
 		
-		anim = GetComponentInChildren<AnimationHandler>();
-		
+		anim = GetComponentsInChildren<AnimationHandler>();
 		control = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
 		player = control.RegisterPlayer(debugControl, 0);
 		
@@ -59,8 +58,8 @@ public class Movement : MonoBehaviour {
 		
 		lastPos = transform.position;
 		state = PlayerState.Air;
-		anim.setAnimation(state, DEF_ANIM_SPEED);
-		
+		anim[0].setAnimation(state, DEF_ANIM_SPEED);
+		anim[1].setAnimation(state, DEF_ANIM_SPEED);
 		normal = -Physics.gravity.normalized;
 	}
 	
@@ -144,7 +143,8 @@ public class Movement : MonoBehaviour {
 		if (state == PlayerState.Wall) {
 			newDir = (normal.x < 0)? 1 : -1;			
 			if (newDir != direction) {
-				anim.setDirection(newDir);
+				anim[0].setDirection(newDir);
+				anim[1].setDirection(newDir);
 				direction = newDir;
 			}
 		}
@@ -155,7 +155,8 @@ public class Movement : MonoBehaviour {
 			newDir = (wantedDir < 0)? -1 : 1;
 			
 			if (Mathf.Abs(wantedDir) > 0.1 && newDir != direction) {
-				anim.setDirection(newDir);
+				anim[0].setDirection(newDir);
+				anim[1].setDirection(newDir);
 				direction = newDir;
 			}
 		}
@@ -196,7 +197,8 @@ public class Movement : MonoBehaviour {
 
 	void ChangeState(PlayerState newState) {
 		state = newState;
-		anim.setAnimation(state, DEF_ANIM_SPEED);
+		anim[0].setAnimation(state, DEF_ANIM_SPEED);
+		anim[1].setAnimation(state, DEF_ANIM_SPEED);
 	}
 	
 	void OnDrawGizmos() {
@@ -215,7 +217,8 @@ public class Movement : MonoBehaviour {
 	void OnCollisionEnter(Collision col) {
 		if (state == PlayerState.Jump) {
 			state = PlayerState.Air;
-			anim.setAnimation(state, DEF_ANIM_SPEED);
+			anim[0].setAnimation(state, DEF_ANIM_SPEED);
+			anim[1].setAnimation(state, DEF_ANIM_SPEED);
 		}
 	}
 	
