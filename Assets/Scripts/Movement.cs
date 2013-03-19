@@ -9,6 +9,7 @@ public class Movement : MonoBehaviour {
 	
 	private float MIN_ANGLE_SLIDE = 5f;
 	private float MIN_ANGLE_WALL = 55f;
+	private float MAX_ANGLE_WALL = 100f;
 	private float WALL_TO_AIR_TIME = 1f;
 	
 	public enum PlayerState {
@@ -28,7 +29,9 @@ public class Movement : MonoBehaviour {
 	public float jumpForce = 10f;
 	public float jumpAnimationLenght = 1f;
 	public float acceleration = 10f;
+	public float maxSpeed = 10f;
 	public float airAcceleration = 5f;
+	public float maxAirSpeed = 15f;
 	public float rotationSpeed = 5f;
 
 	private bool colliding = false;
@@ -46,6 +49,8 @@ public class Movement : MonoBehaviour {
 	private int direction = 2;
 	private int dirAux = 0;
 	private float airTimer = 0f;
+	
+	private float currSpeedScale = 0f;
 	
 	void Start () {
 		camara = GameObject.FindGameObjectWithTag("MainCamera").transform;
@@ -74,14 +79,16 @@ public class Movement : MonoBehaviour {
 				
 				rigidbody.velocity += movementDir*airAcceleration*Time.deltaTime;
 				
-				if (state == PlayerState.Wall && airTimer > WALL_TO_AIR_TIME) { // Fa ja massa temps que no toquem paret
-					ChangeState(PlayerState.Air);
+				if (state == PlayerState.Wall) { // Fa ja massa temps que no toquem paret
+					if (airTimer > WALL_TO_AIR_TIME)
+						ChangeState(PlayerState.Air);
 				}
 				else if (state == PlayerState.Jump) {	// Estem Baixant, toca posar Air state			
 					if (Vector3.Angle(-Physics.gravity.normalized, rigidbody.velocity.normalized) > 90f) {
 						ChangeState(PlayerState.Air);
 					}
 				}
+				else ChangeState(PlayerState.Air);
 			}
 			else {
 				if (state == PlayerState.Idle || state == PlayerState.Run) {
@@ -89,7 +96,6 @@ public class Movement : MonoBehaviour {
 					if (dirAux == 0) { //time to slide?
 						if (Vector3.Angle(-Physics.gravity, normal) > MIN_ANGLE_SLIDE) {
 							ChangeState(PlayerState.Slide);
-							//Debug.Log("Slide");
 						}
 					}
 					else {
@@ -102,6 +108,11 @@ public class Movement : MonoBehaviour {
 							ChangeState(PlayerState.Idle);
 						}
 						
+						/*if (state == PlayerState.Run) {
+							anim[0].setAnimation(PlayerState.Run, 2*DEF_ANIM_SPEED*currSpeedScale);
+							anim[1].setAnimation(PlayerState.Run, 2*DEF_ANIM_SPEED*currSpeedScale);
+						}*/
+						
 						if (jump && colliding) {
 							rigidbody.velocity += (normal-Physics.gravity.normalized).normalized*jumpForce;
 							
@@ -110,7 +121,6 @@ public class Movement : MonoBehaviour {
 					}
 				}
 				else if (state == PlayerState.Slide) {
-					//rigidbody.velocity += movementDir*acceleration*Time.deltaTime;
 					
 					if (jump && colliding) {
 						rigidbody.velocity += (normal-Physics.gravity.normalized).normalized*jumpForce;
@@ -132,6 +142,19 @@ public class Movement : MonoBehaviour {
 					rigidbody.velocity += movementDir*airAcceleration*Time.deltaTime;
 				}
 			}
+			
+			if (colliding) {
+				if (rigidbody.velocity.magnitude > maxSpeed) rigidbody.velocity = rigidbody.velocity.normalized*maxSpeed;
+				currSpeedScale = rigidbody.velocity.magnitude / maxSpeed;
+			}
+			else { 
+				if (rigidbody.velocity.magnitude > maxAirSpeed) {
+					rigidbody.velocity = rigidbody.velocity.normalized*maxAirSpeed;
+				}
+				currSpeedScale = rigidbody.velocity.magnitude / maxAirSpeed;
+			}
+			
+			
 			
 			Vector3 wantedRot = -Physics.gravity.normalized;
 			rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, wantedRot), Time.deltaTime*rotationSpeed));
@@ -233,11 +256,16 @@ public class Movement : MonoBehaviour {
 		}
 		normal.z = 0;
 		
-		if (Vector3.Angle(-Physics.gravity, normal) > MIN_ANGLE_WALL) {
+		float angle = Vector3.Angle(-Physics.gravity, normal);
+		
+		if (angle > MAX_ANGLE_WALL) {
+			ChangeState(PlayerState.Air);
+		}
+		else if (angle > MIN_ANGLE_WALL) {
 			ChangeState(PlayerState.Wall);
 		}
 		else if (state == PlayerState.Wall) {
-			if (Vector3.Angle(-Physics.gravity, normal) > MIN_ANGLE_SLIDE) {
+			if (angle > MIN_ANGLE_SLIDE) {
 				ChangeState(PlayerState.Slide);
 			}
 			else {

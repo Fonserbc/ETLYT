@@ -69,7 +69,7 @@ public class Control : MonoBehaviour {
 							playerAxis[i].v = Mathf.Lerp(playerAxis[i].v, -1.0f, AXIS_SPEED*Time.deltaTime);
 						}
 						else {
-							playerAxis[i].v = Mathf.Lerp(playerAxis[i].v, 0f, AXIS_SPEED*Time.deltaTime);
+							playerAxis[i].v = Mathf.Lerp(playerAxis[i].v, 0f, AXIS_SPEED*2f*Time.deltaTime);
 						}
 						
 						if (WiiMoteControl.wiimote_getButtonDown(id)) { // RIGHT
@@ -85,7 +85,7 @@ public class Control : MonoBehaviour {
 							playerAxis[i].h = Mathf.Lerp(playerAxis[i].h, -1.0f, AXIS_SPEED*Time.deltaTime);
 						}
 						else {
-							playerAxis[i].h = Mathf.Lerp(playerAxis[i].h, 0, AXIS_SPEED*Time.deltaTime);
+							playerAxis[i].h = Mathf.Lerp(playerAxis[i].h, 0, AXIS_SPEED*2f*Time.deltaTime);
 						}
 					}
 					break;

@@ -77,7 +77,7 @@ public class WorldMovement : MonoBehaviour {
 	
 	public void gravitateToAngle(Vector3 newGravity) {
 		//gravitating = true;
-		gravity = newGravity;
+		gravity = gravity.magnitude*newGravity;
 	}
 	
 }
