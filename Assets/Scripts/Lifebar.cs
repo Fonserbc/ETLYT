@@ -4,29 +4,24 @@ using System.Collections;
 public class Lifebar : MonoBehaviour {
 
 	public Texture2D[] Numbers;
-
 	private float life = 0;
 	// Use this for initialization
 	void Start () {
 		life = 100;
 	}
 	
-	void OnGUI() 
+	void OnGUI() {
 		GUI.Label(new Rect(10, 10, 180, 45), "Tiempo: " + life);
-		GUI.DrawTexture(new Rect(10, 10, 3, 10), Numbers[number+1]);
-
-		NumberBehaviour nB1 = Numbers[0].GetComponent<NumberBehaviour>();
-		NumberBehaviour nB2 = Numbers[1].GetComponent<NumberBehaviour>();
-		NumberBehaviour nB3 = Numbers[2].GetComponent<NumberBehaviour>();
+		GUI.DrawTexture(new Rect(10, 10, 3, 10), numbers[number+1]);
 		int centenes = ((int)life%1000)/100;
 		int desenes = ((int)life%100)/10;
 		int unitats = (int)life%10;
 		if (centenes == 0) centenes = -1;
 		if (desenes == 0 && centenes == -1) desenes = -1;
 		if (unitats == 0 && desenes == -1) unitats = -1;
-		nB1.setNumber(centenes);
+	/*	nB1.setNumber(centenes);
 		nB2.setNumber(desenes);
-		nB3.setNumber(unitats);		
+		nB3.setNumber(unitats);	*/	
 	}
 	// Update is called once per frame
 	void Update() {
