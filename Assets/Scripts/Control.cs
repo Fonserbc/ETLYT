@@ -61,16 +61,18 @@ public class Control : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		for (int i = 0; i < 4; ++i) {
-			switch (types[i]) {
+			if (types[i] == ControllerType.Undefined) continue;
+			
+			//JUMP
+			bool jumpNow = JumpButton(i);
+			if (jumpNow && !lastJump[i]) {
+				jumpTime[i] = Time.time;
+			}
+			lastJump[i] = jumpNow;
+			
+			switch (types[i]) {				
 				case ControllerType.WiiMote:
 					int id = playerControllerId[i];
-				
-					//JUMP
-					bool jumpNow = JumpButton(i);
-					if (jumpNow && !lastJump[i]) {
-						jumpTime[i] = Time.time;
-					}
-					lastJump[i] = jumpNow;
 				
 					//AXIS
 					//Case not nunchuck
