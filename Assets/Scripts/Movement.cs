@@ -113,8 +113,15 @@ public class Movement : MonoBehaviour {
 						if (state == PlayerState.Idle && rigidbody.velocity.magnitude > 0.5f) {
 							ChangeState(PlayerState.Run);
 						}
-						else if (state == PlayerState.Run && rigidbody.velocity.magnitude < 0.5f) {
-							ChangeState(PlayerState.Idle);
+						else if (state == PlayerState.Run) {
+							if (rigidbody.velocity.magnitude < 0.5f) 
+								ChangeState(PlayerState.Idle);
+							else {
+								float speedScale = (0.1f+rigidbody.velocity.magnitude)*1.5f/maxSpeed;
+								
+								anim[0].setAnimationSpeed(DEF_ANIM_SPEED/speedScale);
+								anim[1].setAnimationSpeed(DEF_ANIM_SPEED/speedScale);
+							}
 						}
 						
 						/*if (state == PlayerState.Run) {
@@ -215,11 +222,14 @@ public class Movement : MonoBehaviour {
 		float angle = Vector3.Angle(aux, dir);
 		bool left = (Vector3.Cross(aux, dir).z < 0);
 		
+		
+		if (Vector3.Angle(Physics.gravity.normalized, dir) < 15f) dirAux = 0;
 		if (angle < 15f) { //Dir is going up
 			return Vector3.zero;
 		}
 		else if (angle < 140f) {
 			dirAux = (left)? 1 : 2;
+			if (Vector3.Angle(Physics.gravity.normalized, dir) < 15f) dirAux = 0;
 			return ((left)? -1 : 1)*(Quaternion.Euler(0, 0, 90f)*normal);
 		}
 		else {
@@ -229,9 +239,11 @@ public class Movement : MonoBehaviour {
 	}
 
 	void ChangeState(PlayerState newState) {
-		state = newState;
-		anim[0].setAnimation(state, DEF_ANIM_SPEED);
-		anim[1].setAnimation(state, DEF_ANIM_SPEED);
+		if (newState != anim[0].getAnimationState()) {
+			state = newState;
+			anim[0].setAnimation(state, DEF_ANIM_SPEED);
+			anim[1].setAnimation(state, DEF_ANIM_SPEED);
+		}
 	}
 	
 	void OnDrawGizmos() {

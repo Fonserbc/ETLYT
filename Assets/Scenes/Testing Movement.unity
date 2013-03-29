@@ -1398,6 +1398,7 @@ MonoBehaviour:
   airAcceleration: 15
   maxAirSpeed: 15
   rotationSpeed: 10
+  controlMode: 0
 --- !u!4 &1224497552
 Transform:
   m_ObjectHideFlags: 0
