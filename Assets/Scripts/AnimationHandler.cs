@@ -102,5 +102,14 @@ public class AnimationHandler : MonoBehaviour {
 			break;
 		}
 		renderer.material.mainTextureScale = new Vector2((float)m_direction, 1f);
-	}	
+	}
+	
+	Movement.PlayerState getAnimationState() {
+		return m_actualState;	
+	}
+	
+	void setAnimationSpeed(float speed) {
+		m_animationSpeed = speed;
+	}
+	
 }
