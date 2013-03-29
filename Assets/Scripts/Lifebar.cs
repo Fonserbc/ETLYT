@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Lifebar : MonoBehaviour {
 
-	public Transform[] Numbers;
+	public Texture2D[] Numbers;
 
 	private float life = 0;
 	// Use this for initialization
@@ -11,12 +11,10 @@ public class Lifebar : MonoBehaviour {
 		life = 100;
 	}
 	
-	void OnGUI() {
+	void OnGUI() 
 		GUI.Label(new Rect(10, 10, 180, 45), "Tiempo: " + life);
-	}
-	// Update is called once per frame
-	void Update() {
-		life -= Time.deltaTime;
+		GUI.DrawTexture(new Rect(10, 10, 3, 10), Numbers[number+1]);
+
 		NumberBehaviour nB1 = Numbers[0].GetComponent<NumberBehaviour>();
 		NumberBehaviour nB2 = Numbers[1].GetComponent<NumberBehaviour>();
 		NumberBehaviour nB3 = Numbers[2].GetComponent<NumberBehaviour>();
@@ -29,6 +27,10 @@ public class Lifebar : MonoBehaviour {
 		nB1.setNumber(centenes);
 		nB2.setNumber(desenes);
 		nB3.setNumber(unitats);		
+	}
+	// Update is called once per frame
+	void Update() {
+		life -= Time.deltaTime;
 		if (life <= 0) BroadcastMessage("Death");
 		Debug.Log(centenes.ToString() + desenes.ToString() + unitats.ToString());
 	}

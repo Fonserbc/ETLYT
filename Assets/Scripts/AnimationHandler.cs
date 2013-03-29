@@ -29,6 +29,15 @@ public class AnimationHandler : MonoBehaviour {
 		m_direction = dir;
 	}
 	
+	
+	public Movement.PlayerState getAnimationState() {
+		return m_actualState;	
+	}
+	
+	public void setAnimationSpeed(float speed) {
+		m_animationSpeed = speed;
+	}
+	
 	// Use this for initialization
 	void Start () {
 	
@@ -103,13 +112,6 @@ public class AnimationHandler : MonoBehaviour {
 		}
 		renderer.material.mainTextureScale = new Vector2((float)m_direction, 1f);
 	}
-	
-	Movement.PlayerState getAnimationState() {
-		return m_actualState;	
-	}
-	
-	void setAnimationSpeed(float speed) {
-		m_animationSpeed = speed;
-	}
+
 	
 }
