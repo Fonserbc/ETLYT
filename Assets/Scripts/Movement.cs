@@ -5,6 +5,7 @@ public class Movement : MonoBehaviour {
 	
 	private float MIN_SPEED = 0.2f;
 	private float MIN_SLIDE_SPEED = 0.2f;
+	private float SLIDE_HOLD_TIME = 0.5f;
 	private float DEF_ANIM_SPEED = 0.1f;
 	
 	private float MIN_ANGLE_SLIDE = 5f;
@@ -49,6 +50,7 @@ public class Movement : MonoBehaviour {
 	private int direction = 2;
 	private int dirAux = 0;
 	private float airTimer = 0f;
+	private float slideTimer = 0f;
 	
 	private float currSpeedScale = 0f;
 	
@@ -95,8 +97,13 @@ public class Movement : MonoBehaviour {
 				
 					if (dirAux == 0) { //time to slide?
 						if (Vector3.Angle(-Physics.gravity, normal) > MIN_ANGLE_SLIDE) {
-							ChangeState(PlayerState.Slide);
+							slideTimer += Time.deltaTime;
+							
+							if (slideTimer > SLIDE_HOLD_TIME) {
+								ChangeState(PlayerState.Slide);
+							}
 						}
+						else slideTimer = 0f;
 					}
 					else {
 						rigidbody.velocity += movementDir*acceleration*Time.deltaTime;
@@ -121,7 +128,6 @@ public class Movement : MonoBehaviour {
 					}
 				}
 				else if (state == PlayerState.Slide) {
-					
 					if (jump && colliding) {
 						rigidbody.velocity += (normal-Physics.gravity.normalized).normalized*jumpForce;
 						
@@ -143,22 +149,21 @@ public class Movement : MonoBehaviour {
 				}
 			}
 			
+			if (state != PlayerState.Run && state != PlayerState.Idle) slideTimer = 0f;
+			
 			if (colliding) {
 				if (rigidbody.velocity.magnitude > maxSpeed) rigidbody.velocity = rigidbody.velocity.normalized*maxSpeed;
 				currSpeedScale = rigidbody.velocity.magnitude / maxSpeed;
 			}
-			else { 
+			else {
 				if (rigidbody.velocity.magnitude > maxAirSpeed) {
 					rigidbody.velocity = rigidbody.velocity.normalized*maxAirSpeed;
 				}
 				currSpeedScale = rigidbody.velocity.magnitude / maxAirSpeed;
 			}
 			
-			
-			
 			Vector3 wantedRot = -Physics.gravity.normalized;
 			rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, wantedRot), Time.deltaTime*rotationSpeed));
-			
 		}
 		
 		// Veure si hem de girar l'sprite

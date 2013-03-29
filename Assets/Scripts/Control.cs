@@ -9,6 +9,7 @@ public class Control : MonoBehaviour {
 	private const float AXIS_SPEED = 5.0f;
 	private const int NUNCHUCK_MARGIN = 30;
 	private const int NUNCHUCK_RANGE = 256-2*NUNCHUCK_MARGIN;
+	private const float JUMP_TIME = 0.2f;
 	
 	
 	public enum ControllerType {
@@ -33,6 +34,8 @@ public class Control : MonoBehaviour {
 	private ControllerType[] types;
 	private int[] playerControllerId;
 	private axis[] playerAxis;
+	private float[] jumpTime;
+	private bool[] lastJump;
 	
 	private WiiMoteControl wiiControl;
 
@@ -41,11 +44,18 @@ public class Control : MonoBehaviour {
 		wiiControl = (WiiMoteControl)GetComponent("WiiMoteControl");
 		
 		types = new ControllerType[4];
-		for (int i = 0; i < 4; ++i)
-			types[i] = ControllerType.Undefined;
 		
 		playerControllerId = new int[4];
 		playerAxis = new axis[4];
+		jumpTime = new float[4];
+		lastJump = new bool[4];
+		
+		for (int i = 0; i < 4; ++i) {
+			types[i] = ControllerType.Undefined;
+			jumpTime[i] = 0f;
+			lastJump[i] = false;
+		}
+		
 	}
 	
 	// Update is called once per frame
@@ -54,6 +64,15 @@ public class Control : MonoBehaviour {
 			switch (types[i]) {
 				case ControllerType.WiiMote:
 					int id = playerControllerId[i];
+				
+					//JUMP
+					bool jumpNow = JumpButton(i);
+					if (jumpNow && !lastJump[i]) {
+						jumpTime[i] = Time.time;
+					}
+					lastJump[i] = jumpNow;
+				
+					//AXIS
 					//Case not nunchuck
 					if (!WiiMoteControl.wiimote_isExpansionPortEnabled(id)) {
 						if (WiiMoteControl.wiimote_getButtonRight(id)) { // UP
@@ -187,6 +206,15 @@ public class Control : MonoBehaviour {
 	}
 	
 	public bool Jump (int player) {
+		if (player < players) {
+			return (Time.time - jumpTime[player]) < JUMP_TIME;
+		}
+		else Debug.LogError("Player id does not exist. id "+player);
+		
+		return false;
+	}
+	
+	public bool JumpButton (int player) {
 		if (player < players) {
 			switch (types[player]) {
 				case ControllerType.WiiMote:
