@@ -54,6 +54,8 @@ public class Movement : MonoBehaviour {
 	
 	private float currSpeedScale = 0f;
 	
+	public int controlMode = 0;
+	
 	void Start () {
 		camara = GameObject.FindGameObjectWithTag("MainCamera").transform;
 		
@@ -145,7 +147,7 @@ public class Movement : MonoBehaviour {
 						ChangeState(PlayerState.Jump);
 					}
 					
-					rigidbody.velocity += movementDir*airAcceleration*Time.deltaTime;
+					rigidbody.velocity += movementDir*airAcceleration*0.2f*Time.deltaTime;
 				}
 			}
 			
@@ -169,7 +171,7 @@ public class Movement : MonoBehaviour {
 		// Veure si hem de girar l'sprite
 		int newDir;
 		if (state == PlayerState.Wall) {
-			newDir = (normal.x < 0)? 1 : -1;			
+			newDir = (Vector3.Cross(Physics.gravity, normal).z > 0)? -1 : 1;
 			if (newDir != direction) {
 				anim[0].setDirection(newDir);
 				anim[1].setDirection(newDir);
@@ -207,8 +209,11 @@ public class Movement : MonoBehaviour {
 		
 		dir.Normalize();
 		
-		float angle = Vector3.Angle(norm, dir);
-		bool left = (Vector3.Cross(norm, dir).z < 0);
+		Vector3 aux;
+		if (controlMode == 0) aux = norm;
+		else aux = Vector3.up;
+		float angle = Vector3.Angle(aux, dir);
+		bool left = (Vector3.Cross(aux, dir).z < 0);
 		
 		if (angle < 15f) { //Dir is going up
 			return Vector3.zero;
