@@ -19,6 +19,8 @@ public class Lifebar : MonoBehaviour {
 		if (desenes == 0 && centenes == -1) desenes = -1;
 		if (unitats == 0 && desenes == -1) unitats = -1;
 		GUI.DrawTexture(new Rect(10, 10, 60, 60), Numbers[centenes+1]);
+		GUI.DrawTexture(new Rect(33, 10, 60, 60), Numbers[desenes+1]);
+		GUI.DrawTexture(new Rect(56, 10, 60, 60), Numbers[unitats+1]);
 	/*	nB1.setNumber(centenes);
 		nB2.setNumber(desenes);
 		nB3.setNumber(unitats);	*/	
