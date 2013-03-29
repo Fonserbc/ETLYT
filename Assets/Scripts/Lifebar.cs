@@ -21,10 +21,8 @@ public class Lifebar : MonoBehaviour {
 		GUI.DrawTexture(new Rect(10, 10, 60, 60), Numbers[centenes+1]);
 		GUI.DrawTexture(new Rect(33, 10, 60, 60), Numbers[desenes+1]);
 		GUI.DrawTexture(new Rect(56, 10, 60, 60), Numbers[unitats+1]);
-	/*	nB1.setNumber(centenes);
-		nB2.setNumber(desenes);
-		nB3.setNumber(unitats);	*/	
 	}
+	
 	// Update is called once per frame
 	void Update() {
 		life -= Time.deltaTime;
@@ -32,14 +30,11 @@ public class Lifebar : MonoBehaviour {
 		//Debug.Log(centenes.ToString() + desenes.ToString() + unitats.ToString());
 	}
 	
-	void OnTriggerEnter(Collider collider) {
-		if (collider.gameObject.tag == "Clock") {
-			life += 5;
-			Destroy(collider.gameObject);
-		}
-	}
-	
 	public void gotHit() {
 		life -= 10;
+	}
+	
+	public void addLife(int i) {
+		life += 5;
 	}
 }

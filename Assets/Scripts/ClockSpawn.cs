@@ -22,6 +22,9 @@ public class ClockSpawn : MonoBehaviour {
 			int pos = Random.Range(0, SpawnPoints.Length-1);
 			SphereGizmos sG = SpawnPoints[pos].GetComponent<SphereGizmos>();
 			if (!sG.isInstantiated()) {
+				GameObject p1 = GameObject.FindGameObjectWithTag("Player1");
+				float x = p1.transform.position.x;
+				float y = p1.transform.position.y;
 				sG.is_instanced(true);
 				GameObject c = (GameObject)Instantiate(Clock, SpawnPoints[pos].position, SpawnPoints[pos].rotation);
 				ClockGestor rC = c.GetComponent<ClockGestor>();
