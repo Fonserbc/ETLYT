@@ -17,7 +17,7 @@ public class MenuCharacterControl : MonoBehaviour {
 			players = new Rigidbody[c];
 			for (int i=0; i<=c-1; i++) {
 				Rigidbody sel;
-				sel = (Rigidbody) Instantiate(selector, new Vector3(0,0,-2), transform.rotation);
+				sel = (Rigidbody) Instantiate(selector, new Vector3(0,2,-0.5f), transform.rotation);
 				players[i] = sel;
 				control.RegisterPlayer(Control.ControllerType.WiiMote, i);
 				mov = sel.GetComponent<MenuMovement>();

@@ -10,7 +10,9 @@ public class BasicPowers : MonoBehaviour {
 	/*** Control de movimientos en ejecucion ***/
 	//Se accedera al mundo
 
-
+	public void setPlayer(int p) {
+		player = p;	
+	}
 	// Use this for initialization
 	void Start () {
 		control = (Control)(GameObject.FindGameObjectWithTag("Control").GetComponent("Control"));	

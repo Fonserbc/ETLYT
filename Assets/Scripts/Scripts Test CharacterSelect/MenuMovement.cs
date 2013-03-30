@@ -23,14 +23,13 @@ public class MenuMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {			
-		rigidbody.MovePosition(transform.position+control.HorizontalAxis(player)*camara.right*acceleration*Time.deltaTime+control.VerticalAxis(player)*camara.up*acceleration*Time.deltaTime);
 		
-		if(control.Pause(player)) {
+		/*if(control.Pause(player)) {
 			Application.LoadLevel("Testing Movement");	
-		}
+		}*/
 		
 		if(selection) {
-			if(control.Jump(player)) {
+			if(control.Attack(player)) {
 				CharacterSelect Cs;				
 				Cs = selection.GetComponent<CharacterSelect>();
 				Cs.setSelected(player);	
