@@ -9,7 +9,7 @@ public class Control : MonoBehaviour {
 	private const float AXIS_SPEED = 5.0f;
 	private const int NUNCHUCK_MARGIN = 30;
 	private const int NUNCHUCK_RANGE = 256-2*NUNCHUCK_MARGIN;
-	private const float JUMP_TIME = 0.2f;
+	private const float PRESSED_TIME = 0.2f;
 	
 	
 	public enum ControllerType {
@@ -34,8 +34,9 @@ public class Control : MonoBehaviour {
 	private ControllerType[] types;
 	private int[] playerControllerId;
 	private axis[] playerAxis;
-	private float[] jumpTime;
-	private bool[] lastJump;
+	
+	private float[,] pressedTime;
+	private bool[,] lastPressed;
 	
 	private WiiMoteControl wiiControl;
 
@@ -47,13 +48,15 @@ public class Control : MonoBehaviour {
 		
 		playerControllerId = new int[4];
 		playerAxis = new axis[4];
-		jumpTime = new float[4];
-		lastJump = new bool[4];
+		pressedTime = new float[7,4];
+		lastPressed = new bool[7,4];
 		
 		for (int i = 0; i < 4; ++i) {
 			types[i] = ControllerType.Undefined;
-			jumpTime[i] = 0f;
-			lastJump[i] = false;
+			for (int j = 0; j < 7; ++j) {
+				pressedTime[j,i] = 0;
+				lastPressed[j,i] = false;
+			}
 		}
 		
 	}
@@ -63,17 +66,33 @@ public class Control : MonoBehaviour {
 		for (int i = 0; i < 4; ++i) {
 			if (types[i] == ControllerType.Undefined) continue;
 			
-			//JUMP
-			bool jumpNow = JumpButton(i);
-			if (jumpNow && !lastJump[i]) {
-				jumpTime[i] = Time.time;
-			}
-			lastJump[i] = jumpNow;
-			
 			switch (types[i]) {				
 				case ControllerType.WiiMote:
 					int id = playerControllerId[i];
-				
+					
+					for (int j = 0; j < 7; ++j) {
+						bool button = false;
+						switch (j) {
+							case 0:
+								button = JumpButton(i); break;
+							case 1:
+								button = AttackButton(i); break;
+							case 2:
+								button = AbilityWorldButton(i); break;
+							case 3:
+								button = AbilityGravityButton(i); break;
+							case 4:
+								button = AbilityPowerUp(i); break;
+							case 5:
+								button = AbilitySkill(i); break;
+							case 6:
+								button = PauseButton(i); break;
+						}
+						if (button && !lastPressed[j,i]) {
+							pressedTime[j,i] = Time.time;
+						}
+						lastPressed[j,i] = button;
+					}
 					//AXIS
 					//Case not nunchuck
 					if (!WiiMoteControl.wiimote_isExpansionPortEnabled(id)) {
@@ -209,7 +228,12 @@ public class Control : MonoBehaviour {
 	
 	public bool Jump (int player) {
 		if (player < players) {
-			return (Time.time - jumpTime[player]) < JUMP_TIME;
+			switch (types[player]) {
+			case ControllerType.WiiMote:
+				return (Time.time - pressedTime[0,player]) < PRESSED_TIME;
+			case ControllerType.Keyboard:
+				return Input.GetKeyDown(KeyCode.Space);
+			}
 		}
 		else Debug.LogError("Player id does not exist. id "+player);
 		
@@ -242,6 +266,20 @@ public class Control : MonoBehaviour {
 	public bool Attack (int player) {
 		if (player < players) {
 			switch (types[player]) {
+			case ControllerType.WiiMote:
+				return (Time.time - pressedTime[1,player]) < PRESSED_TIME;
+			case ControllerType.Keyboard:
+				return Input.GetButtonDown("Fire1");
+			}
+		}
+		else Debug.LogError("Player id does not exist. id "+player);
+		
+		return false;
+	}
+	
+	public bool AttackButton (int player) {
+		if (player < players) {
+			switch (types[player]) {
 				case ControllerType.WiiMote:
 					if (WiiMoteControl.wiimote_isExpansionPortEnabled(playerControllerId[player])) {
 						return WiiMoteControl.wiimote_getButtonB(playerControllerId[player]);
@@ -263,6 +301,20 @@ public class Control : MonoBehaviour {
 	}
 	
 	public bool AbilityWorld (int player) {
+		if (player < players) {
+			switch (types[player]) {
+			case ControllerType.WiiMote:
+				return (Time.time - pressedTime[2,player]) < PRESSED_TIME;
+			case ControllerType.Keyboard:
+				return Input.GetKeyDown(KeyCode.Q);
+			}
+		}
+		else Debug.LogError("Player id does not exist. id "+player);
+		
+		return false;
+	}
+	
+	public bool AbilityWorldButton (int player) {
 		if (player < players) {
 			switch (types[player]) {
 				case ControllerType.WiiMote:
@@ -288,6 +340,20 @@ public class Control : MonoBehaviour {
 	public bool AbilityGravity (int player) {
 		if (player < players) {
 			switch (types[player]) {
+			case ControllerType.WiiMote:
+				return (Time.time - pressedTime[3,player]) < PRESSED_TIME;
+			case ControllerType.Keyboard:
+				return Input.GetKeyDown(KeyCode.E);
+			}
+		}
+		else Debug.LogError("Player id does not exist. id "+player);
+		
+		return false;
+	}
+	
+	public bool AbilityGravityButton (int player) {
+		if (player < players) {
+			switch (types[player]) {
 				case ControllerType.WiiMote:
 					if (WiiMoteControl.wiimote_isExpansionPortEnabled(playerControllerId[player])) {
 						return WiiMoteControl.wiimote_getButtonMinus(playerControllerId[player]);
@@ -311,6 +377,20 @@ public class Control : MonoBehaviour {
 	public bool AbilityPowerUp (int player) {
 		if (player < players) {
 			switch (types[player]) {
+			case ControllerType.WiiMote:
+				return (Time.time - pressedTime[4,player]) < PRESSED_TIME;
+			case ControllerType.Keyboard:
+				return Input.GetButtonDown("Fire2");
+			}
+		}
+		else Debug.LogError("Player id does not exist. id "+player);
+		
+		return false;
+	}
+	
+	public bool AbilityPowerUpButton (int player) {
+		if (player < players) {
+			switch (types[player]) {
 				case ControllerType.WiiMote:
 					if (WiiMoteControl.wiimote_isExpansionPortEnabled(playerControllerId[player])) {
 						return WiiMoteControl.wiimote_getButtonNunchuckZ(playerControllerId[player]);
@@ -332,6 +412,11 @@ public class Control : MonoBehaviour {
 	}
 	
 	public bool AbilitySkill (int player) {
+		// TODO
+		return false;
+	}
+	
+	public bool AbilitySkillButton (int player) {
 		// TODO
 		return false;
 	}
@@ -369,6 +454,20 @@ public class Control : MonoBehaviour {
 	public bool Pause (int player) {
 		if (player < players) {
 			switch (types[player]) {
+			case ControllerType.WiiMote:
+				return (Time.time - pressedTime[4,player]) < PRESSED_TIME;
+			case ControllerType.Keyboard:
+				return Input.GetKeyDown(KeyCode.P);
+			}
+		}
+		else Debug.LogError("Player id does not exist. id "+player);
+		
+		return false;
+	}
+	
+	public bool PauseButton (int player) {
+		if (player < players) {
+			switch (types[player]) {
 				case ControllerType.WiiMote:
 					if (WiiMoteControl.wiimote_isExpansionPortEnabled(playerControllerId[player])) {
 						return WiiMoteControl.wiimote_getButton1(playerControllerId[player]);
@@ -388,5 +487,4 @@ public class Control : MonoBehaviour {
 		
 		return false;
 	}
-	
 }

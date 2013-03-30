@@ -1336,7 +1336,7 @@ GameObject:
   - 136: {fileID: 1224497550}
   m_Layer: 0
   m_Name: FlowerPlayer_final
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
