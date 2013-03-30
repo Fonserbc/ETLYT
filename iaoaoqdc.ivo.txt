@@ -1,0 +1,23 @@
+﻿errores
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	modified:   Assets/Scenes/Character Select.unity
+#	modified:   Assets/Scripts/Scripts Test CharacterSelect/MenuCharacterControl.cs
+#	modified:   Assets/Scripts/Scripts Test CharacterSelect/MenuMovement.cs
+#	modified:   Assets/Scripts/Scripts Test Scenary/BasicPowers.cs
+#	modified:   ProjectSettings/TagManager.asset
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	Assets/Prefabs/HitBox.prefab
+#	Assets/Prefabs/HitBox.prefab.meta
+#	Assets/Prefabs/Player_StageSelectTesting.prefab
+#	Assets/Prefabs/Player_StageSelectTesting.prefab.meta
+#	Assets/Scripts/PlayerHitBoxControl.cs
+#	Assets/Scripts/PlayerHitBoxControl.cs.meta
+
