@@ -26,6 +26,7 @@ public class Movement : MonoBehaviour {
 	}
 	
 	public Control.ControllerType debugControl;
+	public int debugMoteId;
 	
 	public float jumpForce = 10f;
 	public float jumpAnimationLenght = 1f;
@@ -61,9 +62,7 @@ public class Movement : MonoBehaviour {
 		
 		anim = GetComponentsInChildren<AnimationHandler>();
 		control = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
-		player = control.RegisterPlayer(debugControl, 0);
-		
-		BroadcastMessage("SetPlayer", player);
+		player = control.RegisterPlayer(debugControl, debugMoteId);
 		
 		lastPos = transform.position;
 		state = PlayerState.Air;

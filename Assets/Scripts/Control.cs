@@ -54,7 +54,7 @@ public class Control : MonoBehaviour {
 		for (int i = 0; i < 4; ++i) {
 			types[i] = ControllerType.Undefined;
 			for (int j = 0; j < 7; ++j) {
-				pressedTime[j,i] = 0;
+				pressedTime[j,i] = -1000;
 				lastPressed[j,i] = false;
 			}
 		}
@@ -455,7 +455,7 @@ public class Control : MonoBehaviour {
 		if (player < players) {
 			switch (types[player]) {
 			case ControllerType.WiiMote:
-				return (Time.time - pressedTime[4,player]) < PRESSED_TIME;
+				return (Time.time - pressedTime[6,player]) < PRESSED_TIME;
 			case ControllerType.Keyboard:
 				return Input.GetKeyDown(KeyCode.P);
 			}
