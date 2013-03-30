@@ -20,11 +20,11 @@ public class PowerUpHandler : MonoBehaviour {
 			timeLeft = 10;
 			isActive = true;
 			Movement m = GetComponent<Movement>();
-			PlayerHitboxControl m = GetComponent<PlayerHitboxControl>();
-			Debug.Log ("Soc el powerup: " + activePowerUp);
+			PlayerHitBoxControl phb = GetComponent<PlayerHitBoxControl>();
 			switch(activePowerUp) {
 			case 0:
-				
+				phb.setShield(true);
+				break;	
 			case 1:
 				m.jumpForce *= 3;
 				m.maxSpeed *= 2;
@@ -50,7 +50,11 @@ public class PowerUpHandler : MonoBehaviour {
 		isActive = false;
 		timeLeft = 0;
 		Movement m = GetComponent<Movement>();
+		PlayerHitBoxControl pHB = GetComponent<PlayerHitBoxControl>();
 		switch(activePowerUp) {
+			case 0:
+				pHB.setShield(false);
+				break;
 			case 1:
 				m.jumpForce /= 3;
 				m.maxSpeed /= 2;
