@@ -13,6 +13,10 @@ public class Movement : MonoBehaviour {
 	private float MAX_ANGLE_WALL = 100f;
 	private float WALL_TO_AIR_TIME = 1f;
 	
+	private float HIT_RESPONSE_INTENSITY = 5f;
+	private float HURT_TIME = 1f;
+	private float ATTACK_TIME = 0.7f;
+	
 	public enum PlayerState {
 		Idle,
 		Run,
@@ -24,9 +28,6 @@ public class Movement : MonoBehaviour {
 		Attack,
 		Death
 	}
-	
-	public Control.ControllerType debugControl;
-	public int debugMoteId;
 	
 	public float jumpForce = 10f;
 	public float jumpAnimationLenght = 1f;
@@ -46,12 +47,14 @@ public class Movement : MonoBehaviour {
 	
 	private AnimationHandler[] anim;
 	private Control control;
+	private PlayerHitBoxControl hitBoxControl;
 	
 	private Vector3 lastPos;
 	private int direction = 2;
 	private int dirAux = 0;
 	private float airTimer = 0f;
 	private float slideTimer = 0f;
+	private float violentTimer = 0f;
 	
 	private float currSpeedScale = 0f;
 	
@@ -61,8 +64,8 @@ public class Movement : MonoBehaviour {
 		camara = GameObject.FindGameObjectWithTag("MainCamera").transform;
 		
 		anim = GetComponentsInChildren<AnimationHandler>();
+		hitBoxControl = GetComponent<PlayerHitBoxControl>();
 		control = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
-		player = control.RegisterPlayer(debugControl, debugMoteId);
 		
 		lastPos = transform.position;
 		state = PlayerState.Air;
@@ -72,11 +75,24 @@ public class Movement : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (debugControl != Control.ControllerType.WiiMote || WiiMoteControl.wiimote_count() > player) {
-			Vector3 movementDir = GetMovementDir();
+		Vector3 movementDir = GetMovementDir();
+		
+		bool jump = control.Jump(player);
+		
+		if (state == PlayerState.Hurt || state == PlayerState.Attack) {
+			violentTimer += Time.deltaTime;
 			
-			bool jump = control.Jump(player);
+			float aux = 1000f;
+			if (state == PlayerState.Hurt) aux = HURT_TIME;
+			else aux = ATTACK_TIME;
 			
+			if (violentTimer > aux) {
+				violentTimer = 0;
+				
+				ChangeState(PlayerState.Run);
+			}
+		}
+		else {
 			if (!colliding) {
 				airTimer += Time.deltaTime;
 				
@@ -156,24 +172,24 @@ public class Movement : MonoBehaviour {
 					rigidbody.velocity += movementDir*airAcceleration*0.2f*Time.deltaTime;
 				}
 			}
-			
-			if (state != PlayerState.Run && state != PlayerState.Idle) slideTimer = 0f;
-			
-			if (colliding) {
-				if (rigidbody.velocity.magnitude > maxSpeed) rigidbody.velocity = rigidbody.velocity.normalized*maxSpeed;
-				currSpeedScale = rigidbody.velocity.magnitude / maxSpeed;
-			}
-			else {
-				if (rigidbody.velocity.magnitude > maxAirSpeed) {
-					rigidbody.velocity = rigidbody.velocity.normalized*maxAirSpeed;
-				}
-				currSpeedScale = rigidbody.velocity.magnitude / maxAirSpeed;
-			}
-			
-			Vector3 wantedRot = -Physics.gravity.normalized;
-			rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, wantedRot), Time.deltaTime*rotationSpeed));
-			//transform.rotation.y = 0;
 		}
+	
+		if (state != PlayerState.Run && state != PlayerState.Idle) slideTimer = 0f;
+		
+		if (colliding) {
+			if (rigidbody.velocity.magnitude > maxSpeed) rigidbody.velocity = rigidbody.velocity.normalized*maxSpeed;
+			currSpeedScale = rigidbody.velocity.magnitude / maxSpeed;
+		}
+		else {
+			if (rigidbody.velocity.magnitude > maxAirSpeed) {
+				rigidbody.velocity = rigidbody.velocity.normalized*maxAirSpeed;
+			}
+			currSpeedScale = rigidbody.velocity.magnitude / maxAirSpeed;
+		}
+		
+		Vector3 wantedRot = -Physics.gravity.normalized;
+		rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector3.up, wantedRot), Time.deltaTime*rotationSpeed));
+		//transform.rotation.y = 0;
 		
 		// Veure si hem de girar l'sprite
 		int newDir;
@@ -241,9 +257,10 @@ public class Movement : MonoBehaviour {
 	void ChangeState(PlayerState newState) {
 		if (newState != anim[0].getAnimationState()) {
 			state = newState;
-			if (state == PlayerState.Jump && debugControl == Control.ControllerType.WiiMote) Debug.Log("Jump");
-			anim[0].setAnimation(state, DEF_ANIM_SPEED);
-			anim[1].setAnimation(state, DEF_ANIM_SPEED);
+			float speed = DEF_ANIM_SPEED;
+			if (state == PlayerState.Slide) speed *= 2;
+			anim[0].setAnimation(state, speed);
+			anim[1].setAnimation(state, speed);
 		}
 	}
 	
@@ -317,11 +334,23 @@ public class Movement : MonoBehaviour {
 		ChangeState(PlayerState.Death);
 	}
 	
-	public void Attack () {
+	public void Attack (int right) {
+		violentTimer = 0;
 		
+		if (right != direction) {
+			anim[0].setDirection(right);
+			anim[1].setDirection(right);
+			direction = right;
+		}
+		
+		ChangeState(PlayerState.Attack);
 	}
 	
 	public void Hit (Vector3 dir) {
+		violentTimer = 0;
 		
+		rigidbody.velocity += dir.normalized*HIT_RESPONSE_INTENSITY;
+		
+		ChangeState(PlayerState.Hurt);
 	}
 }

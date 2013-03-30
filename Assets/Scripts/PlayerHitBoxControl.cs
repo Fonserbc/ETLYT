@@ -31,7 +31,7 @@ public class PlayerHitBoxControl : MonoBehaviour {
 				
 				
 				 Movement mov = GetComponent<Movement>();
-				 mov.Attack();			 
+				 mov.Attack(hitDir);			 
 				 
 			}
 			
