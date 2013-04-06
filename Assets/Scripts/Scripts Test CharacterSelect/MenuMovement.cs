@@ -24,18 +24,15 @@ public class MenuMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {			
 		
-		/*if(control.Pause(player)) {
+		if(control.Pause(player)) {
 			Application.LoadLevel("Testing Movement");	
-		}*/
+		}
 		
 		if(selection) {
 			if(control.Attack(player)) {
 				CharacterSelect Cs;				
 				Cs = selection.GetComponent<CharacterSelect>();
 				Cs.setSelected(player);	
-				
-				
-				
 			}
 		}
 	
