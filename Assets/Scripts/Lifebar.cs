@@ -4,7 +4,9 @@ using System.Collections;
 public class Lifebar : MonoBehaviour {
 
 	public Texture2D[] Numbers;
+	public Texture2D[] PowerUps;
 	private float life = 0;
+	private int stackedPowerUp = -1;
 	// Use this for initialization
 	void Start () {
 		life = 100;
@@ -21,6 +23,7 @@ public class Lifebar : MonoBehaviour {
 		GUI.DrawTexture(new Rect(10, 10, 60, 60), Numbers[centenes+1]);
 		GUI.DrawTexture(new Rect(33, 10, 60, 60), Numbers[desenes+1]);
 		GUI.DrawTexture(new Rect(56, 10, 60, 60), Numbers[unitats+1]);
+		if (stackedPowerUp > -1) GUI.DrawTexture(new Rect(35, 45, 60, 60), PowerUps[stackedPowerUp]);
 	}
 	
 	// Update is called once per frame
@@ -36,5 +39,16 @@ public class Lifebar : MonoBehaviour {
 	
 	public void addLife(int i) {
 		life += 5;
+	}
+	
+	public void addPowerUp(int i) {
+		stackedPowerUp = i;
+	}
+		
+	void OnTriggerEnter(Collider collider) {
+		if (collider.gameObject.tag == "Clock") {
+			life += 5;
+			Destroy(collider.gameObject);
+		}
 	}
 }

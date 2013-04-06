@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: textura suelo
+  m_Name: nogravity
   m_Shader: {fileID: 30, guid: 0000000000000000e000000000000000, type: 0}
   m_SavedProperties:
     serializedVersion: 2
@@ -15,14 +15,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: c19118e26dcf1c24cbf04e4b68a7b33a, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: -.00999999978}
-      data:
-        first:
-          name: _BumpMap
-        second:
-          m_Texture: {fileID: 0}
+          m_Texture: {fileID: 2800000, guid: e65c983e456c5f246a19cdb39694dca4, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats: {}

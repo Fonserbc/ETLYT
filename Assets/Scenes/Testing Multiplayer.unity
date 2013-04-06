@@ -1994,6 +1994,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: ab0638b9fb0505c48a951fec2f893ec4, type: 3}
   - {fileID: 2800000, guid: 55613dc229c5c224294a10189d700a32, type: 3}
   - {fileID: 2800000, guid: 689080d528cfeab47b67579879d5bcc5, type: 3}
+  PowerUps: []
 --- !u!114 &1451873680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2007,7 +2008,7 @@ MonoBehaviour:
   players:
   - {fileID: 694803932}
   - {fileID: 1224497548}
-  playerControls: 0100000001000000
+  playerControls: 0100000003000000
   playerControllerIds: 0000000001000000
 --- !u!1 &1470284952
 GameObject:

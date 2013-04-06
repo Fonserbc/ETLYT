@@ -89,6 +89,7 @@ public class Movement : MonoBehaviour {
 			if (violentTimer > aux) {
 				violentTimer = 0;
 				
+				hitBoxControl.finishAttack();
 				ChangeState(PlayerState.Run);
 			}
 		}
@@ -349,7 +350,7 @@ public class Movement : MonoBehaviour {
 	public void Hit (Vector3 dir) {
 		violentTimer = 0;
 		
-		rigidbody.velocity += dir.normalized*HIT_RESPONSE_INTENSITY;
+		rigidbody.velocity += dir.normalized*HIT_RESPONSE_INTENSITY + -Physics.gravity.normalized*HIT_RESPONSE_INTENSITY;
 		
 		ChangeState(PlayerState.Hurt);
 	}
