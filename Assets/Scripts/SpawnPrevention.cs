@@ -16,11 +16,11 @@ public class SpawnPrevention : MonoBehaviour {
 	
 		
 	void OnTriggerEnter(Collider collider) {
-		if (collider.gameObject.tag == "Player1") ++someoneThere;
+		if (collider.gameObject.tag == "Player") ++someoneThere;
 	}
 	
 	void OnTriggerExit(Collider collider) {
-		if (collider.gameObject.tag == "Player1") --someoneThere;
+		if (collider.gameObject.tag == "Player") --someoneThere;
 	}
 	
 	public bool isSomeoneThere() {
