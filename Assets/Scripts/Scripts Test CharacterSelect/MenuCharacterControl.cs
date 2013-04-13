@@ -22,6 +22,8 @@ public class MenuCharacterControl : MonoBehaviour {
 				control.RegisterPlayer(Control.ControllerType.WiiMote, i);
 				mov = sel.GetComponent<MenuMovement>();
 				mov.setPlayer(i);
+				Movement move = sel.GetComponent<Movement>();
+				move.SetPlayer(i);
 			}		
 		} else {
 			Debug.Log ("No hay mandos, tolai!");		
