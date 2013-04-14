@@ -39,6 +39,11 @@ public class Control : MonoBehaviour {
 	private bool[,] lastPressed;
 	
 	private WiiMoteControl wiiControl;
+	
+
+	public int[] automaticRegisterId;
+	public GameObject[] automaticRegisterPlayer;
+	public ControllerType[] automaticRegisterType;
 
 	// Use this for initialization
 	void Awake () {
@@ -59,6 +64,12 @@ public class Control : MonoBehaviour {
 			}
 		}
 		
+		if (automaticRegisterId.Length == automaticRegisterPlayer.Length && automaticRegisterType.Length == automaticRegisterId.Length) {
+			for (int i = 0; i < automaticRegisterId.Length; ++i) {
+				int p = RegisterPlayer(automaticRegisterType[i], automaticRegisterId[i]);
+				automaticRegisterPlayer[i].BroadcastMessage("SetPlayer", p);
+			}
+		}
 	}
 	
 	// Update is called once per frame
