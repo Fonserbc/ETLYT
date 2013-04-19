@@ -15,7 +15,7 @@ public class Movement : MonoBehaviour {
 	
 	private float HIT_RESPONSE_INTENSITY = 5f;
 	private float HURT_TIME = 1f;
-	private float ATTACK_TIME = 0.7f;
+	public float ATTACK_TIME = 0.5f;
 	
 	public enum PlayerState {
 		Idle,
@@ -203,7 +203,10 @@ public class Movement : MonoBehaviour {
 			}
 		}
 		else {
-			Vector3 dir = transform.position - lastPos;
+			//Vector3 dir = transform.position - lastPos;
+			Vector3 dir = movementDir;
+			if (dir.magnitude < 0.01f)
+				dir = transform.position - lastPos;
 			
 			float wantedDir = Vector3.Cross(-Physics.gravity, dir).z;
 			newDir = (wantedDir < 0)? -1 : 1;
@@ -284,6 +287,10 @@ public class Movement : MonoBehaviour {
 		}
 	}
 	
+	public int GetDirection() {
+		return direction;
+	}
+	
 	void OnCollisionStay(Collision col) {
 		if (col.gameObject.tag != "Player") {
 			airTimer = 0f;
@@ -335,16 +342,22 @@ public class Movement : MonoBehaviour {
 		ChangeState(PlayerState.Death);
 	}
 	
-	public void Attack (int right) {
-		violentTimer = 0;
-		
-		if (right != direction) {
-			anim[0].setDirection(right);
-			anim[1].setDirection(right);
-			direction = right;
+	public bool Attack (int right) {
+		if (state != PlayerState.Hurt) {
+			
+			violentTimer = 0;
+			
+			if (right != 0 && right != direction) {
+				anim[0].setDirection(right);
+				anim[1].setDirection(right);
+				direction = right;
+			}
+			
+			ChangeState(PlayerState.Attack);
+			
+			return true;
 		}
-		
-		ChangeState(PlayerState.Attack);
+		return false;
 	}
 	
 	public void Hit (Vector3 dir) {

@@ -45,7 +45,6 @@ public class AnimationHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.Space)) setAnimation(Movement.PlayerState.Jump, 0.1f);
 		m_stepStatus = m_stepStatus + Time.deltaTime;
 		switch (m_actualState) {
 
@@ -59,7 +58,8 @@ public class AnimationHandler : MonoBehaviour {
 		case Movement.PlayerState.Attack:
 			if(m_stepStatus >= m_animationSpeed) {
 				m_stepStatus %= m_animationSpeed;
-				m_step = (++m_step)%attackAnimation.Length;
+				if (m_step < attackAnimation.Length - 1)
+					m_step = (++m_step)%attackAnimation.Length;
 			} 
 			renderer.material.mainTexture = attackAnimation[m_step];
 			break;

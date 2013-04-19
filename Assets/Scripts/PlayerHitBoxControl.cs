@@ -8,13 +8,18 @@ public class PlayerHitBoxControl : MonoBehaviour {
 	private int player = 0;
 	private bool shield = false;
 	
-	public Vector3 hitPosition;
+	private Vector3 hitPosition; // 0.24 0.18 0
+	private Vector3 hitScale; // 1 0.7 0.5
 	
-
+	private Movement mov;
 
 	// Use this for initialization
 	void Start () {
-		control = (Control)(GameObject.FindGameObjectWithTag("Control").GetComponent("Control"));	
+		control = (Control)(GameObject.FindGameObjectWithTag("Control").GetComponent("Control"));
+		mov = gameObject.GetComponent<Movement>();
+		
+		hitPosition = new Vector3(0f, 0.35f, 0f);
+		hitScale = new Vector3(1f, 0.7f, 0.5f);
 	}
 	
 	// Update is called once per frame
@@ -22,17 +27,18 @@ public class PlayerHitBoxControl : MonoBehaviour {
 		if(control.Attack(player) && hittingBox == null) {
 			int hitDir = GetHitDir();
 			//PillarPosicion si precede
-			if(hitDir != 0) {
+			if(mov.Attack(hitDir)) {
+				if (hitDir == 0) hitDir = mov.GetDirection();
 				//ARREGLAR HITPOSITION
-				hittingBox = (GameObject)Instantiate(hitBox, transform.position+hitPosition*hitDir, transform.rotation);
-				Physics.IgnoreCollision(hittingBox.collider, transform.collider);
+				hittingBox = (GameObject)Instantiate(hitBox, transform.position, transform.rotation);
 				hittingBox.transform.parent = transform;
-
 				
+				hittingBox.transform.localScale = hitScale;
+				hittingBox.transform.position +=  transform.InverseTransformDirection(hitPosition-hitDir*transform.right*0.45f);
 				
-				 Movement mov = GetComponent<Movement>();
-				 mov.Attack(hitDir);			 
-				 
+				Physics.IgnoreCollision(hittingBox.collider, transform.collider);
+				
+				Destroy(hittingBox, mov.ATTACK_TIME+0.2f);
 			}
 			
 		}
@@ -42,11 +48,10 @@ public class PlayerHitBoxControl : MonoBehaviour {
 	void OnTriggerEnter(Collider col) {
 		if(!shield) {
 			if(col.gameObject.tag == "HitBox") {
-				Vector3 dir = transform.position - col.transform.position;
+				Vector3 dir = transform.position - col.transform.position + col.transform.parent.rigidbody.velocity.normalized;
 				
-				Movement mov = GetComponent<Movement>();
 				mov.Hit(dir);
-				Debug.Log ("JIT");
+				//Debug.Log ("JIT");
 			}
 		}
 	}
@@ -55,7 +60,7 @@ public class PlayerHitBoxControl : MonoBehaviour {
 		shield = sh;
 	}
 	
-	public void setPlayer(int p) {
+	public void SetPlayer(int p) {
 		player = p;	
 	}
 	
@@ -65,10 +70,7 @@ public class PlayerHitBoxControl : MonoBehaviour {
 	
 	public void finishAttack() {
 		Destroy(hittingBox);
-	}
-	
-	
-	
+	}	
 	
 	int GetHitDir () {
 		float hAxis = control.HorizontalAxis(player);
@@ -86,7 +88,7 @@ public class PlayerHitBoxControl : MonoBehaviour {
 		aux = Vector3.up;
 		float angle = Vector3.Angle(aux, dir);
 		int left = -1;
-		if(Vector3.Cross(aux, dir).z < 0) left = 1;
+		if(Vector3.Cross(aux, dir).z < 0) left = -1;
 		return left;
 	}
 
