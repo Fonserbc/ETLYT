@@ -7,6 +7,8 @@ public class Movement : MonoBehaviour {
 	private float MIN_SLIDE_SPEED = 0.2f;
 	private float SLIDE_HOLD_TIME = 0.5f;
 	private float DEF_ANIM_SPEED = 0.1f;
+	private float MIN_SLIDE_TIME = 0.5f;
+	private float SLIDE_IMPULSE = 0.3f;
 	
 	private float MIN_ANGLE_SLIDE = 5f;
 	private float MIN_ANGLE_WALL = 55f;
@@ -16,6 +18,7 @@ public class Movement : MonoBehaviour {
 	private float HIT_RESPONSE_INTENSITY = 5f;
 	private float HURT_TIME = 1f;
 	public float ATTACK_TIME = 0.5f;
+	private float ATTACK_IMPULSE = 0.5f;
 	
 	public enum PlayerState {
 		Idle,
@@ -90,7 +93,8 @@ public class Movement : MonoBehaviour {
 				violentTimer = 0;
 				
 				hitBoxControl.finishAttack();
-				ChangeState(PlayerState.Run);
+				if (rigidbody.velocity.magnitude > 0.5f) ChangeState(PlayerState.Run);
+				else ChangeState(PlayerState.Idle);
 			}
 		}
 		else {
@@ -119,6 +123,8 @@ public class Movement : MonoBehaviour {
 							
 							if (slideTimer > SLIDE_HOLD_TIME) {
 								ChangeState(PlayerState.Slide);
+								slideTimer = 0f;
+								rigidbody.velocity += Physics.gravity.normalized*SLIDE_IMPULSE;
 							}
 						}
 						else slideTimer = 0f;
@@ -126,7 +132,7 @@ public class Movement : MonoBehaviour {
 					else {
 						rigidbody.velocity += movementDir*acceleration*Time.deltaTime;
 						
-						if (state == PlayerState.Idle && rigidbody.velocity.magnitude > 0.5f) {
+						if (state == PlayerState.Idle && rigidbody.velocity.magnitude > 0.5f && movementDir.magnitude > 0.5f) {
 							ChangeState(PlayerState.Run);
 						}
 						else if (state == PlayerState.Run) {
@@ -153,13 +159,14 @@ public class Movement : MonoBehaviour {
 					}
 				}
 				else if (state == PlayerState.Slide) {
+					slideTimer += Time.deltaTime;
 					if (jump && colliding) {
 						rigidbody.velocity += (normal-Physics.gravity.normalized).normalized*jumpForce;
 						
 						ChangeState(PlayerState.Jump);
 					}
-					else if (rigidbody.velocity.magnitude < MIN_SLIDE_SPEED) { //We are going too slow
-						ChangeState(PlayerState.Run);
+					else if (rigidbody.velocity.magnitude < MIN_SLIDE_SPEED && slideTimer > MIN_SLIDE_TIME) { //We are going too slow
+						ChangeState(PlayerState.Idle);
 					}
 				}
 				else if (state == PlayerState.Wall) {
@@ -175,7 +182,7 @@ public class Movement : MonoBehaviour {
 			}
 		}
 	
-		if (state != PlayerState.Run && state != PlayerState.Idle) slideTimer = 0f;
+		if (state != PlayerState.Run && state != PlayerState.Idle && state != PlayerState.Slide) slideTimer = 0f;
 		
 		if (colliding) {
 			if (rigidbody.velocity.magnitude > maxSpeed) rigidbody.velocity = rigidbody.velocity.normalized*maxSpeed;
@@ -316,11 +323,11 @@ public class Movement : MonoBehaviour {
 					ChangeState(PlayerState.Slide);
 				}
 				else {
-					ChangeState(PlayerState.Run);
+					ChangeState(PlayerState.Idle);
 				}
 			}
 			else if (state == PlayerState.Air) {
-				ChangeState(PlayerState.Run);
+				ChangeState(PlayerState.Idle);
 			}
 		}
 	}
@@ -346,6 +353,8 @@ public class Movement : MonoBehaviour {
 		if (state != PlayerState.Hurt) {
 			
 			violentTimer = 0;
+			
+			rigidbody.velocity += transform.right*right*ATTACK_IMPULSE;
 			
 			if (right != 0 && right != direction) {
 				anim[0].setDirection(right);

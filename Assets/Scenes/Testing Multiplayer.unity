@@ -1263,10 +1263,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84eb3297025e9a442bf1041c56c90ed5, type: 3}
   m_Name: 
-  player1: {fileID: 694803937}
-  player2: {fileID: 1224497552}
   height: 0
-  distance: 10
+  distance: 9
+  margin: {x: 2, y: 2}
 --- !u!54 &922757126
 Rigidbody:
   m_ObjectHideFlags: 0

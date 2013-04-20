@@ -10,6 +10,7 @@ public class PlayerHitBoxControl : MonoBehaviour {
 	
 	private Vector3 hitPosition; // 0.24 0.18 0
 	private Vector3 hitScale; // 1 0.7 0.5
+	private float upHit = 0.1f;
 	
 	private Movement mov;
 
@@ -45,12 +46,14 @@ public class PlayerHitBoxControl : MonoBehaviour {
 		
 	}
 	
-	void OnTriggerEnter(Collider col) {
+	void OnTriggerStay(Collider col) {
 		if(!shield) {
 			if(col.gameObject.tag == "HitBox") {
-				Vector3 dir = transform.position - col.transform.position + col.transform.parent.rigidbody.velocity.normalized;
+				Vector3 dir = transform.position - col.transform.position + col.transform.parent.rigidbody.velocity.normalized - Physics.gravity.normalized*upHit;
 				
 				mov.Hit(dir);
+				
+				Physics.IgnoreCollision(col, collider);
 				//Debug.Log ("JIT");
 			}
 		}
