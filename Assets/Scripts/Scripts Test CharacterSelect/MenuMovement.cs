@@ -4,11 +4,13 @@ using System.Collections;
 public class MenuMovement : MonoBehaviour {
 	
 	private Control control;
-	private Transform camara;
 	private int player;
-	public float acceleration = 5f;
 	private GameObject selection = null;
-	private GameObject selected = null;
+	private BattleInformer1 bi; //accederemos bastante a battleinformer
+	
+	private string selected;
+
+	
 	
 	public void setPlayer(int p) {
 		player = p;	
@@ -16,8 +18,8 @@ public class MenuMovement : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		camara = GameObject.FindGameObjectWithTag("MainCamera").transform;
 		control = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
+		bi = GameObject.FindGameObjectWithTag("BattleInformer").GetComponent<BattleInformer1>();
 
 	}
 	
@@ -25,31 +27,39 @@ public class MenuMovement : MonoBehaviour {
 	void Update () {			
 		
 		if(control.Pause(player)) {
-			Application.LoadLevel("Testing Movement");	
-		}
-		
-		if(selection) {
-			if(control.Attack(player)) {
-				CharacterSelect Cs;				
-				Cs = selection.GetComponent<CharacterSelect>();
-				Cs.setSelected(player);	
+			if(selection){
+				if(selected == "CharacterAvatar") {
+					characterAvatar ca = selection.GetComponent<characterAvatar>();
+					GameObject character = ca.getCharacter();
+					Debug.Log(character);
+					bi.changePlayer(character, player);
+				} else if(selected == "StageAvatar") {
+					stageAvatar sa = selection.GetComponent<stageAvatar>();
+					int stage = sa.getStage();
+					bi.changeStage(stage);
+				} else if(selected == "ItemAvatar") {
+					itemAvatar ia = selection.GetComponent<itemAvatar>();
+					int item = ia.getItem();
+					bool activate = ia.changeActive();
+					bi.changeItem(item,activate);
+				}
 			}
 		}
+
 	
 	}
 	
 	void OnTriggerEnter(Collider c) {
-		if (c.gameObject.tag == "Character") {
+		if (c.gameObject.tag == "CharacterAvatar" || c.gameObject.tag == "StageAvatar" || c.gameObject.tag == "ItemAvatar" ) {
 			selection = c.gameObject;
-			c.renderer.material.color = Color.red;
+			selected = c.gameObject.tag;
 		}
 	}
 	
 	void OnTriggerExit(Collider c) {
-		if (c.gameObject.tag == "Character") {
+		if (c.gameObject.tag == "CharacterAvatar" || c.gameObject.tag == "StageAvatar" || c.gameObject.tag == "ItemAvatar" ) {
 			selection = null;
-			CharacterSelect Cs = c.GetComponent<CharacterSelect>();
-			Cs.setColor();
+			selected = "";
 		}
 	}
 }

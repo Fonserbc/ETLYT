@@ -4,26 +4,19 @@ using System.Collections;
 public class MenuCharacterControl : MonoBehaviour {
 	
 
-	public Rigidbody selector;
-	private MenuMovement mov;
+	public GameObject standardAvatar;
 	
-	private Rigidbody[] players;
-
 	// Use this for initialization
 	void Start () {
 		Control control = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
+		BattleInformer1 bi = GameObject.FindGameObjectWithTag("BattleInformer").GetComponent<BattleInformer1>();
+
 		int c = WiiMoteControl.wiimote_count();
 		if (c>0) {
-			players = new Rigidbody[c];
 			for (int i=0; i<=c-1; i++) {
-				Rigidbody sel;
-				sel = (Rigidbody) Instantiate(selector, new Vector3(0,2,-0.5f), transform.rotation);
-				players[i] = sel;
+				bi.changePlayer(standardAvatar,i);
 				control.RegisterPlayer(Control.ControllerType.WiiMote, i);
-				mov = sel.GetComponent<MenuMovement>();
-				mov.setPlayer(i);
-				Movement move = sel.GetComponent<Movement>();
-				move.SetPlayer(i);
+
 			}		
 		} else {
 			Debug.Log ("No hay mandos, tolai!");		
