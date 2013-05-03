@@ -6,7 +6,7 @@ public class MenuMovement : MonoBehaviour {
 	private Control control;
 	private int player;
 	private GameObject selection = null;
-	private BattleInformer1 bi; //accederemos bastante a battleinformer
+	private BattleInformer bi; //accederemos bastante a battleinformer
 	
 	private string selected;
 
@@ -19,14 +19,14 @@ public class MenuMovement : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		control = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
-		bi = GameObject.FindGameObjectWithTag("BattleInformer").GetComponent<BattleInformer1>();
+		bi = GameObject.FindGameObjectWithTag("BattleInformer").GetComponent<BattleInformer>();
 
 	}
 	
 	// Update is called once per frame
 	void Update () {			
 		
-		if(control.Pause(player)) {
+		if(control.Attack(player)) {
 			if(selection){
 				if(selected == "CharacterAvatar") {
 					characterAvatar ca = selection.GetComponent<characterAvatar>();
@@ -44,6 +44,10 @@ public class MenuMovement : MonoBehaviour {
 					bi.changeItem(item,activate);
 				}
 			}
+		}
+		
+		if(control.Pause(player)) {
+			bi.startFight();
 		}
 
 	

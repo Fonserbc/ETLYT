@@ -5,7 +5,7 @@ public class StartBattle : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		BattleInformer Bi = GameObject.FindGameObjectWithTag("Control").GetComponent<BattleInformer>();
+		OldBattleInformer Bi = GameObject.FindGameObjectWithTag("Control").GetComponent<OldBattleInformer>();
 		Bi.startBattle();
 
 	}

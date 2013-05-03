@@ -9,7 +9,7 @@ public class MenuCharacterControl : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Control control = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
-		BattleInformer1 bi = GameObject.FindGameObjectWithTag("BattleInformer").GetComponent<BattleInformer1>();
+		BattleInformer bi = GameObject.FindGameObjectWithTag("BattleInformer").GetComponent<BattleInformer>();
 
 		int c = WiiMoteControl.wiimote_count();
 		if (c>0) {

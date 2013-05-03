@@ -4,7 +4,7 @@ using System.Collections;
 public class controllerActivate : MonoBehaviour {
 	
 	private int maxPlayers; //numero maximo de jugadores en juego
-	private BattleInformer1 bi; //accederemos bastante a battleinformer
+	private BattleInformer bi; //accederemos bastante a battleinformer
 	
 	private bool[] players; //iremos marcando que numero de mando esta en funcionamiento
 	public GameObject standardAvatar; //Tenemos guardado el avatar standard
@@ -13,7 +13,7 @@ public class controllerActivate : MonoBehaviour {
 
 	void Start () {
 		control = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
-		bi = GameObject.FindGameObjectWithTag("BattleInformer").GetComponent<BattleInformer1>();
+		bi = GameObject.FindGameObjectWithTag("BattleInformer").GetComponent<BattleInformer>();
 		maxPlayers = bi.getMaxPlayers();
 		players = new bool[maxPlayers];
 	

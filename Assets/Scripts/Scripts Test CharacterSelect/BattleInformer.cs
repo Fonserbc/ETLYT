@@ -3,39 +3,67 @@ using System.Collections;
 
 public class BattleInformer : MonoBehaviour {
 	
-	private int playerCount;
-	private GameObject[] players; //personaje escogido
-	private float[] life;
+	public int maxPlayers = 4; //numero maximo de pnjs en juego
+	public Vector3 standardPosition = Vector3.zero; //Posicion standard para colocar pnjs
+	private GameObject[] players; //personajes en juego
+	private int stage = 1; //Pantalla
+	public bool[] items;
 	
-	private bool start = false;
 	
-	public void setPlayer(GameObject p, int i) {
-		players[i] = p;
-	}
-	
-	public void setLife(float f, int i) {
-		life[i] = f;
-	}
-	
-	public void startBattle() {
-		for (int i=0; i<=playerCount-1; i++) {
-			Instantiate(players[i], new Vector3(), players[i].transform.rotation);
-		}
-		start = true;	
-	}
-
-	// Use this for initialization
-	void Start () {
+	void Start() {
 		DontDestroyOnLoad(transform.gameObject);
-		Control control = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
-		playerCount = WiiMoteControl.wiimote_count();
-		players = new GameObject[playerCount];
+		players = new GameObject[maxPlayers];
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		if(!start) {
-			
-		}	
+	public void startFight() {
+		if(stage != -1) {
+			Application.LoadLevel(stage);
+		}
 	}
+	
+	//El item i pasa a estado b
+	public void changeItem(int i, bool b) {
+	//Accede itemSwitch
+		items[i] = b;
+	}
+	
+	//Se cambia el escenario
+	public void changeStage(int s) {
+	//Accede stageSelect
+		stage = s;	
+	}
+	
+	//Se cambia el personaje
+	public void changePlayer(GameObject playerType, int i) {
+	/* Acceden controllerActivate y characterAvatar
+	 * i debe ser entre 1 y maxPlayers
+	 *Si playerType = null simplemente destruye un jugador 
+	 *Sino: Si jugador = null instancia playerType en standardPosition
+	 *		Sino: instancia playerType en posicion de jugador
+	 */
+		if(i <= maxPlayers)	{
+			Debug.Log(playerType);
+
+			Vector3 position = standardPosition;
+			if(players[i] != null) {
+				position = players[i].transform.position;
+				Destroy (players[i]);
+			}
+			
+			//Instantiate particles			
+			if(playerType != null) { 
+				players[i] = Instantiate(playerType,position, playerType.transform.rotation) as GameObject; 
+				MenuMovement mm = players[i].GetComponent<MenuMovement>();
+				mm.setPlayer(i);
+				Movement move = players[i].GetComponent<Movement>();
+				move.SetPlayer(i);
+			}
+		} 
+	}
+	
+	public int getMaxPlayers() {
+	//Accede controllerActivate
+		return maxPlayers;
+	}
+	
 }

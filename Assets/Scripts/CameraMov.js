@@ -36,7 +36,7 @@ function Update () {
 	var minDistY : float = Mathf.Max(mdy, maxY) / Mathf.Tan(Mathf.Deg2Rad * camera.fov);
 	var minDistX : float = Mathf.Max(mdx, maxX) / Mathf.Tan(Mathf.Deg2Rad * (camera.fov * camera.aspect));
 	
-	Debug.Log(maxY+":"+mdy+ "/" + maxX+":"+mdx+" "+(Mathf.Tan(Mathf.Deg2Rad * camera.fov)));
+//	Debug.Log(maxY+":"+mdy+ "/" + maxX+":"+mdx+" "+(Mathf.Tan(Mathf.Deg2Rad * camera.fov)));
 	
 	
 	//transform.position = Vector3.Lerp(transform.position, mid + Vector3(0,height,-distance), Time.deltaTime*speed);

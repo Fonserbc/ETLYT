@@ -13,7 +13,7 @@ public class CharacterSelect : MonoBehaviour {
 	
 	
 	public void setSelected(int i) {
-		BattleInformer b = GameObject.FindGameObjectWithTag("Control").GetComponent<BattleInformer>();
+		OldBattleInformer b = GameObject.FindGameObjectWithTag("Control").GetComponent<OldBattleInformer>();
 		b.setPlayer(player,i);
 	}
 	
