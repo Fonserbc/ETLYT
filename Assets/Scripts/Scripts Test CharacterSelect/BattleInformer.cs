@@ -34,7 +34,7 @@ public class BattleInformer : MonoBehaviour {
 	}
 	
 	//Se cambia el personaje
-	public void changePlayer(GameObject playerType, int i) {
+	public void changePlayer(GameObject playerType, int i, int idPlayer) {
 	/* Acceden controllerActivate y characterAvatar
 	 * i debe ser entre 1 y maxPlayers
 	 *Si playerType = null simplemente destruye un jugador 
@@ -42,19 +42,22 @@ public class BattleInformer : MonoBehaviour {
 	 *		Sino: instancia playerType en posicion de jugador
 	 */
 		if(i <= maxPlayers)	{
-			Debug.Log(playerType);
 
 			Vector3 position = standardPosition;
+			Vector3 velocity = Vector3.zero;
 			if(players[i] != null) {
 				position = players[i].transform.position;
+				velocity = players[i].rigidbody.velocity;
 				Destroy (players[i]);
 			}
 			
 			//Instantiate particles			
 			if(playerType != null) { 
 				players[i] = Instantiate(playerType,position, playerType.transform.rotation) as GameObject; 
+				players[i].rigidbody.velocity = velocity;
 				MenuMovement mm = players[i].GetComponent<MenuMovement>();
 				mm.setPlayer(i);
+				mm.setIdPlayer(idPlayer);
 				Movement move = players[i].GetComponent<Movement>();
 				move.SetPlayer(i);
 			}

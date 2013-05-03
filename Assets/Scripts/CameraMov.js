@@ -13,6 +13,7 @@ function Start () {
 }
 
 function Update () {
+	players = GameObject.FindGameObjectsWithTag("Player");
 	var mid : Vector3 = Vector3.zero;
 	var mdx : float = 0;
 	var mdy : float = 0;

@@ -14,7 +14,7 @@ public class MenuCharacterControl : MonoBehaviour {
 		int c = WiiMoteControl.wiimote_count();
 		if (c>0) {
 			for (int i=0; i<=c-1; i++) {
-				bi.changePlayer(standardAvatar,i);
+				bi.changePlayer(standardAvatar,i, 0);
 				control.RegisterPlayer(Control.ControllerType.WiiMote, i);
 
 			}		

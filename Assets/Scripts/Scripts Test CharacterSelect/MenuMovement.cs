@@ -9,11 +9,17 @@ public class MenuMovement : MonoBehaviour {
 	private BattleInformer bi; //accederemos bastante a battleinformer
 	
 	private string selected;
+	
+	private int idPlayer;
 
 	
 	
 	public void setPlayer(int p) {
 		player = p;	
+	}
+	
+	public void setIdPlayer(int id) {
+		idPlayer = id;	
 	}
 	
 	// Use this for initialization
@@ -30,9 +36,11 @@ public class MenuMovement : MonoBehaviour {
 			if(selection){
 				if(selected == "CharacterAvatar") {
 					characterAvatar ca = selection.GetComponent<characterAvatar>();
-					GameObject character = ca.getCharacter();
-					Debug.Log(character);
-					bi.changePlayer(character, player);
+					int idp = ca.getIdPlayer();
+					if(idPlayer != idp) {
+						GameObject character = ca.getCharacter();
+						bi.changePlayer(character, player, idp);
+					}
 				} else if(selected == "StageAvatar") {
 					stageAvatar sa = selection.GetComponent<stageAvatar>();
 					int stage = sa.getStage();
