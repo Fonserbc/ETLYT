@@ -5,9 +5,11 @@ public class characterAvatar : MonoBehaviour {
 	
 	public GameObject character; //tenemos guardado un avatar en cocreto
 	public int idPlayer;
+	public AudioSource selection;
 	
 	public GameObject getCharacter() {
-		return character;
+		selection.Play();
+		return character;	
 	}
 	
 	public int getIdPlayer() {
