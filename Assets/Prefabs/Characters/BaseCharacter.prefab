@@ -369,6 +369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9846116c8ac18e4fa7fe3c5060fab76, type: 3}
   m_Name: 
   hitBox: {fileID: 100000, guid: 81e2b851e661de648a6f926a5f8aecd3, type: 2}
+  shieldObject: {fileID: 100000, guid: 631c4eff33e245a4c9108c9c4f943d4b, type: 2}
 --- !u!136 &13600000
 CapsuleCollider:
   m_ObjectHideFlags: 1

@@ -88,7 +88,9 @@ GameObject:
   - 114: {fileID: 7427401}
   - 114: {fileID: 7427400}
   - 114: {fileID: 7427399}
-  m_Layer: 0
+  - 114: {fileID: 7427406}
+  - 114: {fileID: 7427405}
+  m_Layer: 9
   m_Name: FestaBoy
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -115,7 +117,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 2001072929}
   m_GameObject: {fileID: 7427397}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: abf0f20902f769d40a5c0b1a704617af, type: 3}
   m_Name: 
@@ -152,6 +154,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92ca82c4faee3c64f8fed37ba73da328, type: 3}
   m_Name: 
+  ATTACK_TIME: .5
   jumpForce: 10
   jumpAnimationLenght: 1
   acceleration: 20
@@ -190,6 +193,30 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 1
+--- !u!114 &7427405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400014, guid: 6bac51d7e9845e648b1a59dcab415a31,
+    type: 2}
+  m_PrefabInternal: {fileID: 2001072929}
+  m_GameObject: {fileID: 7427397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9846116c8ac18e4fa7fe3c5060fab76, type: 3}
+  m_Name: 
+  hitBox: {fileID: 100000, guid: 81e2b851e661de648a6f926a5f8aecd3, type: 2}
+  shieldObject: {fileID: 100000, guid: 631c4eff33e245a4c9108c9c4f943d4b, type: 2}
+--- !u!114 &7427406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400012, guid: 6bac51d7e9845e648b1a59dcab415a31,
+    type: 2}
+  m_PrefabInternal: {fileID: 2001072929}
+  m_GameObject: {fileID: 7427397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a49cbc483a548bc4480e9c5e7b8640da, type: 3}
+  m_Name: 
 --- !u!1 &34828017
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,6 +268,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: e2fa342fec2d3744a8c4964c4dfddef5, type: 3}
   - {fileID: 2800000, guid: e65c983e456c5f246a19cdb39694dca4, type: 3}
   - {fileID: 2800000, guid: 41b9a711c1132824ba6535043acee331, type: 3}
+  spawnTime: 4
 --- !u!114 &34828020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -851,7 +879,7 @@ GameObject:
   - 33: {fileID: 509263753}
   - 23: {fileID: 509263752}
   - 114: {fileID: 509263751}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1021,7 +1049,9 @@ GameObject:
   - 136: {fileID: 545528103}
   - 114: {fileID: 545528108}
   - 114: {fileID: 545528109}
-  m_Layer: 0
+  - 114: {fileID: 545528111}
+  - 114: {fileID: 545528110}
+  m_Layer: 9
   m_Name: Flowerish
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1049,7 +1079,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 44462027}
   m_GameObject: {fileID: 545528102}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84a283aabdb1c2f4ead63bccf46256cb, type: 3}
   m_Name: 
@@ -1064,6 +1094,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92ca82c4faee3c64f8fed37ba73da328, type: 3}
   m_Name: 
+  ATTACK_TIME: .5
   jumpForce: 10
   jumpAnimationLenght: 1
   acceleration: 20
@@ -1108,7 +1139,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 44462027}
   m_GameObject: {fileID: 545528102}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: abf0f20902f769d40a5c0b1a704617af, type: 3}
   m_Name: 
@@ -1122,6 +1153,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00783fd2d595163429d33cc6a43f15a5, type: 3}
+  m_Name: 
+--- !u!114 &545528110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400014, guid: 9e5fda6f026efda469656e58acf1d6f1,
+    type: 2}
+  m_PrefabInternal: {fileID: 44462027}
+  m_GameObject: {fileID: 545528102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9846116c8ac18e4fa7fe3c5060fab76, type: 3}
+  m_Name: 
+  hitBox: {fileID: 100000, guid: 81e2b851e661de648a6f926a5f8aecd3, type: 2}
+  shieldObject: {fileID: 100000, guid: 631c4eff33e245a4c9108c9c4f943d4b, type: 2}
+--- !u!114 &545528111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400012, guid: 9e5fda6f026efda469656e58acf1d6f1,
+    type: 2}
+  m_PrefabInternal: {fileID: 44462027}
+  m_GameObject: {fileID: 545528102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a49cbc483a548bc4480e9c5e7b8640da, type: 3}
   m_Name: 
 --- !u!1 &568670058
 GameObject:
@@ -1137,7 +1192,9 @@ GameObject:
   - 114: {fileID: 568670063}
   - 114: {fileID: 568670064}
   - 114: {fileID: 568670065}
-  m_Layer: 0
+  - 114: {fileID: 568670067}
+  - 114: {fileID: 568670066}
+  m_Layer: 9
   m_Name: FestaBoy
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1198,6 +1255,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92ca82c4faee3c64f8fed37ba73da328, type: 3}
   m_Name: 
+  ATTACK_TIME: .5
   jumpForce: 10
   jumpAnimationLenght: 1
   acceleration: 20
@@ -1235,9 +1293,33 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 513676081}
   m_GameObject: {fileID: 568670058}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: abf0f20902f769d40a5c0b1a704617af, type: 3}
+  m_Name: 
+--- !u!114 &568670066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400014, guid: 6bac51d7e9845e648b1a59dcab415a31,
+    type: 2}
+  m_PrefabInternal: {fileID: 513676081}
+  m_GameObject: {fileID: 568670058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9846116c8ac18e4fa7fe3c5060fab76, type: 3}
+  m_Name: 
+  hitBox: {fileID: 100000, guid: 81e2b851e661de648a6f926a5f8aecd3, type: 2}
+  shieldObject: {fileID: 100000, guid: 631c4eff33e245a4c9108c9c4f943d4b, type: 2}
+--- !u!114 &568670067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400012, guid: 6bac51d7e9845e648b1a59dcab415a31,
+    type: 2}
+  m_PrefabInternal: {fileID: 513676081}
+  m_GameObject: {fileID: 568670058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a49cbc483a548bc4480e9c5e7b8640da, type: 3}
   m_Name: 
 --- !u!1 &635144977
 GameObject:
@@ -1319,7 +1401,9 @@ GameObject:
   - 114: {fileID: 665245437}
   - 114: {fileID: 665245438}
   - 114: {fileID: 665245439}
-  m_Layer: 0
+  - 114: {fileID: 665245441}
+  - 114: {fileID: 665245440}
+  m_Layer: 9
   m_Name: InvisiFriend
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1380,6 +1464,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92ca82c4faee3c64f8fed37ba73da328, type: 3}
   m_Name: 
+  ATTACK_TIME: .5
   jumpForce: 10
   jumpAnimationLenght: 1
   acceleration: 20
@@ -1420,6 +1505,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: abf0f20902f769d40a5c0b1a704617af, type: 3}
+  m_Name: 
+--- !u!114 &665245440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400014, guid: 31f60652f9e0e2d48b51af89a3e962d5,
+    type: 2}
+  m_PrefabInternal: {fileID: 1582511026}
+  m_GameObject: {fileID: 665245432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9846116c8ac18e4fa7fe3c5060fab76, type: 3}
+  m_Name: 
+  hitBox: {fileID: 100000, guid: 81e2b851e661de648a6f926a5f8aecd3, type: 2}
+  shieldObject: {fileID: 100000, guid: 631c4eff33e245a4c9108c9c4f943d4b, type: 2}
+--- !u!114 &665245441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400012, guid: 31f60652f9e0e2d48b51af89a3e962d5,
+    type: 2}
+  m_PrefabInternal: {fileID: 1582511026}
+  m_GameObject: {fileID: 665245432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a49cbc483a548bc4480e9c5e7b8640da, type: 3}
   m_Name: 
 --- !u!1 &707355183
 GameObject:
@@ -1632,7 +1741,7 @@ GameObject:
   - 33: {fileID: 757971100}
   - 23: {fileID: 757971099}
   - 114: {fileID: 757971098}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2036,10 +2145,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84eb3297025e9a442bf1041c56c90ed5, type: 3}
   m_Name: 
-  player1: {fileID: 545528107}
-  player2: {fileID: 545528107}
   height: 0
-  distance: 10
+  speed: 5
+  margin: {x: 0, y: 0}
 --- !u!54 &922757126
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2066,7 +2174,7 @@ GameObject:
   - 33: {fileID: 959841859}
   - 23: {fileID: 959841858}
   - 114: {fileID: 959841857}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2099,9 +2207,9 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 12ba0e77f2410d641998f25367842b20, type: 3}
   - {fileID: 2800000, guid: c61a1ccd1463d9a46af9ad08645fa1ab, type: 3}
   attackAnimation:
-  - {fileID: 2800000, guid: 547705318a015d6439578a9fdfabafbf, type: 3}
-  - {fileID: 2800000, guid: efc1ebfef177ecc469a915313e1a274a, type: 3}
-  - {fileID: 2800000, guid: 190fb69e8e4049a468a07e994f6bd63a, type: 3}
+  - {fileID: 2800000, guid: eed028c6f48c73b4191f8e600aa3700f, type: 3}
+  - {fileID: 2800000, guid: eed028c6f48c73b4191f8e600aa3700f, type: 3}
+  - {fileID: 2800000, guid: eed028c6f48c73b4191f8e600aa3700f, type: 3}
   - {fileID: 2800000, guid: 98cde6f945ef6e348b68096fa25018ab, type: 3}
   hurtAnimation:
   - {fileID: 2800000, guid: 64adafff7ddda1545b52264a97624f5f, type: 3}
@@ -2213,10 +2321,10 @@ Transform:
   - {fileID: 1706249260}
   - {fileID: 276044219}
   - {fileID: 1701206263}
-  - {fileID: 1331807648}
   - {fileID: 2125560523}
   - {fileID: 1339921693}
   - {fileID: 183133926}
+  - {fileID: 1331807648}
   m_Father: {fileID: 751473744}
 --- !u!114 &1013109978
 MonoBehaviour:
@@ -2532,7 +2640,7 @@ GameObject:
   - 33: {fileID: 1186828347}
   - 23: {fileID: 1186828346}
   - 114: {fileID: 1186828345}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2554,9 +2662,9 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 12ba0e77f2410d641998f25367842b20, type: 3}
   - {fileID: 2800000, guid: c61a1ccd1463d9a46af9ad08645fa1ab, type: 3}
   attackAnimation:
-  - {fileID: 2800000, guid: 547705318a015d6439578a9fdfabafbf, type: 3}
-  - {fileID: 2800000, guid: efc1ebfef177ecc469a915313e1a274a, type: 3}
-  - {fileID: 2800000, guid: 190fb69e8e4049a468a07e994f6bd63a, type: 3}
+  - {fileID: 2800000, guid: eed028c6f48c73b4191f8e600aa3700f, type: 3}
+  - {fileID: 2800000, guid: eed028c6f48c73b4191f8e600aa3700f, type: 3}
+  - {fileID: 2800000, guid: eed028c6f48c73b4191f8e600aa3700f, type: 3}
   - {fileID: 2800000, guid: 98cde6f945ef6e348b68096fa25018ab, type: 3}
   hurtAnimation:
   - {fileID: 2800000, guid: 64adafff7ddda1545b52264a97624f5f, type: 3}
@@ -2662,7 +2770,9 @@ GameObject:
   - 114: {fileID: 1195558736}
   - 114: {fileID: 1195558735}
   - 114: {fileID: 1195558734}
-  m_Layer: 0
+  - 114: {fileID: 1195558741}
+  - 114: {fileID: 1195558740}
+  m_Layer: 9
   m_Name: InvisiFriend
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2726,6 +2836,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92ca82c4faee3c64f8fed37ba73da328, type: 3}
   m_Name: 
+  ATTACK_TIME: .5
   jumpForce: 10
   jumpAnimationLenght: 1
   acceleration: 20
@@ -2764,6 +2875,30 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 1
+--- !u!114 &1195558740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400014, guid: 31f60652f9e0e2d48b51af89a3e962d5,
+    type: 2}
+  m_PrefabInternal: {fileID: 1186808615}
+  m_GameObject: {fileID: 1195558732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9846116c8ac18e4fa7fe3c5060fab76, type: 3}
+  m_Name: 
+  hitBox: {fileID: 100000, guid: 81e2b851e661de648a6f926a5f8aecd3, type: 2}
+  shieldObject: {fileID: 100000, guid: 631c4eff33e245a4c9108c9c4f943d4b, type: 2}
+--- !u!114 &1195558741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400012, guid: 31f60652f9e0e2d48b51af89a3e962d5,
+    type: 2}
+  m_PrefabInternal: {fileID: 1186808615}
+  m_GameObject: {fileID: 1195558732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a49cbc483a548bc4480e9c5e7b8640da, type: 3}
+  m_Name: 
 --- !u!1 &1202294815
 GameObject:
   m_ObjectHideFlags: 0
@@ -2775,7 +2910,7 @@ GameObject:
   - 33: {fileID: 1202294818}
   - 23: {fileID: 1202294817}
   - 114: {fileID: 1202294816}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AddOns
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2901,7 +3036,7 @@ GameObject:
   - 33: {fileID: 1207713773}
   - 23: {fileID: 1207713772}
   - 114: {fileID: 1207713771}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2934,10 +3069,10 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 12ba0e77f2410d641998f25367842b20, type: 3}
   - {fileID: 2800000, guid: c61a1ccd1463d9a46af9ad08645fa1ab, type: 3}
   attackAnimation:
-  - {fileID: 2800000, guid: 547705318a015d6439578a9fdfabafbf, type: 3}
-  - {fileID: 2800000, guid: efc1ebfef177ecc469a915313e1a274a, type: 3}
-  - {fileID: 2800000, guid: 190fb69e8e4049a468a07e994f6bd63a, type: 3}
-  - {fileID: 2800000, guid: 98cde6f945ef6e348b68096fa25018ab, type: 3}
+  - {fileID: 2800000, guid: eed028c6f48c73b4191f8e600aa3700f, type: 3}
+  - {fileID: 2800000, guid: eed028c6f48c73b4191f8e600aa3700f, type: 3}
+  - {fileID: 2800000, guid: eed028c6f48c73b4191f8e600aa3700f, type: 3}
+  - {fileID: 2800000, guid: eed028c6f48c73b4191f8e600aa3700f, type: 3}
   hurtAnimation:
   - {fileID: 2800000, guid: 64adafff7ddda1545b52264a97624f5f, type: 3}
   - {fileID: 2800000, guid: 50b3d906e3b7d3845826119d50d7c783, type: 3}
@@ -3287,7 +3422,7 @@ GameObject:
   - 33: {fileID: 1326401248}
   - 23: {fileID: 1326401247}
   - 114: {fileID: 1326401246}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AddOns
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3405,8 +3540,8 @@ MeshFilter:
 --- !u!1 &1331807647
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabParentObject: {fileID: 100000, guid: 2b7efea6558d535498db751cfa524fbb, type: 2}
+  m_PrefabInternal: {fileID: 1785153590}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1331807648}
@@ -3414,7 +3549,7 @@ GameObject:
   - 65: {fileID: 1331807650}
   - 114: {fileID: 1331807651}
   m_Layer: 0
-  m_Name: ClockSpawn5
+  m_Name: SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3423,8 +3558,8 @@ GameObject:
 --- !u!4 &1331807648
 Transform:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabParentObject: {fileID: 400000, guid: 2b7efea6558d535498db751cfa524fbb, type: 2}
+  m_PrefabInternal: {fileID: 1785153590}
   m_GameObject: {fileID: 1331807647}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.20277834, y: -28.0965118, z: 0}
@@ -3434,8 +3569,9 @@ Transform:
 --- !u!114 &1331807649
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabParentObject: {fileID: 11400000, guid: 2b7efea6558d535498db751cfa524fbb,
+    type: 2}
+  m_PrefabInternal: {fileID: 1785153590}
   m_GameObject: {fileID: 1331807647}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -3444,8 +3580,9 @@ MonoBehaviour:
 --- !u!65 &1331807650
 BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabParentObject: {fileID: 6500000, guid: 2b7efea6558d535498db751cfa524fbb,
+    type: 2}
+  m_PrefabInternal: {fileID: 1785153590}
   m_GameObject: {fileID: 1331807647}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -3456,8 +3593,9 @@ BoxCollider:
 --- !u!114 &1331807651
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabParentObject: {fileID: 11400002, guid: 2b7efea6558d535498db751cfa524fbb,
+    type: 2}
+  m_PrefabInternal: {fileID: 1785153590}
   m_GameObject: {fileID: 1331807647}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -3535,7 +3673,7 @@ GameObject:
   - 33: {fileID: 1342563828}
   - 23: {fileID: 1342563827}
   - 114: {fileID: 1342563826}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3662,7 +3800,7 @@ GameObject:
   - 33: {fileID: 1373145764}
   - 23: {fileID: 1373145763}
   - 114: {fileID: 1373145762}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AddOns
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3788,7 +3926,7 @@ GameObject:
   - 33: {fileID: 1422209114}
   - 23: {fileID: 1422209113}
   - 114: {fileID: 1422209112}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AddOns
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3944,6 +4082,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afe47fdc88dd86747af14f750fdd744c, type: 3}
   m_Name: 
   players: 0
+  automaticRegisterId: 
+  automaticRegisterPlayer: []
+  automaticRegisterType: 
 --- !u!114 &1451873678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4295,7 +4436,7 @@ GameObject:
   - 33: {fileID: 1573634835}
   - 23: {fileID: 1573634834}
   - 114: {fileID: 1573634833}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4802,6 +4943,46 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dae049677ecec5448a6d21cf5fd33d8d, type: 3}
   m_Name: 
+--- !u!1001 &1785153590
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1013109977}
+    m_Modifications:
+    - target: {fileID: 400000, guid: 2b7efea6558d535498db751cfa524fbb, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -7.20277834
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 2b7efea6558d535498db751cfa524fbb, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -28.0965118
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 2b7efea6558d535498db751cfa524fbb, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 2b7efea6558d535498db751cfa524fbb, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 2b7efea6558d535498db751cfa524fbb, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 2b7efea6558d535498db751cfa524fbb, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 2b7efea6558d535498db751cfa524fbb, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 2b7efea6558d535498db751cfa524fbb, type: 2}
+  m_RootGameObject: {fileID: 1331807647}
+  m_IsPrefabParent: 0
+  m_IsExploded: 1
 --- !u!1 &1907742243
 GameObject:
   m_ObjectHideFlags: 0
@@ -4813,7 +4994,7 @@ GameObject:
   - 33: {fileID: 1907742247}
   - 23: {fileID: 1907742246}
   - 114: {fileID: 1907742245}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AddOns
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5056,7 +5237,7 @@ GameObject:
   - 33: {fileID: 1974045417}
   - 23: {fileID: 1974045416}
   - 114: {fileID: 1974045415}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AddOns
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5225,7 +5406,9 @@ GameObject:
   - 136: {fileID: 2032111864}
   - 114: {fileID: 2032111863}
   - 114: {fileID: 2032111862}
-  m_Layer: 0
+  - 114: {fileID: 2032111870}
+  - 114: {fileID: 2032111869}
+  m_Layer: 9
   m_Name: Flowerish
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -5250,7 +5433,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 482624765}
   m_GameObject: {fileID: 2032111861}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: abf0f20902f769d40a5c0b1a704617af, type: 3}
   m_Name: 
@@ -5275,7 +5458,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 482624765}
   m_GameObject: {fileID: 2032111861}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84a283aabdb1c2f4ead63bccf46256cb, type: 3}
   m_Name: 
@@ -5290,6 +5473,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92ca82c4faee3c64f8fed37ba73da328, type: 3}
   m_Name: 
+  ATTACK_TIME: .5
   jumpForce: 10
   jumpAnimationLenght: 1
   acceleration: 20
@@ -5327,6 +5511,30 @@ Transform:
   - {fileID: 1422209111}
   - {fileID: 1573634832}
   m_Father: {fileID: 0}
+--- !u!114 &2032111869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400014, guid: 9e5fda6f026efda469656e58acf1d6f1,
+    type: 2}
+  m_PrefabInternal: {fileID: 482624765}
+  m_GameObject: {fileID: 2032111861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9846116c8ac18e4fa7fe3c5060fab76, type: 3}
+  m_Name: 
+  hitBox: {fileID: 100000, guid: 81e2b851e661de648a6f926a5f8aecd3, type: 2}
+  shieldObject: {fileID: 100000, guid: 631c4eff33e245a4c9108c9c4f943d4b, type: 2}
+--- !u!114 &2032111870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400012, guid: 9e5fda6f026efda469656e58acf1d6f1,
+    type: 2}
+  m_PrefabInternal: {fileID: 482624765}
+  m_GameObject: {fileID: 2032111861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a49cbc483a548bc4480e9c5e7b8640da, type: 3}
+  m_Name: 
 --- !u!1 &2103744205
 GameObject:
   m_ObjectHideFlags: 0
@@ -5338,7 +5546,7 @@ GameObject:
   - 33: {fileID: 2103744209}
   - 23: {fileID: 2103744208}
   - 114: {fileID: 2103744207}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AddOns
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5467,7 +5675,9 @@ GameObject:
   - 114: {fileID: 2116936979}
   - 114: {fileID: 2116936980}
   - 114: {fileID: 2116936981}
-  m_Layer: 0
+  - 114: {fileID: 2116936983}
+  - 114: {fileID: 2116936982}
+  m_Layer: 9
   m_Name: PianoCat
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -5528,6 +5738,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92ca82c4faee3c64f8fed37ba73da328, type: 3}
   m_Name: 
+  ATTACK_TIME: .5
   jumpForce: 10
   jumpAnimationLenght: 1
   acceleration: 20
@@ -5565,9 +5776,33 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1540170389}
   m_GameObject: {fileID: 2116936974}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: abf0f20902f769d40a5c0b1a704617af, type: 3}
+  m_Name: 
+--- !u!114 &2116936982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400014, guid: 5f4f05a2d80ad5d42a9d828ce927cb29,
+    type: 2}
+  m_PrefabInternal: {fileID: 1540170389}
+  m_GameObject: {fileID: 2116936974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9846116c8ac18e4fa7fe3c5060fab76, type: 3}
+  m_Name: 
+  hitBox: {fileID: 100000, guid: 81e2b851e661de648a6f926a5f8aecd3, type: 2}
+  shieldObject: {fileID: 100000, guid: 631c4eff33e245a4c9108c9c4f943d4b, type: 2}
+--- !u!114 &2116936983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400012, guid: 5f4f05a2d80ad5d42a9d828ce927cb29,
+    type: 2}
+  m_PrefabInternal: {fileID: 1540170389}
+  m_GameObject: {fileID: 2116936974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a49cbc483a548bc4480e9c5e7b8640da, type: 3}
   m_Name: 
 --- !u!1 &2125560522
 GameObject:

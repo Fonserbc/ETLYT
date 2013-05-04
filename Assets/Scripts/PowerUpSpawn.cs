@@ -8,6 +8,7 @@ public class PowerUpSpawn : MonoBehaviour {
 	public GameObject PowerUpType1;
 	public GameObject PowerUpType2;
 	public Texture2D[] PowerUps;
+	public float spawnTime = 4f;
 	
 	// Use this for initialization
 	void Start () {
@@ -20,10 +21,11 @@ public class PowerUpSpawn : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		time += Time.deltaTime;
-		if (time >= 4f) {
-			time -= 4f;
-			int pos = Random.Range(0, 5);
-			SphereGizmos sG = SpawnPoints[pos].GetComponent<SphereGizmos>();
+		if (time >= spawnTime) {
+			time -= spawnTime;
+			int pos = Random.Range(0, PowerUps.Length-1);
+			int spawner = Random.Range(0, SpawnPoints.Length-1);
+			SphereGizmos sG = SpawnPoints[spawner].GetComponent<SphereGizmos>();
 			if (!sG.isInstantiated() && !SpawnPoints[pos].GetComponent<SpawnPrevention>().isSomeoneThere()) {
 				sG.is_instanced(true);
 				if (pos < 3) {
