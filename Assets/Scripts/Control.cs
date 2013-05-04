@@ -47,6 +47,7 @@ public class Control : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
+		DontDestroyOnLoad(transform.gameObject);
 		wiiControl = (WiiMoteControl)GetComponent("WiiMoteControl");
 		
 		types = new ControllerType[4];

@@ -9,16 +9,37 @@ public class BattleInformer : MonoBehaviour {
 	private int stage = 1; //Pantalla
 	public bool[] items;
 	
+	//datos que se traspasan
+	private GameObject[] playersType;
+	private Vector3[] scenary;
+
 	
 	void Start() {
 		DontDestroyOnLoad(transform.gameObject);
 		players = new GameObject[maxPlayers];
+		playersType = new GameObject[maxPlayers];
+
 	}
 	
 	public void startFight() {
 		if(stage != -1) {
 			Application.LoadLevel(stage);
 		}
+	}
+	
+	public void initFight(Vector3[] scn) {
+		int size = playersType.Length;
+		for(int i = 0; i < size; ++i) {
+			if(playersType[i] != null) {
+				players[i] = Instantiate(playersType[i],scn[i], playersType[i].transform.rotation) as GameObject; 
+				players[i].GetComponent<MenuMovement>().enabled = false;
+				players[i].GetComponent<Movement>().enabled = true;
+				players[i].GetComponent<BasicPowers>().enabled = true;
+				//players[i].GetComponent<PoweUpHandler>().enabled = true;
+				
+				players[i].BroadcastMessage("SetPlayer", i);
+			}
+		}	
 	}
 	
 	//El item i pasa a estado b
@@ -49,12 +70,14 @@ public class BattleInformer : MonoBehaviour {
 				position = players[i].transform.position;
 				velocity = players[i].rigidbody.velocity;
 				Destroy (players[i]);
+				playersType[i] = null;
 			}
 			
 			//Instantiate particles			
 			if(playerType != null) { 
 				players[i] = Instantiate(playerType,position, playerType.transform.rotation) as GameObject; 
 				players[i].rigidbody.velocity = velocity;
+				playersType[i] = playerType;
 				MenuMovement mm = players[i].GetComponent<MenuMovement>();
 				mm.setPlayer(i);
 				mm.setIdPlayer(idPlayer);
