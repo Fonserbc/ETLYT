@@ -3,10 +3,12 @@ using System.Collections;
 
 public class PlayerHitBoxControl : MonoBehaviour {
 	public GameObject hitBox;
+	public GameObject shieldObject;
 	private GameObject hittingBox;
 	private Control control;
 	private int player = 0;
 	private bool shield = false;
+	private GameObject instantiatedShield;
 	
 	private Vector3 hitPosition; // 0.24 0.18 0
 	private Vector3 hitScale; // 1 0.7 0.5
@@ -24,7 +26,7 @@ public class PlayerHitBoxControl : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () {		
 		if(control.Attack(player) && hittingBox == null) {
 			int hitDir = GetHitDir();
 			//PillarPosicion si precede
@@ -61,6 +63,17 @@ public class PlayerHitBoxControl : MonoBehaviour {
 	
 	public void setShield(bool sh) {
 		shield = sh;
+		
+		if (shield) {
+			if (instantiatedShield == null) {
+				instantiatedShield = (GameObject) GameObject.Instantiate(shieldObject, transform.position, transform.rotation);
+				instantiatedShield.transform.parent = transform;
+				instantiatedShield.transform.localScale = new Vector3(1f,1f,1f);
+			}
+		}
+		else {
+			if (instantiatedShield) Destroy(instantiatedShield);
+		}
 	}
 	
 	public void SetPlayer(int p) {

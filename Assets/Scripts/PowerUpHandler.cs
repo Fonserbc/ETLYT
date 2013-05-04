@@ -7,6 +7,7 @@ public class PowerUpHandler : MonoBehaviour {
 	private float timeLeft = 0;
 	private bool isActive = false;
 	private int activePowerUp = -1;
+	private int player = 0;
 
 	public void stackPowerUp(int i) {
 		stack = i;	
@@ -39,7 +40,11 @@ public class PowerUpHandler : MonoBehaviour {
 				m.maxAirSpeed *=1.5f;
 			//	m.airAcceleration *=2;
 				Debug.Log ("Estic super corrents");
-				break;			
+				break;
+			case 3:
+				rigidbody.useGravity = false;
+				Debug.Log ("No tinc gravetat");
+				break;
 			default:
 				break;
 			}
@@ -68,6 +73,9 @@ public class PowerUpHandler : MonoBehaviour {
 				m.maxAirSpeed /=1.5f;
 //				m.airAcceleration /=2;
 				break;
+			case 3:
+				rigidbody.useGravity = true;
+				break;
 			default:
 				break;
 		}
@@ -94,7 +102,11 @@ public class PowerUpHandler : MonoBehaviour {
 			}
 		}
 		Control c = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
-		if (c.AbilityPowerUp(0)) usePowerUp();
+		if (c.AbilityPowerUp(player)) usePowerUp();
 		HUDActualization();
+	}
+	
+	void SetPlayer (int p) {
+		player = p;
 	}
 }
