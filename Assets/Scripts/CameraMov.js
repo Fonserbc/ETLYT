@@ -58,6 +58,7 @@ function FixedUpdate () {
 	rigidbody.MovePosition(Vector3.Lerp(transform.position, mid + Vector3(0,height, -Mathf.Max(minDistY, minDistX)), speed*Time.deltaTime));
 }
 
+/*
 function OnDrawGizmos () {
 	var pos : Vector3 = transform.position;
 	pos.z = 0;
@@ -65,3 +66,4 @@ function OnDrawGizmos () {
 	Gizmos.color = Color.cyan;
 	Gizmos.DrawWireCube(pos, Vector3(2*margin.x, 2*margin.y, 1)); 
 }
+*/
