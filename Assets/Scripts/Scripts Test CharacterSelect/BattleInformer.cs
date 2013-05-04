@@ -29,15 +29,19 @@ public class BattleInformer : MonoBehaviour {
 	
 	public void initFight(Vector3[] scn) {
 		int size = playersType.Length;
+		float delta = 1f/((float)playersType.Length + 1f);
+		float initDelta = -1f + delta;
 		for(int i = 0; i < size; ++i) {
 			if(playersType[i] != null) {
-				players[i] = Instantiate(playersType[i],scn[i], playersType[i].transform.rotation) as GameObject; 
+				players[i] = Instantiate(playersType[i],scn[i] + new Vector3(0f,0f,initDelta), playersType[i].transform.rotation) as GameObject; 
 				players[i].GetComponent<MenuMovement>().enabled = false;
 				players[i].GetComponent<Movement>().enabled = true;
 				players[i].GetComponent<BasicPowers>().enabled = true;
 				//players[i].GetComponent<PoweUpHandler>().enabled = true;
 				
 				players[i].BroadcastMessage("SetPlayer", i);
+				
+				initDelta += delta;
 			}
 		}	
 	}
