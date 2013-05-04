@@ -20,6 +20,8 @@ public class Movement : MonoBehaviour {
 	public float ATTACK_TIME = 0.5f;
 	private float ATTACK_IMPULSE = 0.5f;
 	
+	private float INV_TIME = 1.5f;
+	
 	public enum PlayerState {
 		Idle,
 		Run,
@@ -58,6 +60,7 @@ public class Movement : MonoBehaviour {
 	private float airTimer = 0f;
 	private float slideTimer = 0f;
 	private float violentTimer = 0f;
+	private float lastTimeHit = 10f;
 	
 	private float currSpeedScale = 0f;
 	
@@ -78,6 +81,8 @@ public class Movement : MonoBehaviour {
 	}
 	
 	void Update () {
+		lastTimeHit += Time.deltaTime;
+		
 		Vector3 movementDir = GetMovementDir();
 		
 		bool jump = control.Jump(player);
@@ -370,10 +375,14 @@ public class Movement : MonoBehaviour {
 	}
 	
 	public void Hit (Vector3 dir) {
-		violentTimer = 0;
-		
-		rigidbody.velocity += dir.normalized*HIT_RESPONSE_INTENSITY + -Physics.gravity.normalized*HIT_RESPONSE_INTENSITY;
-		
-		ChangeState(PlayerState.Hurt);
+		if (lastTimeHit > INV_TIME) {
+			violentTimer = 0;
+			
+			lastTimeHit = 0;
+			
+			rigidbody.velocity += dir.normalized*HIT_RESPONSE_INTENSITY + -Physics.gravity.normalized*HIT_RESPONSE_INTENSITY;
+			
+			ChangeState(PlayerState.Hurt);
+		}
 	}
 }
