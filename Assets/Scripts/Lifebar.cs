@@ -7,15 +7,23 @@ public class Lifebar : MonoBehaviour {
 	public Texture2D[] PowerUps;
 	public Texture2D Portrait;
 	public Texture2D[] Display;
-	public Texture2D Arrow;
+	public Texture2D[] Arrow;
 	private float life = 0;
 	private int stackedPowerUp = -1;
 	
 	private int player = 0;
 	
+	private bool start = false;
+	
+	public float angle = 0;
+	private float anguel = 0;
+	Control control;
+	
 	// Use this for initialization
 	void Start () {
-		life = 100;
+		life = 40;
+		control = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
+
 	}
 	
 	void OnGUI() {
@@ -33,7 +41,12 @@ public class Lifebar : MonoBehaviour {
 			GUI.DrawTexture(new Rect(129, 46, 60, 60), Numbers[desenes+1]);
 			GUI.DrawTexture(new Rect(152, 46, 60, 60), Numbers[unitats+1]);
 			GUI.DrawTexture(new Rect(25,30,100,100), Portrait);
-			//GUI.DrawTexture(new Rect(30,30,100,100), Arrow);
+			
+			Matrix4x4 matrixBackup = GUI.matrix;
+			Vector2 pivot = new Vector2(72.5f,80);
+			GUIUtility.RotateAroundPivot(angle, pivot);
+			GUI.DrawTexture(new Rect(62.5f, 10, 20, 20), Arrow[0]);
+			GUI.matrix = matrixBackup;
 			
 			if (stackedPowerUp > -1) GUI.DrawTexture(new Rect(133, 94, 50, 50), PowerUps[stackedPowerUp]);
 		}
@@ -43,7 +56,12 @@ public class Lifebar : MonoBehaviour {
 			GUI.DrawTexture(new Rect(Screen.width-232, 46, 60, 60), Numbers[desenes+1]);
 			GUI.DrawTexture(new Rect(Screen.width-209, 46, 60, 60), Numbers[unitats+1]);
 			GUI.DrawTexture(new Rect(Screen.width-123,30,100,100), Portrait);
-			//GUI.DrawTexture(new Rect(30,30,100,100), Arrow);
+			
+			Matrix4x4 matrixBackup = GUI.matrix;
+			Vector2 pivot = new Vector2(Screen.width-72.5f,80);
+			GUIUtility.RotateAroundPivot(angle, pivot);
+			GUI.DrawTexture(new Rect(Screen.width-82.5f, 10, 20, 20), Arrow[1]);
+			GUI.matrix = matrixBackup;
 			
 			if (stackedPowerUp > -1) GUI.DrawTexture(new Rect(Screen.width-178, 94, 50, 50), PowerUps[stackedPowerUp]);
 		}
@@ -53,7 +71,12 @@ public class Lifebar : MonoBehaviour {
 			GUI.DrawTexture(new Rect(129, Screen.height-124, 60, 60), Numbers[desenes+1]);
 			GUI.DrawTexture(new Rect(152, Screen.height-124, 60, 60), Numbers[unitats+1]);
 			GUI.DrawTexture(new Rect(25,Screen.height-140,100,100), Portrait);
-			//GUI.DrawTexture(new Rect(30,30,100,100), Arrow);
+			
+			Matrix4x4 matrixBackup = GUI.matrix;
+			Vector2 pivot = new Vector2(72.5f,Screen.height-90);
+			GUIUtility.RotateAroundPivot(angle, pivot);
+			GUI.DrawTexture(new Rect(62.5f, Screen.height-160, 20, 20), Arrow[2]);
+			GUI.matrix = matrixBackup;
 			
 			if (stackedPowerUp > -1) GUI.DrawTexture(new Rect(133, Screen.height-76, 50, 50), PowerUps[stackedPowerUp]);
 		}
@@ -63,7 +86,12 @@ public class Lifebar : MonoBehaviour {
 			GUI.DrawTexture(new Rect(Screen.width-232, Screen.height-124, 60, 60), Numbers[desenes+1]);
 			GUI.DrawTexture(new Rect(Screen.width-209, Screen.height-124, 60, 60), Numbers[unitats+1]);
 			GUI.DrawTexture(new Rect(Screen.width-123,Screen.height-140,100,100), Portrait);
-			//GUI.DrawTexture(new Rect(30,30,100,100), Arrow);
+
+			Matrix4x4 matrixBackup = GUI.matrix;
+			Vector2 pivot = new Vector2(Screen.width-72.5f,Screen.height-90);
+			GUIUtility.RotateAroundPivot(angle, pivot);
+			GUI.DrawTexture(new Rect(Screen.width-82.5f, Screen.height-160, 20, 20), Arrow[3]);
+			GUI.matrix = matrixBackup;
 			
 			if (stackedPowerUp > -1) GUI.DrawTexture(new Rect(Screen.width-178, Screen.height-76, 50, 50), PowerUps[stackedPowerUp]);
 		}
@@ -72,14 +100,19 @@ public class Lifebar : MonoBehaviour {
 	// Update is called once per frame
 	void Update() {
 		life -= Time.deltaTime;
-		if (life <= 0) BroadcastMessage("Death");
+		if (life <= 0) Destroy(gameObject);//BroadcastMessage("Death");
 		//Debug.Log(centenes.ToString() + desenes.ToString() + unitats.ToString());
+		anguel = (control.Slope(player)*2*Mathf.PI)/360;
+		Debug.Log(anguel);
+
 	}
 	
+	//Se llama desde Movement, al cambiar a estado Hurt
 	public void gotHit() {
-		life -= 10;
+		life -= 2;
 	}
 	
+	//Se llama desde aqui
 	public void addLife(int i) {
 		life += 5;
 	}

@@ -27,7 +27,6 @@ public class ClockSpawn : MonoBehaviour {
 				GameObject c = (GameObject)Instantiate(Clock, SpawnPoints[pos].position, SpawnPoints[pos].rotation);
 				c.transform.parent = transform;
 				ClockGestor rC = c.GetComponent<ClockGestor>();
-				Debug.Log (rC == null);
 				rC.setSpawner(SpawnPoints[pos]);
 			}
 		}

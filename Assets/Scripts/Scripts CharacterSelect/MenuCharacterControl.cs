@@ -8,6 +8,8 @@ public class MenuCharacterControl : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		Physics.gravity = new Vector3(0,-9.81f,0);
+		Time.timeScale = 1.0f;
 		Control control = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
 		BattleInformer bi = GameObject.FindGameObjectWithTag("BattleInformer").GetComponent<BattleInformer>();
 

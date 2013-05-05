@@ -14,7 +14,11 @@ public class Scenary : MonoBehaviour {
 	private int numPlayers;
 	private int cont = 0;
 	BattleInformer bi;
-
+	
+	private bool finished = false;
+	public Texture2D finish;
+	
+	private float timefinish = 3.0f;
 	
 	// Use this for initialization
 	void Start () {
@@ -37,8 +41,20 @@ public class Scenary : MonoBehaviour {
 				}
 			}
 		} else {
-			numPlayers = bi.getPlayersInGame();
-			if(numPlayers == 1) Debug.Log("finished!");
+			if(!finished) {
+				numPlayers = bi.getPlayersInGame();
+				if(numPlayers == 1) {
+					finished = true;
+					Time.timeScale = 0.5f;
+				}
+			} else {
+				timefinish -= 2*Time.deltaTime;
+				if(timefinish <= 0) {
+					Destroy (GameObject.FindGameObjectWithTag("BattleInformer"));
+					Destroy (GameObject.FindGameObjectWithTag("Control"));
+					Application.LoadLevel("Character Select");
+				}
+			}
 				
 		}
 	}
@@ -48,6 +64,10 @@ public class Scenary : MonoBehaviour {
 		for(int i = 0; i < initPosition.Length; ++i) {
 			Gizmos.DrawWireCube(initPosition[i],Vector3.one);
 		}
+	}
+	
+	void OnGUI() {
+		if(finished) GUI.DrawTexture(new Rect((Screen.width/2)-200,(Screen.height/2) -200, 400, 400), finish);
 	}
 	
 

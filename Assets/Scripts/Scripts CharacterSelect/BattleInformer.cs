@@ -8,6 +8,8 @@ public class BattleInformer : MonoBehaviour {
 	private GameObject[] players; //personajes en juego
 	private int stage = 1; //Pantalla
 	public bool[] items;
+	private bool start = false;
+	public GameObject dust;
 	
 	//datos que se traspasan
 	private GameObject[] playersType;
@@ -22,9 +24,13 @@ public class BattleInformer : MonoBehaviour {
 	}
 	
 	public void startFight() {
-		if(stage != -1) {
+		if(stage != -1 && start) {
 			Application.LoadLevel(stage);
 		}
+	}
+	
+	public void setStart(bool s) {
+		start = s;
 	}
 	
 	/*
@@ -54,6 +60,7 @@ public class BattleInformer : MonoBehaviour {
 		if(playersType[i] != null) {
 			players[i] = Instantiate(playersType[i],scn + new Vector3(0f,0f,initDelta), playersType[i].transform.rotation) as GameObject; 
 			players[i].GetComponent<MenuMovement>().enabled = false;
+			players[i].GetComponent<Movement>().enabled = false;
 			players[i].BroadcastMessage("SetPlayer", i);
 		}
 	}
@@ -64,9 +71,22 @@ public class BattleInformer : MonoBehaviour {
 			if(playersType[i] != null) {
 				players[i].GetComponent<Movement>().enabled = true;
 				players[i].GetComponent<BasicPowers>().enabled = true;
-				//players[i].GetComponent<PoweUpHandler>().enabled = true;
+				players[i].GetComponent<PowerUpHandler>().enabled = true;
+				players[i].GetComponent<Lifebar>().enabled = true;
+
+
 			}
 		}	
+	}
+	
+	public int getNumPlayers(GameObject bs) {
+		int cont = 0;
+		for(int i = 0; i < playersType.Length; ++i) {
+			if(playersType[i] != null && playersType[i] != bs) {
+				++cont;
+			}
+		}
+		return cont;	
 	}
 	
 	public int getNumPlayers() {
@@ -122,7 +142,8 @@ public class BattleInformer : MonoBehaviour {
 			
 			//Instantiate particles			
 			if(playerType != null) { 
-				players[i] = Instantiate(playerType,position, playerType.transform.rotation) as GameObject; 
+				players[i] = Instantiate(playerType,position, playerType.transform.rotation) as GameObject;
+				//Instantiate (dust, position, playerType.transform.rotation);
 				players[i].rigidbody.velocity = velocity;
 				playersType[i] = playerType;
 				players[i].BroadcastMessage("SetPlayer", i);

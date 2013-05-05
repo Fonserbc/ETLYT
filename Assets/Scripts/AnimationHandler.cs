@@ -107,6 +107,14 @@ public class AnimationHandler : MonoBehaviour {
 			} 
 			renderer.material.mainTexture = wallAnimation[m_step];
 			break;
+		case Movement.PlayerState.Death:
+			if(m_stepStatus >= m_animationSpeed) {
+				m_stepStatus %= m_animationSpeed;
+				//if(m_step == 7) Destroy(transform.parent.gameObject); 
+				//else m_step = (++m_step)%wallAnimation.Length;
+			} 
+			renderer.material.mainTexture = wallAnimation[m_step];
+			break;
 		default:
 			break;
 		}

@@ -383,6 +383,8 @@ public class Movement : MonoBehaviour {
 			rigidbody.velocity += dir.normalized*HIT_RESPONSE_INTENSITY + -Physics.gravity.normalized*HIT_RESPONSE_INTENSITY;
 			
 			ChangeState(PlayerState.Hurt);
+			Lifebar lb = GetComponent<Lifebar>();
+			if(lb.enabled) lb.gotHit();
 		}
 	}
 }
