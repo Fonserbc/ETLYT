@@ -51,8 +51,7 @@ public class Scenary : MonoBehaviour {
 				timefinish -= 2*Time.deltaTime;
 				if(timefinish <= 0) {
 					Destroy (GameObject.FindGameObjectWithTag("BattleInformer"));
-					Destroy (GameObject.FindGameObjectWithTag("Control"));
-					Application.LoadLevel("Character Select");
+					Application.LoadLevel(Application.loadedLevel - 1);
 				}
 			}
 				

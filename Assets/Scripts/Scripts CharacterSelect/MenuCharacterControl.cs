@@ -17,7 +17,7 @@ public class MenuCharacterControl : MonoBehaviour {
 		if (c>0) {
 			for (int i=0; i<=c-1; i++) {
 				
-				control.RegisterPlayer(Control.ControllerType.WiiMote, i);
+				//control.RegisterPlayer(Control.ControllerType.WiiMote, i);
 				bi.changePlayer(standardAvatar,i, 0);
 			}		
 		} else {

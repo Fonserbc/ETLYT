@@ -84,12 +84,13 @@ public class TitleSelect : MonoBehaviour {
 		if (onTuto) {
 			Vector2 size;
 			if (lore) {
-				size = new Vector2(Mathf.Min(loreTex.width, Screen.width), Mathf.Min(loreTex.height, Screen.height));
+				size = new Vector2(Mathf.Min(loreTex.width, Screen.width*3/4), Mathf.Min(loreTex.height, Screen.height));
 				GUI.DrawTexture(new Rect(Screen.width/2 - size.x/2, Screen.height/2 - size.y/2, size.x, size.y), loreTex);
 			}
 			else {
-				size = new Vector2(Mathf.Min(wiimote.width, Screen.width*3/4), Mathf.Min(wiimote.height, Screen.height));
+				size = new Vector2(Mathf.Min(wiimote.width, Screen.width/2), Mathf.Min(wiimote.height, Screen.height));
 				GUI.DrawTexture(new Rect(Screen.width/4 - size.x/2, Screen.height/2 - size.y/2, size.x, size.y), wiimote);
+				size = new Vector2(Mathf.Min(nunchuck.width, Screen.width/2), Mathf.Min(nunchuck.height, Screen.height));
 				GUI.DrawTexture(new Rect(Screen.width*3/4 - size.x/2, Screen.height/2 - size.y/2, size.x, size.y), nunchuck);
 			}
 		}
