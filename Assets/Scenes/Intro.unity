@@ -371,6 +371,7 @@ MonoBehaviour:
   studio: {fileID: 2800000, guid: ea91a0bcf025c5d45aab888ac4eb2096, type: 3}
   credits: {fileID: 2800000, guid: 69cc061ab9cf0154d94ba77aa2b2ad91, type: 3}
   cantDetect: {fileID: 2800000, guid: bb5ad146f9c60c14ea8615add7a61b5a, type: 3}
+  noFriends: {fileID: 2800000, guid: d0566ba01aba41c469a83f2eb160831c, type: 3}
   whiteMaterial: {fileID: 2100000, guid: 75f7d808ab08f1549801653ac48c3ddc, type: 2}
   background: {fileID: 1745584595}
 --- !u!82 &1203143286

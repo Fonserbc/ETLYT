@@ -15,6 +15,7 @@ public class Intro : MonoBehaviour {
 	public Texture2D credits;
 	private float creditsTime = 4;
 	public Texture2D cantDetect;
+	public Texture2D noFriends;
 	
 	public Material whiteMaterial;
 	public GameObject background;
@@ -25,6 +26,7 @@ public class Intro : MonoBehaviour {
 	private Control control;
 	
 	private bool finished = false;
+	private int count = 0;
 	
 	
 	// Use this for initialization
@@ -37,9 +39,11 @@ public class Intro : MonoBehaviour {
 	void Update () {
 		time += Time.deltaTime;
 		
+		count = WiiMoteControl.wiimote_count();	
+	
 		switch (state) {
 		case IntroState.Detecting:
-			if (WiiMoteControl.wiimote_count() > 0) SetState(IntroState.Studio);
+			if (WiiMoteControl.wiimote_count() > 1) SetState(IntroState.Studio);
 			break;
 		case IntroState.Studio:
 			if (time > studioTime) SetState(IntroState.Credits);
@@ -85,7 +89,8 @@ public class Intro : MonoBehaviour {
 		Vector2 size;
 		switch (state) {
 			case IntroState.Detecting:
-				tex = cantDetect;
+				if (count == 0) tex = cantDetect;
+				else tex = noFriends;
 				break;
 			case IntroState.Studio:
 				tex = studio;
