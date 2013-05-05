@@ -16,8 +16,9 @@ public class Lifebar : MonoBehaviour {
 	private bool start = false;
 	
 	public float angle = 0;
-	private float anguel = 0;
 	Control control;
+	private float timer = 0.2f;
+	private float count = 0;
 	
 	// Use this for initialization
 	void Start () {
@@ -102,8 +103,11 @@ public class Lifebar : MonoBehaviour {
 		life -= Time.deltaTime;
 		if (life <= 0) Destroy(gameObject);//BroadcastMessage("Death");
 		//Debug.Log(centenes.ToString() + desenes.ToString() + unitats.ToString());
-		anguel = (control.Slope(player)*2*Mathf.PI)/360;
-		Debug.Log(anguel);
+		
+		angle = control.Slope(player);
+		angle = (angle < 0)? angle + 360f : angle;
+		angle = -angle+180;
+		
 
 	}
 	

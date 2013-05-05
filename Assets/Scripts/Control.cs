@@ -44,6 +44,8 @@ public class Control : MonoBehaviour {
 	public int[] automaticRegisterId;
 	public GameObject[] automaticRegisterPlayer;
 	public ControllerType[] automaticRegisterType;
+	
+	private float[] actualSlope;
 
 	// Use this for initialization
 	void Awake () {
@@ -56,6 +58,7 @@ public class Control : MonoBehaviour {
 		playerAxis = new axis[4];
 		pressedTime = new float[7,4];
 		lastPressed = new bool[7,4];
+		actualSlope = new float[4];
 		
 		for (int i = 0; i < 4; ++i) {
 			types[i] = ControllerType.Undefined;
@@ -63,6 +66,7 @@ public class Control : MonoBehaviour {
 				pressedTime[j,i] = -1000;
 				lastPressed[j,i] = false;
 			}
+			actualSlope[i] = 0;
 		}
 		
 		if (automaticRegisterId.Length == automaticRegisterPlayer.Length && automaticRegisterType.Length == automaticRegisterId.Length) {
@@ -76,6 +80,7 @@ public class Control : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		for (int i = 0; i < 4; ++i) {
+			
 			if (types[i] == ControllerType.Undefined) continue;
 			
 			switch (types[i]) {				
@@ -144,6 +149,9 @@ public class Control : MonoBehaviour {
 				default:
 					break;
 			}
+			
+			actualSlope[i] = SlopeButton(i);
+			
 		}
 	}
 	
@@ -439,6 +447,14 @@ public class Control : MonoBehaviour {
 	 * 0 represents the static position
 	 */
 	public float Slope (int player) {
+		if (player < players) {
+			return actualSlope[player];
+		} else Debug.LogError("Player id does not exist. id "+player);
+		
+		return 0f;
+	}
+	
+	public float SlopeButton (int player) {
 		if (player < players) {
 			switch (types[player]) {
 				case ControllerType.WiiMote:
