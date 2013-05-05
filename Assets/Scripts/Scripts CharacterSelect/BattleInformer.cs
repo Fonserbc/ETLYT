@@ -4,7 +4,7 @@ using System.Collections;
 public class BattleInformer : MonoBehaviour {
 	
 	public int maxPlayers = 4; //numero maximo de pnjs en juego
-	public Vector3 standardPosition = Vector3.zero; //Posicion standard para colocar pnjs
+	public Vector3[] standardPositions; //Posicion standard para colocar pnjs
 	private GameObject[] players; //personajes en juego
 	private int stage = 1; //Pantalla
 	public bool[] items;
@@ -70,7 +70,23 @@ public class BattleInformer : MonoBehaviour {
 	}
 	
 	public int getNumPlayers() {
-		return players.Length;	
+		int cont = 0;
+		for(int i = 0; i < playersType.Length; ++i) {
+			if(playersType[i] != null) {
+				++cont;
+			}
+		}
+		return cont;	
+	}
+	
+	public int getPlayersInGame() {
+		int cont = 0;
+		for(int i = 0; i < players.Length; ++i) {
+			if(players[i] != null) {
+				++cont;
+			}
+		}
+		return cont;	
 	}
 	
 	//El item i pasa a estado b
@@ -95,7 +111,7 @@ public class BattleInformer : MonoBehaviour {
 	 */
 		if(i <= maxPlayers)	{
 
-			Vector3 position = standardPosition;
+			Vector3 position = standardPositions[i];
 			Vector3 velocity = Vector3.zero;
 			if(players[i] != null) {
 				position = players[i].transform.position;
@@ -109,11 +125,12 @@ public class BattleInformer : MonoBehaviour {
 				players[i] = Instantiate(playerType,position, playerType.transform.rotation) as GameObject; 
 				players[i].rigidbody.velocity = velocity;
 				playersType[i] = playerType;
+				players[i].BroadcastMessage("SetPlayer", i);
+
 				MenuMovement mm = players[i].GetComponent<MenuMovement>();
 				mm.setPlayer(i);
 				mm.setIdPlayer(idPlayer);
-				Movement move = players[i].GetComponent<Movement>();
-				move.SetPlayer(i);
+				
 			}
 		} 
 	}
@@ -121,6 +138,13 @@ public class BattleInformer : MonoBehaviour {
 	public int getMaxPlayers() {
 	//Accede controllerActivate
 		return maxPlayers;
+	}
+	
+	void OnDrawGizmos() {
+		Gizmos.color = Color.green;
+		for(int i = 0; i < standardPositions.Length; ++i) {
+			Gizmos.DrawWireCube(standardPositions[i],Vector3.one);
+		}
 	}
 	
 }

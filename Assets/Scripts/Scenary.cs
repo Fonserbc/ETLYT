@@ -12,15 +12,15 @@ public class Scenary : MonoBehaviour {
 	private float time2 = 0;
 	
 	private int numPlayers;
-	private int cont = 1;
+	private int cont = 0;
+	BattleInformer bi;
+
 	
 	// Use this for initialization
 	void Start () {
 		selection.Play();
-		BattleInformer bi = GameObject.FindGameObjectWithTag("BattleInformer").GetComponent<BattleInformer>();
+		bi = GameObject.FindGameObjectWithTag("BattleInformer").GetComponent<BattleInformer>();
 		numPlayers = bi.getNumPlayers();
-		time2 = time/numPlayers;//debugar
-		Debug.Log(time2);
 	}
 	
 	void Update() {
@@ -28,7 +28,7 @@ public class Scenary : MonoBehaviour {
 			time2 -= Time.deltaTime;
 			if(time2 <= 0) {
 				time2 += time/numPlayers;
-				BattleInformer bi = GameObject.FindGameObjectWithTag("BattleInformer").GetComponent<BattleInformer>();
+				bi = GameObject.FindGameObjectWithTag("BattleInformer").GetComponent<BattleInformer>();
 				bi.initPlayers(initPosition[cont],cont);
 				++cont;
 				if(cont == numPlayers) {
@@ -36,6 +36,10 @@ public class Scenary : MonoBehaviour {
 					bi.initFight();
 				}
 			}
+		} else {
+			numPlayers = bi.getPlayersInGame();
+			if(numPlayers == 1) Debug.Log("finished!");
+				
 		}
 	}
 	
