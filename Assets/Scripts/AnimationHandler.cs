@@ -11,6 +11,7 @@ public class AnimationHandler : MonoBehaviour {
 	public Texture2D[] runAnimation;	
 	public Texture2D[] slideAnimation;
 	public Texture2D[] wallAnimation;
+	public Texture2D[] deadAnimation;
 	
 	private int m_step = 0;
 	private float m_stepStatus = 0;
@@ -110,10 +111,10 @@ public class AnimationHandler : MonoBehaviour {
 		case Movement.PlayerState.Death:
 			if(m_stepStatus >= m_animationSpeed) {
 				m_stepStatus %= m_animationSpeed;
-				//if(m_step == 7) Destroy(transform.parent.gameObject); 
-				//else m_step = (++m_step)%wallAnimation.Length;
+				if(m_step < deadAnimation.Length-1) m_step = (++m_step)%deadAnimation.Length;
+				else Destroy(transform.parent.gameObject);
 			} 
-			renderer.material.mainTexture = wallAnimation[m_step];
+			renderer.material.mainTexture = deadAnimation[m_step];
 			break;
 		default:
 			break;

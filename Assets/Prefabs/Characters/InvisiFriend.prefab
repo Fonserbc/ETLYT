@@ -59,6 +59,7 @@ GameObject:
   - 82: {fileID: 8200006}
   - 82: {fileID: 8200008}
   - 82: {fileID: 8200010}
+  - 82: {fileID: 8200012}
   m_Layer: 9
   m_Name: InvisiFriend
   m_TagString: Player
@@ -502,6 +503,62 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+--- !u!82 &8200012
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100004}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 8300000, guid: e10529ea7c9f7674494c4e48966c6a4f, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -571,6 +628,15 @@ MonoBehaviour:
   - {fileID: 2800000, guid: a4ca4262b09310f4e8c90c949efbb514, type: 3}
   - {fileID: 2800000, guid: 922d20c1d74bf9440a49d36d31431a39, type: 3}
   - {fileID: 2800000, guid: 6a82f349ebb67784e8851ed97f31d525, type: 3}
+  deadAnimation:
+  - {fileID: 2800000, guid: adf6953c5c72b644bb1c79cb9dbde4e3, type: 3}
+  - {fileID: 2800000, guid: e61c00643c2e0304095fe53cc970b297, type: 3}
+  - {fileID: 2800000, guid: f8606b7358301f64e9b4a4a4243e6775, type: 3}
+  - {fileID: 2800000, guid: 60e55b142a6cd0d4096e3508d68ad528, type: 3}
+  - {fileID: 2800000, guid: 67ab113422e39c44ca0843a8907f29d7, type: 3}
+  - {fileID: 2800000, guid: 8f6f414d69a94d74b90bf8d8d945513e, type: 3}
+  - {fileID: 2800000, guid: 1b135cd0502ea1b4eae94ec346d8d220, type: 3}
+  - {fileID: 2800000, guid: 23cc554227c5c3641b045fc3804d5f3c, type: 3}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -582,6 +648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92ca82c4faee3c64f8fed37ba73da328, type: 3}
   m_Name: 
   ATTACK_TIME: .5
+  death: {fileID: 8200012}
   jumpForce: 10
   jumpAnimationLenght: 1
   acceleration: 20
@@ -690,6 +757,15 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 265e1f31dc1935942afe549bb25b2d63, type: 3}
   - {fileID: 2800000, guid: 1b208bde1776bcb438f639131de9497b, type: 3}
   - {fileID: 2800000, guid: 08fb11aa5f5f8a641bc5df80a69a36a8, type: 3}
+  deadAnimation:
+  - {fileID: 2800000, guid: faa2d8e48185b474a837fc17c004f2df, type: 3}
+  - {fileID: 2800000, guid: 74ce226e60f842948934c191a6b1498d, type: 3}
+  - {fileID: 2800000, guid: 7f7cc36d510ff4c468c7f543182fe91e, type: 3}
+  - {fileID: 2800000, guid: 673cd331ba1b83b43baab8277fb2ea3e, type: 3}
+  - {fileID: 2800000, guid: c2f5ac4fe928f244aa0793308a1ffd49, type: 3}
+  - {fileID: 2800000, guid: 684b1029999afce4fba376f24d5fb96a, type: 3}
+  - {fileID: 2800000, guid: ce83836853bfc03419fba456f8313dfd, type: 3}
+  - {fileID: 2800000, guid: 70448f3af53dd514c97dba5e96eed0de, type: 3}
 --- !u!114 &11400012
 MonoBehaviour:
   m_ObjectHideFlags: 1

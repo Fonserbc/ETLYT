@@ -17,8 +17,8 @@ public class ClockSpawn : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		time += Time.deltaTime;
-		if (time >= 2.5f) {
-			time -= 2.5f;
+		if (time >= 1.5f) {
+			time -= 1.5f;
 			int pos = Random.Range(0, SpawnPoints.Length-1);
 			SphereGizmos sG = SpawnPoints[pos].GetComponent<SphereGizmos>();
 			if (!sG.isInstantiated() && !SpawnPoints[pos].GetComponent<SpawnPrevention>().isSomeoneThere()) {

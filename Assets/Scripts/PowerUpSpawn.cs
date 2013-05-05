@@ -40,6 +40,7 @@ public class PowerUpSpawn : MonoBehaviour {
 				}
 				else {		
 					GameObject c = (GameObject)Instantiate(PowerUpType2, SpawnPoints[pos].position, SpawnPoints[pos].rotation);
+					c.transform.parent = transform;
 					c.transform.GetChild(0).renderer.material.mainTexture = PowerUps[pos];
 					c.transform.GetChild(1).renderer.material.mainTexture = PowerUps[pos];
 					ClockGestor rC = c.GetComponent<ClockGestor>();

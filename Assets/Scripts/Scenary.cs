@@ -43,7 +43,7 @@ public class Scenary : MonoBehaviour {
 		} else {
 			if(!finished) {
 				numPlayers = bi.getPlayersInGame();
-				if(numPlayers == 1) {
+				if(numPlayers <= 1) {
 					finished = true;
 					Time.timeScale = 0.5f;
 				}

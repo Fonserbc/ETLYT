@@ -22,6 +22,8 @@ public class Movement : MonoBehaviour {
 	
 	private float INV_TIME = 1.5f;
 	
+	public AudioSource death;
+	
 	public enum PlayerState {
 		Idle,
 		Run,
@@ -352,7 +354,10 @@ public class Movement : MonoBehaviour {
 	
 	public void Death () {
 		ChangeState(PlayerState.Death);
-		Destroy(gameObject, 3f);
+		collider.isTrigger = true;
+		rigidbody.useGravity = false;
+		death.Play();
+		//Destroy(gameObject, 5f);
 		this.enabled = false;
 	}
 	

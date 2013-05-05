@@ -23,6 +23,7 @@ GameObject:
   - 82: {fileID: 8200006}
   - 82: {fileID: 8200008}
   - 82: {fileID: 8200010}
+  - 82: {fileID: 8200012}
   m_Layer: 9
   m_Name: Flowerish
   m_TagString: Player
@@ -502,6 +503,62 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+--- !u!82 &8200012
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 8300000, guid: 970c95bc450124b43aee140e0f5a925c, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -513,6 +570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92ca82c4faee3c64f8fed37ba73da328, type: 3}
   m_Name: 
   ATTACK_TIME: .5
+  death: {fileID: 8200012}
   jumpForce: 10
   jumpAnimationLenght: 1
   acceleration: 20
@@ -601,6 +659,15 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 265e1f31dc1935942afe549bb25b2d63, type: 3}
   - {fileID: 2800000, guid: 1b208bde1776bcb438f639131de9497b, type: 3}
   - {fileID: 2800000, guid: 08fb11aa5f5f8a641bc5df80a69a36a8, type: 3}
+  deadAnimation:
+  - {fileID: 2800000, guid: faa2d8e48185b474a837fc17c004f2df, type: 3}
+  - {fileID: 2800000, guid: 74ce226e60f842948934c191a6b1498d, type: 3}
+  - {fileID: 2800000, guid: 7f7cc36d510ff4c468c7f543182fe91e, type: 3}
+  - {fileID: 2800000, guid: 673cd331ba1b83b43baab8277fb2ea3e, type: 3}
+  - {fileID: 2800000, guid: c2f5ac4fe928f244aa0793308a1ffd49, type: 3}
+  - {fileID: 2800000, guid: 684b1029999afce4fba376f24d5fb96a, type: 3}
+  - {fileID: 2800000, guid: ce83836853bfc03419fba456f8313dfd, type: 3}
+  - {fileID: 2800000, guid: 70448f3af53dd514c97dba5e96eed0de, type: 3}
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -670,6 +737,15 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 1ecf0aa517850c34aba3802611124340, type: 3}
   - {fileID: 2800000, guid: f1e14923354a44241b76f283174a6ef3, type: 3}
   - {fileID: 2800000, guid: 7c557dbe348ea0545a332a42488f3e47, type: 3}
+  deadAnimation:
+  - {fileID: 2800000, guid: cdd803f990adaff429cbbaadfd65fe34, type: 3}
+  - {fileID: 2800000, guid: 5ee8fd042a064074eae0aa53d7369147, type: 3}
+  - {fileID: 2800000, guid: fe127c8a4d2c98e48a95801c8a1430e6, type: 3}
+  - {fileID: 2800000, guid: e196e7e8e0234f54285ddb4975a2d50d, type: 3}
+  - {fileID: 2800000, guid: 3cc0f8feeb2d411488c5185e10aac73b, type: 3}
+  - {fileID: 2800000, guid: 4556a836c803da5458746cc4b04ef474, type: 3}
+  - {fileID: 2800000, guid: 27e22f23ff154f84e9ad1f046879c73a, type: 3}
+  - {fileID: 2800000, guid: c67c576069856a744b35ece3b52b8cf8, type: 3}
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1

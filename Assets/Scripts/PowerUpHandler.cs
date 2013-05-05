@@ -27,7 +27,7 @@ public class PowerUpHandler : MonoBehaviour {
 			switch(activePowerUp) {
 			case 0:
 				phb.setShield(true);
-				Debug.Log ("Shield");
+				//Debug.Log ("Shield");
 				break;	
 			case 1:
 				m.jumpForce *= 3;
@@ -35,18 +35,18 @@ public class PowerUpHandler : MonoBehaviour {
 //				m.acceleration *=2;
 //				m.maxAirSpeed *=2;
 				m.airAcceleration *=2;
-				Debug.Log ("Estic super saltant");
+				//Debug.Log ("Estic super saltant");
 				break;
 			case 2:
 				m.maxSpeed *= 2;
 				m.acceleration *=2;
 				m.maxAirSpeed *=1.5f;
 			//	m.airAcceleration *=2;
-				Debug.Log ("Estic super corrents");
+				//Debug.Log ("Estic super corrents");
 				break;
 			case 3:
 				rigidbody.useGravity = false;
-				Debug.Log ("No tinc gravetat");
+				//Debug.Log ("No tinc gravetat");
 				break;
 			default:
 				break;

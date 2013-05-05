@@ -47,11 +47,11 @@ public class Control : MonoBehaviour {
 	
 	private float[] actualSlope;
 	
-	public bool destroyOnLoad = false;
+	public bool automaticDetect = true;
 
 	// Use this for initialization
 	void Awake () {
-		if (!destroyOnLoad) DontDestroyOnLoad(transform.gameObject);
+		DontDestroyOnLoad(transform.gameObject);
 		wiiControl = (WiiMoteControl)GetComponent("WiiMoteControl");
 		
 		types = new ControllerType[4];
@@ -76,6 +76,13 @@ public class Control : MonoBehaviour {
 				int p = RegisterPlayer(automaticRegisterType[i], automaticRegisterId[i]);
 				automaticRegisterPlayer[i].BroadcastMessage("SetPlayer", p);
 			}
+		}
+		
+		if (automaticDetect) {
+			int c = WiiMoteControl.wiimote_count();
+			if (c>0)
+				for (int i=0; i<=Mathf.Min(c-1, 4); i++)					
+					RegisterPlayer(ControllerType.WiiMote, i);
 		}
 	}
 	
@@ -422,7 +429,7 @@ public class Control : MonoBehaviour {
 						return WiiMoteControl.wiimote_getButtonNunchuckZ(playerControllerId[player]);
 					}
 					else {
-						return WiiMoteControl.wiimote_getButtonMinus(playerControllerId[player]);
+						return WiiMoteControl.wiimote_getButtonPlus(playerControllerId[player]);
 					}
 				
 				case ControllerType.Keyboard:
@@ -507,7 +514,7 @@ public class Control : MonoBehaviour {
 						return WiiMoteControl.wiimote_getButton1(playerControllerId[player]);
 					}
 					else {
-						return WiiMoteControl.wiimote_getButtonPlus(playerControllerId[player]);
+						return WiiMoteControl.wiimote_getButtonMinus(playerControllerId[player]);
 					}
 				
 				case ControllerType.Keyboard:
@@ -518,6 +525,15 @@ public class Control : MonoBehaviour {
 			}
 		}
 		else Debug.LogError("Player id does not exist. id "+player);
+		
+		return false;
+	}
+	
+	public bool Accept () {
+		
+		for (int i = 0; i < players; ++i) {
+			if (Pause(i) || Jump(i) || Attack(i)) return true;
+		}
 		
 		return false;
 	}

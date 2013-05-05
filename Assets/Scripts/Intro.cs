@@ -4,20 +4,23 @@ using System.Collections;
 public class Intro : MonoBehaviour {
 	
 	public enum IntroState {
+		Detecting,
 		Studio,
 		Credits,
 		Video
 	};
-	
-	private bool needsPlay = false;
 
 	public Texture2D studio;
-	private float studioTime = 3;
+	private float studioTime = 4;
 	public Texture2D credits;
 	private float creditsTime = 4;
+	public Texture2D cantDetect;
+	
+	public Material whiteMaterial;
+	public GameObject background;
 	
 	private float time= 0;
-	private IntroState state = IntroState.Studio;
+	private IntroState state = IntroState.Detecting;
 	
 	private Control control;
 	
@@ -26,8 +29,8 @@ public class Intro : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		SetState (IntroState.Studio);
 		control = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
+		SetState(IntroState.Detecting);
 	}
 	
 	// Update is called once per frame
@@ -35,6 +38,9 @@ public class Intro : MonoBehaviour {
 		time += Time.deltaTime;
 		
 		switch (state) {
+		case IntroState.Detecting:
+			if (WiiMoteControl.wiimote_count() > 0) SetState(IntroState.Studio);
+			break;
 		case IntroState.Studio:
 			if (time > studioTime) SetState(IntroState.Credits);
 			break;
@@ -42,29 +48,13 @@ public class Intro : MonoBehaviour {
 			if (time > creditsTime) SetState(IntroState.Video);
 			break;
 		case IntroState.Video:
-			if (control.Jump(0)) {
+			if (control.Accept()) {
 				Application.LoadLevel(Application.loadedLevel + 1);
 			}
-			if (needsPlay && !((MovieTexture)renderer.material.mainTexture).isPlaying && !audio.isPlaying) {
-				
-				time = -2f;
-				finished = true;
+			if (!((MovieTexture)renderer.material.mainTexture).isPlaying && !audio.isPlaying) {
+				Application.LoadLevel(Application.loadedLevel + 1);
 			}
 			break;
-		}
-		
-		if (needsPlay) {
-			if (!((MovieTexture)renderer.material.mainTexture).isPlaying) {
-				((MovieTexture) renderer.material.mainTexture).Play();
-				//audio.Play();
-			}
-			if (time > 0f && finished) Application.LoadLevel(Application.loadedLevel + 1);
-		}
-		else {
-			if (((MovieTexture)renderer.material.mainTexture).isPlaying) {
-				((MovieTexture)renderer.material.mainTexture).Stop();
-				audio.Stop();
-			}
 		}
 	}
 	
@@ -72,15 +62,21 @@ public class Intro : MonoBehaviour {
 		state = s;
 		time = 0;
 		
+		if (s == IntroState.Studio) {
+			background.renderer.material = whiteMaterial;
+		}
+		
 		if (s == IntroState.Video) {
 			renderer.enabled = true;
 			Play();
-			Debug.Log("Play");
 		}
 	}
 	
 	void Play() {
-		needsPlay = true;
+		if (!((MovieTexture)renderer.material.mainTexture).isPlaying) {
+			((MovieTexture) renderer.material.mainTexture).Play();
+			//audio.Play();
+		}		
 		audio.Play();
 	}
 	
@@ -88,6 +84,9 @@ public class Intro : MonoBehaviour {
 		Texture2D tex;
 		Vector2 size;
 		switch (state) {
+			case IntroState.Detecting:
+				tex = cantDetect;
+				break;
 			case IntroState.Studio:
 				tex = studio;
 				break;

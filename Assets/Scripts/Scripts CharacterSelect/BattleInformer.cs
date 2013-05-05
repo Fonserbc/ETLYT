@@ -6,7 +6,7 @@ public class BattleInformer : MonoBehaviour {
 	public int maxPlayers = 4; //numero maximo de pnjs en juego
 	public Vector3[] standardPositions; //Posicion standard para colocar pnjs
 	private GameObject[] players; //personajes en juego
-	private int stage = 1; //Pantalla
+	private int stage = 2; //Pantalla
 	public bool[] items;
 	private bool start = false;
 	public GameObject dust;
@@ -25,7 +25,7 @@ public class BattleInformer : MonoBehaviour {
 	
 	public void startFight() {
 		if(stage != -1 && start) {
-			Application.LoadLevel(stage);
+			Application.LoadLevel(Application.loadedLevel + 1);
 		}
 	}
 	
@@ -129,7 +129,7 @@ public class BattleInformer : MonoBehaviour {
 	 *Sino: Si jugador = null instancia playerType en standardPosition
 	 *		Sino: instancia playerType en posicion de jugador
 	 */
-		if(i <= maxPlayers)	{
+		if(i < maxPlayers)	{
 
 			Vector3 position = standardPositions[i];
 			Vector3 velocity = Vector3.zero;

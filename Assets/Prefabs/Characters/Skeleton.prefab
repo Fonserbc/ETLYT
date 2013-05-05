@@ -124,6 +124,15 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 265e1f31dc1935942afe549bb25b2d63, type: 3}
   - {fileID: 2800000, guid: 1b208bde1776bcb438f639131de9497b, type: 3}
   - {fileID: 2800000, guid: 08fb11aa5f5f8a641bc5df80a69a36a8, type: 3}
+  deadAnimation:
+  - {fileID: 2800000, guid: faa2d8e48185b474a837fc17c004f2df, type: 3}
+  - {fileID: 2800000, guid: 74ce226e60f842948934c191a6b1498d, type: 3}
+  - {fileID: 2800000, guid: 7f7cc36d510ff4c468c7f543182fe91e, type: 3}
+  - {fileID: 2800000, guid: 673cd331ba1b83b43baab8277fb2ea3e, type: 3}
+  - {fileID: 2800000, guid: c2f5ac4fe928f244aa0793308a1ffd49, type: 3}
+  - {fileID: 2800000, guid: 684b1029999afce4fba376f24d5fb96a, type: 3}
+  - {fileID: 2800000, guid: ce83836853bfc03419fba456f8313dfd, type: 3}
+  - {fileID: 2800000, guid: 70448f3af53dd514c97dba5e96eed0de, type: 3}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

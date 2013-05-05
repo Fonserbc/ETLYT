@@ -23,7 +23,7 @@ public class Lifebar : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		life = 40;
+		life = 80;
 		control = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
 
 	}
@@ -39,9 +39,9 @@ public class Lifebar : MonoBehaviour {
 		
 		if (player == 0) {
 			GUI.DrawTexture(new Rect(0, -30, 240, 240), Display[0]);
-			GUI.DrawTexture(new Rect(106, 46, 60, 60), Numbers[centenes+1]);
-			GUI.DrawTexture(new Rect(129, 46, 60, 60), Numbers[desenes+1]);
-			GUI.DrawTexture(new Rect(152, 46, 60, 60), Numbers[unitats+1]);
+			GUI.DrawTexture(new Rect(106, 46, 60, 60), Numbers[(centenes+1)]);
+			GUI.DrawTexture(new Rect(129, 46, 60, 60), Numbers[(desenes+1)]);
+			GUI.DrawTexture(new Rect(152, 46, 60, 60), Numbers[(unitats+1)]);
 			GUI.DrawTexture(new Rect(25,30,100,100), Portrait);
 			
 			Matrix4x4 matrixBackup = GUI.matrix;
@@ -54,9 +54,9 @@ public class Lifebar : MonoBehaviour {
 		}
 		else if (player == 1) {		
 		GUI.DrawTexture(new Rect(Screen.width-240, -30, 240, 240), Display[1]);
-			GUI.DrawTexture(new Rect(Screen.width-255, 46, 60, 60), Numbers[centenes+1]);
-			GUI.DrawTexture(new Rect(Screen.width-232, 46, 60, 60), Numbers[desenes+1]);
-			GUI.DrawTexture(new Rect(Screen.width-209, 46, 60, 60), Numbers[unitats+1]);
+			GUI.DrawTexture(new Rect(Screen.width-255, 46, 60, 60), Numbers[(centenes+1)]);
+			GUI.DrawTexture(new Rect(Screen.width-232, 46, 60, 60), Numbers[(desenes+1)]);
+			GUI.DrawTexture(new Rect(Screen.width-209, 46, 60, 60), Numbers[(unitats+1)]);
 			GUI.DrawTexture(new Rect(Screen.width-123,30,100,100), Portrait);
 			
 			Matrix4x4 matrixBackup = GUI.matrix;
@@ -69,9 +69,9 @@ public class Lifebar : MonoBehaviour {
 		}
 		else if (player == 2) {
 			GUI.DrawTexture(new Rect(0, Screen.height-200, 240, 240), Display[0]);
-			GUI.DrawTexture(new Rect(106, Screen.height-124, 60, 60), Numbers[centenes+1]);
-			GUI.DrawTexture(new Rect(129, Screen.height-124, 60, 60), Numbers[desenes+1]);
-			GUI.DrawTexture(new Rect(152, Screen.height-124, 60, 60), Numbers[unitats+1]);
+			GUI.DrawTexture(new Rect(106, Screen.height-124, 60, 60), Numbers[(centenes+1)]);
+			GUI.DrawTexture(new Rect(129, Screen.height-124, 60, 60), Numbers[(desenes+1)]);
+			GUI.DrawTexture(new Rect(152, Screen.height-124, 60, 60), Numbers[(unitats+1)]);
 			GUI.DrawTexture(new Rect(25,Screen.height-140,100,100), Portrait);
 			
 			Matrix4x4 matrixBackup = GUI.matrix;
@@ -84,9 +84,9 @@ public class Lifebar : MonoBehaviour {
 		}
 		else if (player == 3) {
 			GUI.DrawTexture(new Rect(Screen.width-240, Screen.height-200, 240, 240), Display[1]);
-			GUI.DrawTexture(new Rect(Screen.width-255, Screen.height-124, 60, 60), Numbers[centenes+1]);
-			GUI.DrawTexture(new Rect(Screen.width-232, Screen.height-124, 60, 60), Numbers[desenes+1]);
-			GUI.DrawTexture(new Rect(Screen.width-209, Screen.height-124, 60, 60), Numbers[unitats+1]);
+			GUI.DrawTexture(new Rect(Screen.width-255, Screen.height-124, 60, 60), Numbers[(centenes+1)]);
+			GUI.DrawTexture(new Rect(Screen.width-232, Screen.height-124, 60, 60), Numbers[(desenes+1)]);
+			GUI.DrawTexture(new Rect(Screen.width-209, Screen.height-124, 60, 60), Numbers[(unitats+1)]);
 			GUI.DrawTexture(new Rect(Screen.width-123,Screen.height-140,100,100), Portrait);
 
 			Matrix4x4 matrixBackup = GUI.matrix;
@@ -101,8 +101,13 @@ public class Lifebar : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update() {
-		life -= Time.deltaTime;
-		if (life <= 0) Destroy(gameObject);//BroadcastMessage("Death");
+		
+		if (life <= 0) {
+			//Destroy(gameObject);
+			BroadcastMessage("Death");
+			life = 0;
+		}
+		else life -= Time.deltaTime;
 		//Debug.Log(centenes.ToString() + desenes.ToString() + unitats.ToString());
 		
 		angle = control.Slope(player);
