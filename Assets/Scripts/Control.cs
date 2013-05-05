@@ -46,10 +46,12 @@ public class Control : MonoBehaviour {
 	public ControllerType[] automaticRegisterType;
 	
 	private float[] actualSlope;
+	
+	public bool destroyOnLoad = false;
 
 	// Use this for initialization
 	void Awake () {
-		DontDestroyOnLoad(transform.gameObject);
+		if (!destroyOnLoad) DontDestroyOnLoad(transform.gameObject);
 		wiiControl = (WiiMoteControl)GetComponent("WiiMoteControl");
 		
 		types = new ControllerType[4];

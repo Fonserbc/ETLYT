@@ -352,6 +352,8 @@ public class Movement : MonoBehaviour {
 	
 	public void Death () {
 		ChangeState(PlayerState.Death);
+		Destroy(gameObject, 3f);
+		this.enabled = false;
 	}
 	
 	public bool Attack (int right) {
