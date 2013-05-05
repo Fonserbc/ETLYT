@@ -22,7 +22,7 @@ public class Collisions : MonoBehaviour {
 		else if (collider.gameObject.tag == "PowerUp") {
 			SimpleIDHandler iDH = collider.gameObject.GetComponent<SimpleIDHandler>();
 			PowerUpHandler pUH = GetComponent<PowerUpHandler>();
-			Debug.Log (iDH.getID ());
+			//Debug.Log (iDH.getID ());
 			pUH.stackPowerUp(iDH.getID());
 			Destroy(collider.gameObject);
 		}

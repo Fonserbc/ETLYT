@@ -22,6 +22,6 @@ public class ClockGestor : MonoBehaviour {
 	
 	public void setSpawner(Transform s) {
 		spawner = s.gameObject;
-		Debug.Log(s.position.x);
+		//Debug.Log(s.position.x);
 	}
 }

@@ -35,7 +35,7 @@ public class PowerUpSpawn : MonoBehaviour {
 					ClockGestor rC = c.GetComponent<ClockGestor>();
 					SimpleIDHandler iDH = c.GetComponent<SimpleIDHandler>();
 					iDH.setID(pos);
-					Debug.Log(iDH.getID ());
+					//Debug.Log(iDH.getID ());
 					rC.setSpawner(SpawnPoints[pos]);
 				}
 				else {		
@@ -45,7 +45,7 @@ public class PowerUpSpawn : MonoBehaviour {
 					ClockGestor rC = c.GetComponent<ClockGestor>();
 					SimpleIDHandler iDH = c.GetComponent<SimpleIDHandler>();
 					iDH.setID(pos);
-					Debug.Log(iDH.getID ());
+					//Debug.Log(iDH.getID ());
 					rC.setSpawner(SpawnPoints[pos]);
 				}
 			}

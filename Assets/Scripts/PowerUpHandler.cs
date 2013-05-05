@@ -8,12 +8,14 @@ public class PowerUpHandler : MonoBehaviour {
 	private bool isActive = false;
 	private int activePowerUp = -1;
 	private int player = 0;
+	
+	private Control c;
 
 	public void stackPowerUp(int i) {
 		stack = i;	
 	}
 	
-	public void usePowerUp() {
+	public void usePowerUp() {		
 		if (stack != -1) {
 			if (isActive) terminatePowerUp();
 			activePowerUp = stack;
@@ -25,6 +27,7 @@ public class PowerUpHandler : MonoBehaviour {
 			switch(activePowerUp) {
 			case 0:
 				phb.setShield(true);
+				Debug.Log ("Shield");
 				break;	
 			case 1:
 				m.jumpForce *= 3;
@@ -83,26 +86,30 @@ public class PowerUpHandler : MonoBehaviour {
 	}
 	
 	void HUDActualization() {
-		Lifebar LB = GameObject.FindGameObjectWithTag("Control").GetComponent<Lifebar>();
-		Debug.Log(stack);
+		Lifebar LB = GetComponent<Lifebar>();
+		//Debug.Log(stack);
 		LB.addPowerUp(stack);
 	}
 	
 	// Use this for initialization
 	void Start () {
-	
+		c = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (Input.GetKeyDown(KeyCode.O)) stackPowerUp(0);
+		if (Input.GetKeyDown(KeyCode.J)) stackPowerUp(1);
+		if (Input.GetKeyDown(KeyCode.M)) stackPowerUp(2);
+		
 		if(timeLeft > 0) {
 			timeLeft -= Time.deltaTime;
 			if (timeLeft < 0) {
 				terminatePowerUp();
 			}
 		}
-		Control c = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
 		if (c.AbilityPowerUp(player)) usePowerUp();
+		
 		HUDActualization();
 	}
 	

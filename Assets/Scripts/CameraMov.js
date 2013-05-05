@@ -35,7 +35,7 @@ function FixedUpdate () {
 		if (dy > mdy)
 			mdy = dy;*/
 	}
-	mid /= players.Length;
+	if (players.Length > 0) mid /= players.Length;
 	
 	var minDistY : float = (my + margin.y) / Mathf.Tan(Mathf.Deg2Rad * (camera.fov/2));
 	var minDistX : float = (mx + margin.x) / Mathf.Tan(Mathf.Deg2Rad * ((camera.fov/2) * camera.aspect));

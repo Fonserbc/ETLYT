@@ -94,9 +94,9 @@ public class Control : MonoBehaviour {
 							case 3:
 								button = AbilityGravityButton(i); break;
 							case 4:
-								button = AbilityPowerUp(i); break;
+								button = AbilityPowerUpButton(i); break;
 							case 5:
-								button = AbilitySkill(i); break;
+								button = AbilitySkillButton(i); break;
 							case 6:
 								button = PauseButton(i); break;
 						}
