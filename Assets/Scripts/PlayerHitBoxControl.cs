@@ -15,6 +15,9 @@ public class PlayerHitBoxControl : MonoBehaviour {
 	private float upHit = 0.1f;
 	
 	private Movement mov;
+	
+	public AudioSource[] attacks;
+	public AudioSource[] hits;
 
 	// Use this for initialization
 	void Start () {
@@ -42,6 +45,8 @@ public class PlayerHitBoxControl : MonoBehaviour {
 				Physics.IgnoreCollision(hittingBox.collider, transform.collider);
 				
 				Destroy(hittingBox, mov.ATTACK_TIME+0.2f);
+				int r = Random.Range(0,2);
+				attacks[r].Play();
 			}
 			
 		}
@@ -57,6 +62,9 @@ public class PlayerHitBoxControl : MonoBehaviour {
 				
 				Physics.IgnoreCollision(col, collider);
 				//Debug.Log ("JIT");
+				
+				int r = Random.Range(0,4);
+				hits[r].Play();
 			}
 		}
 	}

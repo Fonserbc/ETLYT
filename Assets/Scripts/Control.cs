@@ -155,6 +155,10 @@ public class Control : MonoBehaviour {
 		}
 	}
 	
+	public bool isNunchuckEnabled(int player) {
+		return WiiMoteControl.wiimote_isExpansionPortEnabled(playerControllerId[player]);
+	}
+	
 	public int RegisterPlayer (ControllerType type, int id) {
 		if (players < 4) {
 			types[players] = type;

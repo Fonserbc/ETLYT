@@ -15,10 +15,11 @@ public class Lifebar : MonoBehaviour {
 	
 	private bool start = false;
 	
-	public float angle = 0;
+	public GameObject Plus5; 
+	
+	private float angle = 0;
 	Control control;
-	private float timer = 0.2f;
-	private float count = 0;
+	
 	
 	// Use this for initialization
 	void Start () {
@@ -128,6 +129,7 @@ public class Lifebar : MonoBehaviour {
 	void OnTriggerEnter(Collider collider) {
 		if (collider.gameObject.tag == "Clock") {
 			life += 5;
+			Instantiate(Plus5, collider.transform.position,Plus5.transform.rotation);
 			Destroy(collider.gameObject);
 		}
 	}
