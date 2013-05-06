@@ -353,12 +353,14 @@ public class Movement : MonoBehaviour {
 	}
 	
 	public void Death () {
-		ChangeState(PlayerState.Death);
-		collider.isTrigger = true;
-		rigidbody.useGravity = false;
-		death.Play();
-		//Destroy(gameObject, 5f);
-		this.enabled = false;
+		if (state != PlayerState.Death) {
+			ChangeState(PlayerState.Death);
+			collider.isTrigger = true;
+			rigidbody.useGravity = false;
+			if (!death.isPlaying) death.Play();
+			//Destroy(gameObject, 5f);
+			this.enabled = false;
+		}
 	}
 	
 	public bool Attack (int right) {

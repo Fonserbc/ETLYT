@@ -112,7 +112,7 @@ public class AnimationHandler : MonoBehaviour {
 			if(m_stepStatus >= m_animationSpeed) {
 				m_stepStatus %= m_animationSpeed;
 				if(m_step < deadAnimation.Length-1) m_step = (++m_step)%deadAnimation.Length;
-				else Destroy(transform.parent.gameObject);
+				else Destroy(transform.parent.gameObject, 2);
 			} 
 			renderer.material.mainTexture = deadAnimation[m_step];
 			break;

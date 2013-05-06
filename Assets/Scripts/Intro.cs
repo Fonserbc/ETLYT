@@ -28,10 +28,11 @@ public class Intro : MonoBehaviour {
 	private bool finished = false;
 	private int count = 0;
 	
+	private float firsTime = 1f;
 	
 	// Use this for initialization
 	void Start () {
-		control = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
+		//control = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
 		SetState(IntroState.Detecting);
 	}
 	
@@ -39,26 +40,31 @@ public class Intro : MonoBehaviour {
 	void Update () {
 		time += Time.deltaTime;
 		
-		count = WiiMoteControl.wiimote_count();	
+		if (time > firsTime) {
+			if (firsTime > 0) {
+				control = GameObject.FindGameObjectWithTag("Control").GetComponent<Control>();
+				firsTime = -1;
+			}
 	
-		switch (state) {
-		case IntroState.Detecting:
-			if (WiiMoteControl.wiimote_count() > 1) SetState(IntroState.Studio);
-			break;
-		case IntroState.Studio:
-			if (time > studioTime) SetState(IntroState.Credits);
-			break;
-		case IntroState.Credits:
-			if (time > creditsTime) SetState(IntroState.Video);
-			break;
-		case IntroState.Video:
-			if (control.Accept()) {
-				Application.LoadLevel(Application.loadedLevel + 1);
+			switch (state) {
+			case IntroState.Detecting:
+				if (WiiMoteControl.wiimote_count() > 1) SetState(IntroState.Studio);
+				break;
+			case IntroState.Studio:
+				if (time > studioTime) SetState(IntroState.Credits);
+				break;
+			case IntroState.Credits:
+				if (time > creditsTime) SetState(IntroState.Video);
+				break;
+			case IntroState.Video:
+				if (control.Accept()) {
+					Application.LoadLevel(Application.loadedLevel + 1);
+				}
+				if (!((MovieTexture)renderer.material.mainTexture).isPlaying && !audio.isPlaying) {
+					Application.LoadLevel(Application.loadedLevel + 1);
+				}
+				break;
 			}
-			if (!((MovieTexture)renderer.material.mainTexture).isPlaying && !audio.isPlaying) {
-				Application.LoadLevel(Application.loadedLevel + 1);
-			}
-			break;
 		}
 	}
 	

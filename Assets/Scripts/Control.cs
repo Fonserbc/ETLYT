@@ -65,7 +65,7 @@ public class Control : MonoBehaviour {
 		for (int i = 0; i < 4; ++i) {
 			types[i] = ControllerType.Undefined;
 			for (int j = 0; j < 7; ++j) {
-				pressedTime[j,i] = -1000;
+				pressedTime[j,i] = Time.time;
 				lastPressed[j,i] = false;
 			}
 			actualSlope[i] = 0;
@@ -77,17 +77,22 @@ public class Control : MonoBehaviour {
 				automaticRegisterPlayer[i].BroadcastMessage("SetPlayer", p);
 			}
 		}
-		
-		if (automaticDetect) {
-			int c = WiiMoteControl.wiimote_count();
-			if (c>0)
-				for (int i=0; i<=Mathf.Min(c-1, 4); i++)					
-					RegisterPlayer(ControllerType.WiiMote, i);
-		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (automaticDetect) {
+			int c = WiiMoteControl.wiimote_count();
+			//Debug.Log("AutomaticDetecting_ "+c);
+			if (c>players)
+				for (int i=players; i<=Mathf.Min(c-1, 4); i++)					
+					RegisterPlayer(ControllerType.WiiMote, i);
+			
+			automaticDetect = false;
+		}
+		
+		//Debug.Log(WiiMoteControl.wiimote_getButton2(playerControllerId[0]));
+		
 		for (int i = 0; i < 4; ++i) {
 			
 			if (types[i] == ControllerType.Undefined) continue;
@@ -177,7 +182,7 @@ public class Control : MonoBehaviour {
 				case ControllerType.WiiMote:
 					playerControllerId[players] = id;
 					
-					if (WiiMoteControl.wiimote_isExpansionPortEnabled(id))
+					if (!WiiMoteControl.wiimote_isExpansionPortEnabled(id))
 						playerAxis[players].init();
 					
 					break;
@@ -185,7 +190,7 @@ public class Control : MonoBehaviour {
 				default:
 					break;
 			}
-			
+			//Debug.Log(players);
 			return players++;
 		}
 		else Debug.LogError("4 Players cap reached");
@@ -261,8 +266,10 @@ public class Control : MonoBehaviour {
 	
 	public bool Jump (int player) {
 		if (player < players) {
+			//Debug.Log(types[player]);
 			switch (types[player]) {
 			case ControllerType.WiiMote:
+				
 				return (Time.time - pressedTime[0,player]) < PRESSED_TIME;
 			case ControllerType.Keyboard:
 				return Input.GetKeyDown(KeyCode.Space);
@@ -530,7 +537,7 @@ public class Control : MonoBehaviour {
 	}
 	
 	public bool Accept () {
-		
+		//Debug.Log("Accept : "+players);
 		for (int i = 0; i < players; ++i) {
 			if (Pause(i) || Jump(i) || Attack(i)) return true;
 		}

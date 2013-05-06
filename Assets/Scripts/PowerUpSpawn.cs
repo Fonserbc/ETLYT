@@ -22,7 +22,7 @@ public class PowerUpSpawn : MonoBehaviour {
 	void Update () {
 		time += Time.deltaTime;
 		if (time >= spawnTime) {
-			time -= spawnTime;
+			time = 0;
 			int pos = Random.Range(0, PowerUps.Length-1);
 			int spawner = Random.Range(0, SpawnPoints.Length-1);
 			SphereGizmos sG = SpawnPoints[spawner].GetComponent<SphereGizmos>();
@@ -30,6 +30,8 @@ public class PowerUpSpawn : MonoBehaviour {
 				sG.is_instanced(true);
 				if (pos < 3) {
 					GameObject c = (GameObject)Instantiate(PowerUpType1, SpawnPoints[pos].position, SpawnPoints[pos].rotation);
+					//Physics.IgnoreCollision(SpawnPoints[pos].collider, c.collider);
+					c.transform.parent = SpawnPoints[pos];
 					c.transform.GetChild(0).renderer.material.mainTexture = PowerUps[pos];
 					c.transform.GetChild(1).renderer.material.mainTexture = PowerUps[pos];
 					ClockGestor rC = c.GetComponent<ClockGestor>();
@@ -40,6 +42,8 @@ public class PowerUpSpawn : MonoBehaviour {
 				}
 				else {		
 					GameObject c = (GameObject)Instantiate(PowerUpType2, SpawnPoints[pos].position, SpawnPoints[pos].rotation);
+					//Physics.IgnoreCollision(SpawnPoints[pos].collider, c.collider);
+					c.transform.parent = SpawnPoints[pos];
 					c.transform.parent = transform;
 					c.transform.GetChild(0).renderer.material.mainTexture = PowerUps[pos];
 					c.transform.GetChild(1).renderer.material.mainTexture = PowerUps[pos];
