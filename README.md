@@ -5,5 +5,7 @@ Wiideojuegos 2013 winner
 
 We did this game in 1-2 months (and mainly in the last week) so the code is probably going to be dirty :P
 
+No plans on reworking on it for now.
+
 Trailer here:
 http://www.youtube.com/watch?v=UAVU7yE535U
